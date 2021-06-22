@@ -8,3 +8,7 @@ input {
   display: flex;
   flex-direction: column;
 }
+
+.search-wrapper div > *:not(:last-child) {
+  margin-right: 10px;
+}

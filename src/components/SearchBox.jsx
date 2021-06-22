@@ -4,10 +4,12 @@ import "./SearchBox.css";
 
 export const SearchBox = (props) => {
     return (
-        <div className ="search-wrapper">
+        <div className="search-wrapper"> 
             <label>Find Restaurant!</label>
+            <div>
             <input type="text" placeholder="Search"/>
-            <Button>Search</Button>
+            <Button buttonSize="btn-large">Search</Button>
+            </div>
         </div>
     );
 }

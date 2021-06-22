@@ -1,0 +1,6 @@
+.search-wrapper {
+  display: inline-block;
+  margin: 20px 0px 20px 40px;
+  display: flex;
+  flex-direction: column;
+}
