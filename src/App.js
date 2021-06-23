@@ -3,6 +3,8 @@ import './App.css';
 import Navbar from "./components/Navbar/Navbar";
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import Home from "./Home";
+import Login from "./Login";
+import SignUp from "./SignUp";
 
 
 function App() {
@@ -14,6 +16,8 @@ function App() {
         <div className="page">
           <Route path="/" exact component={Home}/>
           <Route path="/home" component={Home}/>
+          <Route path="/sign-in" component={Login}/>
+          <Route path="/sign-up" component={SignUp}/>
         </div>
         </Switch>
       </div>
