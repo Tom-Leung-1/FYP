@@ -2,8 +2,26 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: "Vollkorn", serif;
+  font-family: "Ubuntu", serif; /*font is changed, feel free to change it back*/
 }
 
 .page {
+}
+
+.login { 
+  background: url(./BGImages/loginBg.jpg);
+  width: 100%; 
+  height: 1000px; 
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.signup { 
+  background: url(./BGImages/signupBg.jpg);
+  width: 100%; 
+  height: 1000px; 
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
