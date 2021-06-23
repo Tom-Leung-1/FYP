@@ -6,12 +6,12 @@ export const MenuItems = [ // export so other file can access || const map array
     },
     {
         title: 'Sign In',
-        url: "/letters",
+        url: "/sign-in",
         cName: 'nav-links'
     },
     {
         title: 'Sign Up',
-        url: "#",
+        url: "/sign-up",
         cName: 'nav-links'
     },
 ]
