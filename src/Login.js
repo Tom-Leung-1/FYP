@@ -12,7 +12,6 @@ class Login extends Component {
                        passwordError: 'Please enter your password.',
                        showPass: false 
                      };
-        this.myRef = React.createRef()
     }
 
     componentDidMount() {
