@@ -1,0 +1,5 @@
+#Bform label.required::after
+{
+  color: red;
+  content: " *";
+}
