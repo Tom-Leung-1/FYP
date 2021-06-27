@@ -35,7 +35,7 @@ class BRegister extends Component {
     constructor(props) {
         super(props);
         this.state = { 
-                       showPass: false 
+                       Valid: false 
                      };
     }
 
