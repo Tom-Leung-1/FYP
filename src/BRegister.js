@@ -39,6 +39,8 @@ const NT = [
             "Yuen Long" 
            ];
 
+const key = config["REACT_APP_GOOGLE_KEY"]
+
 class BRegister extends Component {
     
     constructor(props) {
@@ -46,7 +48,20 @@ class BRegister extends Component {
         this.state = { 
                        Valid: false,
                        selectedFile: null,
+                       address: null,
+                       marker: null,
+                       map : null,
                      };
+    }
+
+    onMarkerComplete = marker => {
+      this.state.marker?.setMap(null);
+      const lat = marker.position.lat()
+      const lng = marker.position.lng()
+      console.log(marker)
+      fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${key}`)
+      .then(response => response.json())
+      .then(data => this.setState({marker:marker, address : data.results[0].formatted_address}));
     }
 
     fileSelectedHandler = event => {
@@ -139,8 +154,8 @@ class BRegister extends Component {
               <div class="row mb-2">
                 <div class="col-lg-8">
                   <label for="address" class="form-label required"><b><small>Address</small></b></label>
-                  <input type="text" id="address" class="form-control form-control-sm shadow-sm" />
-                  <GM/>
+                  <input type="text" id="address" class="form-control form-control-sm shadow-sm" value={this.state.address}/>
+                  <GM setMarker={this.onMarkerComplete}/>
                 </div>
               </div>
 

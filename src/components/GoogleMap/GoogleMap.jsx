@@ -1,9 +1,9 @@
 import React, {Component} from "react";
-import {GoogleMap, LoadScript, DrawingManager, Marker } from "@react-google-maps/api"
-
+import {useGoogleMap, GoogleMap, LoadScript, DrawingManager, Marker } from "@react-google-maps/api"
+import config from "../../config/config.json"
 import "./GoogleMap.css"
 
-const key = process.env.REACT_APP_GOOGLE_KEY
+const key = config["REACT_APP_GOOGLE_KEY"]
 
 const center = {
     lat: 22.311680,
@@ -15,17 +15,17 @@ const containerStyle = {
     height: '100%',
 };
 
-const onMarkerComplete = marker => {
-    const lat = marker.position.lat()
-    const lng = marker.position.lng()
-    console.log(lat)
-    fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${key}`)
-    .then(response => response.json())
-    .then(data => console.log(data));
-}
+
 
 class Map extends Component {
+    constructor(props) {
+        super(props) 
+        this.state = {
+
+        }
+    }
     render() {
+        const {setMarker, setMap} = this.props
         return (
             <div className="map-wrapper">
                 <LoadScript
@@ -33,13 +33,14 @@ class Map extends Component {
                     libraries={['drawing']}
                 >
                     <GoogleMap
+                        onLoad={setMap}
                         id="test"
                         mapContainerStyle={containerStyle}
                         center={center}
                         zoom={10}
                     >
                         <DrawingManager
-                            onMarkerComplete={onMarkerComplete}
+                            onMarkerComplete={setMarker}
                         />
                     </GoogleMap>
                 </LoadScript>
