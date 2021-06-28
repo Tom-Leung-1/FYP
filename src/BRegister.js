@@ -1,9 +1,16 @@
 import React, { Component } from 'react';
 import { Helmet } from "react-helmet";
 import './BRegister.css';
-// import ReCAPTCHA from "react-google-recaptcha"; TODO
+import ReCAPTCHA from "react-google-recaptcha";
 import GM from "./components/GoogleMap/GoogleMap"
 import axios from "axios"
+import config from "./config/config.json"
+
+/*@TODO
+filter invalid file format upload
+set address in the address bar, don't let people change the address after setting the marker
+set the recaptcha
+*/
 
 const HK = [ 
             "Central and Western",
@@ -71,8 +78,8 @@ class BRegister extends Component {
     }
 
     render() {
+      console.log("testing", process.env.REACT_RECAPTCHA_SITE_KEY)
         return (
-            
             <div className="">
             <Helmet>
               <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous" />
@@ -167,9 +174,7 @@ class BRegister extends Component {
                   <textarea type="text" id="description" class="form-control shadow-sm" style={{height: "100px"}} />
                 </div>
               </div>
-
-              {/*<ReCAPTCHA sitekey="Your client site key" class="mb-4" /> {/* Not done */}
-
+              <ReCAPTCHA sitekey={config["REACT_RECAPTCHA_SITE_KEY"]} onChange={(val)=> {console.log(val)}}/>
               <div class="row mb-4">
                 <div>
                   <button type="button" id="upload" onClick={this.submit} class="btn btn-sm shadow-sm float-right" style={{backgroundColor: "#3F5BFF", color: "white"}}><b>Submit</b></button>
