@@ -3,6 +3,8 @@ import {GoogleMap, LoadScript, DrawingManager, Marker } from "@react-google-maps
 
 import "./GoogleMap.css"
 
+const key = process.env.REACT_APP_GOOGLE_KEY
+
 const center = {
     lat: 22.311680,
     lng: 114.168762,
@@ -16,7 +18,10 @@ const containerStyle = {
 const onMarkerComplete = marker => {
     const lat = marker.position.lat()
     const lng = marker.position.lng()
-    console.log({lat, lng})
+    console.log(lat)
+    fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${key}`)
+    .then(response => response.json())
+    .then(data => console.log(data));
 }
 
 class Map extends Component {
@@ -24,7 +29,7 @@ class Map extends Component {
         return (
             <div className="map-wrapper">
                 <LoadScript
-                    googleMapsApiKey={process.env.REACT_APP_GOOGLE_KEY}
+                    googleMapsApiKey={key}
                     libraries={['drawing']}
                 >
                     <GoogleMap
