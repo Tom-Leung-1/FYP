@@ -3,6 +3,7 @@ import { Helmet } from "react-helmet";
 import './BRegister.css';
 // import ReCAPTCHA from "react-google-recaptcha"; TODO
 import GM from "./components/GoogleMap/GoogleMap"
+import axios from "axios"
 
 const HK = [ 
             "Central and Western",
@@ -36,8 +37,37 @@ class BRegister extends Component {
     constructor(props) {
         super(props);
         this.state = { 
-                       Valid: false 
+                       Valid: false,
+                       selectedFile: null,
                      };
+    }
+
+    fileSelectedHandler = event => {
+      this.setState({selectedFile:event.target.files[0]})
+    }
+
+    reset = event => {
+      document.getElementById('Bform').reset()
+      this.setState({selectedFile:null})
+    }
+
+    fileUploadHandler = event => {
+      if (!this.state.selectedFile) {
+        console.log("no")
+        return
+      }
+      const formData = new FormData();
+      const imagefile = this.state.selectedFile;
+      formData.append("file", imagefile);
+      axios.post('http://localhost:3001/upload', formData, {
+        //headers: {'Content-Type': 'multipart/form-data'}
+      }).then(res=> {
+        console.log(res.statusText)
+      }) 
+    }
+
+    submit = event => {
+      this.fileUploadHandler(event)
     }
 
     render() {
@@ -82,12 +112,13 @@ class BRegister extends Component {
                   <input type="text" id="id" class="form-control form-control-sm shadow-sm" placeholder="E.g. A123456(7)" />
                 </div>
               </div>
-
               <div class="row mb-4">
                 <div>
                   <label for="upload" class="form-label required"><b><small>Upload Business Registration (BR)</small></b></label>
                   <br/>
-                  <button type="button" id="upload" class="btn shadow-sm" style={{backgroundColor: "#3F5BFF", color: "white"}}><b>Upload</b></button>
+                  <div class="input-group mb-3">
+                  <input type="file" onChange={this.fileSelectedHandler} class="custom-file-input" id="inputGroupFile01"/>
+                  </div>
                 </div>
               </div>
 
@@ -141,8 +172,8 @@ class BRegister extends Component {
 
               <div class="row mb-4">
                 <div>
-                  <button type="button" id="upload" class="btn btn-sm shadow-sm float-right" style={{backgroundColor: "#3F5BFF", color: "white"}}><b>Submit</b></button>
-                  <button type="button" id="upload" class="btn btn-sm boarder-2 shadow-sm mx-3 border border-1 float-right" onClick={()=>document.getElementById('Bform').reset()}><b>Reset</b></button>
+                  <button type="button" id="upload" onClick={this.submit} class="btn btn-sm shadow-sm float-right" style={{backgroundColor: "#3F5BFF", color: "white"}}><b>Submit</b></button>
+                  <button type="button" id="upload" class="btn btn-sm boarder-2 shadow-sm mx-3 border border-1 float-right" onClick={this.reset}><b>Reset</b></button>
                 </div>
               </div>
 
