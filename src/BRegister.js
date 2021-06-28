@@ -7,8 +7,8 @@ import axios from "axios"
 import config from "./config/config.json"
 
 /*@TODO
-set the recaptcha
-add a "please provide a valid image file in the BR tab"
+set the recaptcha (fetch)
+add a "please provide a valid image file in the BR tab" -> bug (the file chosen does not reflect the state change -> need a better input css)
 */
 
 const HK = [ 
@@ -50,10 +50,15 @@ class BRegister extends Component {
                        address: null,
                        marker: null,
                        map : null,
+                       token : "",
                      };
     }
     changeAddress = (event) => {
       this.setState({address : event.target.value})
+    }
+
+    handleRecaptcha = (token) => {
+      this.setState({token})
     }
 
     onMarkerComplete = marker => {
@@ -74,7 +79,8 @@ class BRegister extends Component {
       const file = event.target.files[0]
       const fileExtension = file.name.split('.').pop();
       if (fileExtension !== 'png' && fileExtension !== 'jpg'  && fileExtension !== 'jpeg') {
-        console.log("No other extension but image!") 
+        console.log("No other extension but image!")
+        this.setState({selectedFile: null})
         return
       }
       this.setState({selectedFile:event.target.files[0]})
@@ -102,8 +108,18 @@ class BRegister extends Component {
       }) 
     }
 
+    checkRecaptcha = () => {
+      //have to do this in backend, frontend dont allow cors
+      axios.post(`https://www.google.com/recaptcha/api/siteverify?secret=${config["REACT_RECAPTCHA_SECRET_KEY"]}&response=${this.state.token}`,
+      {method:"POST"})
+      .then(res => res.json())
+      .then(data => console.log(data))
+      .catch(error => console.log(error))
+    }
+
     submit = event => {
       this.fileUploadHandler(event)
+      this.checkRecaptcha()
     }
 
     render() {
@@ -203,7 +219,7 @@ class BRegister extends Component {
                   <textarea type="text" id="description" class="form-control shadow-sm" style={{height: "100px"}} />
                 </div>
               </div>
-              <ReCAPTCHA sitekey={config["REACT_RECAPTCHA_SITE_KEY"]} onChange={(val)=> {console.log(val)}}/>
+              <ReCAPTCHA sitekey={config["REACT_RECAPTCHA_SITE_KEY"]} onChange={this.handleRecaptcha}/>
               <div class="row mb-4">
                 <div>
                   <button type="button" id="upload" onClick={this.submit} class="btn btn-sm shadow-sm float-right" style={{backgroundColor: "#3F5BFF", color: "white"}}><b>Submit</b></button>
