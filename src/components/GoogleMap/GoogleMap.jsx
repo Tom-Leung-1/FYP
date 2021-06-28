@@ -37,7 +37,7 @@ class Map extends Component {
                         id="test"
                         mapContainerStyle={containerStyle}
                         center={center}
-                        zoom={10}
+                        zoom={14}
                     >
                         <DrawingManager
                             onMarkerComplete={setMarker}

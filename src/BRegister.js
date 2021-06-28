@@ -7,8 +7,8 @@ import axios from "axios"
 import config from "./config/config.json"
 
 /*@TODO
-filter invalid file format upload
 set the recaptcha
+add a "please provide a valid image file in the BR tab"
 */
 
 const HK = [ 
@@ -67,6 +67,16 @@ class BRegister extends Component {
     }
 
     fileSelectedHandler = event => {
+      if (event.target.files.length === 0) {
+        this.setState({selectedFile: null})
+        return
+      }
+      const file = event.target.files[0]
+      const fileExtension = file.name.split('.').pop();
+      if (fileExtension !== 'png' && fileExtension !== 'jpg'  && fileExtension !== 'jpeg') {
+        console.log("No other extension but image!") 
+        return
+      }
       this.setState({selectedFile:event.target.files[0]})
     }
 
@@ -87,6 +97,8 @@ class BRegister extends Component {
         //headers: {'Content-Type': 'multipart/form-data'}
       }).then(res=> {
         console.log(res.statusText)
+      }).catch(error=> {
+        console.log("caught it!",error)
       }) 
     }
 
