@@ -8,7 +8,6 @@ import config from "./config/config.json"
 
 /*@TODO
 filter invalid file format upload
-set address in the address bar, don't let people change the address after setting the marker
 set the recaptcha
 */
 
@@ -52,6 +51,9 @@ class BRegister extends Component {
                        marker: null,
                        map : null,
                      };
+    }
+    changeAddress = (event) => {
+      this.setState({address : event.target.value})
     }
 
     onMarkerComplete = marker => {
@@ -154,7 +156,7 @@ class BRegister extends Component {
               <div class="row mb-2">
                 <div class="col-lg-8">
                   <label for="address" class="form-label required"><b><small>Address</small></b></label>
-                  <input type="text" id="address" class="form-control form-control-sm shadow-sm" value={this.state.address}/>
+                  <input type="text" id="address" class="form-control form-control-sm shadow-sm" value={this.state.address} onChange={this.changeAddress}/>
                   <GM setMarker={this.onMarkerComplete}/>
                 </div>
               </div>
