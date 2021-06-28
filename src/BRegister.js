@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Helmet } from "react-helmet";
 import './BRegister.css';
-import ReCAPTCHA from "react-google-recaptcha";
+// import ReCAPTCHA from "react-google-recaptcha"; TODO
+import GM from "./components/GoogleMap/GoogleMap"
 
 const HK = [ 
             "Central and Western",
@@ -41,7 +42,7 @@ class BRegister extends Component {
 
     render() {
         return (
-            <>
+            
             <div className="">
             <Helmet>
               <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous" />
@@ -101,6 +102,7 @@ class BRegister extends Component {
                 <div class="col-lg-8">
                   <label for="address" class="form-label required"><b><small>Address</small></b></label>
                   <input type="text" id="address" class="form-control form-control-sm shadow-sm" />
+                  <GM/>
                 </div>
               </div>
 
@@ -135,7 +137,7 @@ class BRegister extends Component {
                 </div>
               </div>
 
-              <ReCAPTCHA sitekey="Your client site key" class="mb-4" /> {/* Not done */}
+              {/*<ReCAPTCHA sitekey="Your client site key" class="mb-4" /> {/* Not done */}
 
               <div class="row mb-4">
                 <div>
@@ -154,7 +156,7 @@ class BRegister extends Component {
             </div>
 
             
-            </>
+            
         );
     }
 }
