@@ -108,18 +108,28 @@ class BRegister extends Component {
       }) 
     }
 
-    checkRecaptcha = () => {
+    checkRecaptcha = async() => {
       //have to do this in backend, frontend dont allow cors
-      axios.post(`https://www.google.com/recaptcha/api/siteverify?secret=${config["REACT_RECAPTCHA_SECRET_KEY"]}&response=${this.state.token}`,
-      {method:"POST"})
-      .then(res => res.json())
-      .then(data => console.log(data))
-      .catch(error => console.log(error))
+      try {
+        const data = {secret: config["REACT_RECAPTCHA_SECRET_KEY"], response: this.state.token}
+        const res = await axios.post(`http://localhost:3001/checkRecaptcha`, data)
+        console.log(res.data)
+        return res.data
+      }
+      catch(error){
+        console.log(error)
+        return false
+      }
     }
 
-    submit = event => {
-      this.fileUploadHandler(event)
-      this.checkRecaptcha()
+    submit = async event => {
+      if(await this.checkRecaptcha()) {
+        console.log("success")
+        this.fileUploadHandler(event)
+      }
+      else {
+        console.log("Recaptcha fail")
+      }
     }
 
     render() {
