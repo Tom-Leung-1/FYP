@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import "./Detail.css"
+import FoodItemRow from './FoodItemRow';
+import Table from '../Table/Table';
+import GM from "../GoogleMap/GoogleMap"
 
 class Detail extends Component {
     constructor(props) {
@@ -10,10 +13,16 @@ class Detail extends Component {
     }
     
     render() {
+        const foodItems = [
+            {food: "apple", remarks: "cool", price: "$5"},
+            {food: "orange", remarks: "hot", price: "$5"},
+            {food: "pine apple", remarks: "cool", price: "$5"},
+        ]
         return (
-            <div>
-                Hi
-            </div>
+            <>
+                <Table headers={["food", "remarks","price"]} data={foodItems} needModify={false}/>
+                <GM/>
+            </>
         );
     }
 }

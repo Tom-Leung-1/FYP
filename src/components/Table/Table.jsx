@@ -6,7 +6,7 @@ class Table extends React.Component {
     constructor(props) {
         super(props) 
         this.state = {
-            orders : null,
+            data : null,
         }
     }
 
@@ -32,10 +32,10 @@ class Table extends React.Component {
     }
 
     render() {
-        const {orders} = this.state
-        const {headers} = this.props
-        let rows = orders?.map((data) => 
-            <TableRow oneSelect={this.oneSelect} data={data}/>)
+        const {data} = this.state
+        const {headers, needModify} = this.props
+        let rows = data?.map((data) => 
+            <TableRow oneSelect={this.oneSelect} data={data} needModify={needModify}/>)
         return (
             <div className="tbl-wrapper">
                 <div class="tbl-header">
@@ -55,8 +55,11 @@ class Table extends React.Component {
         )
     }
     componentDidMount() {
-        const orders = this.loadOrders()
-        this.setState({orders})
+        let {data} = this.props
+        if (!data) {
+            data = this.loadOrders()
+        }
+        this.setState({data})
     }
 }
 

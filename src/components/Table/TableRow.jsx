@@ -12,7 +12,7 @@ class  TableRow extends React.Component {
     }
 
     render() {
-        const {oneSelect, id, checked, data} = this.props
+        const {oneSelect, id, checked, data, needModify} = this.props
         console.log(Object.entries(data))
         return (
             <div className={`row-wrapper ${checked ? "row-wrapper-bgblue"  : "row-wrapper-bgwhite"}`}> 
@@ -20,9 +20,13 @@ class  TableRow extends React.Component {
                         <tbody>
                             <tr>
                                 {Object.entries(data).map(keyValue => <td className={keyValue[0]}>{keyValue[1]}</td>)}
-                                {<td className="view-details">
-                                    <BsPencilSquare onClick={() => console.log(data)}/>
-                                </td>}
+                                {needModify ? 
+                                    <td className="view-details">
+                                        <BsPencilSquare onClick={() => console.log(data)}/>
+                                    </td>
+                                    :
+                                    null
+                                }
                             </tr>
                         </tbody>
                     </table>

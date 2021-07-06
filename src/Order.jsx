@@ -16,7 +16,7 @@ class Order extends Component {
             <div className="order-detail-wrapper">
                 <div className="order-wrapper">
                     <div className="table-container">
-                        <Table headers={["Order ID", "Name", "Time", "Type", "Status",  "View Details"]}/>
+                        <Table headers={["Order ID", "Name", "Time", "Type", "Status",  "View Details"]} needModify={true}/>
                     </div>
                 </div>
                 <div className="detail-wrapper">
