@@ -1,0 +1,25 @@
+.order-detail-wrapper {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+}
+
+.order-wrapper {
+  display: column;
+  width: 50vw;
+  height: 80vh;
+}
+
+.detail-wrapper {
+  display: column;
+  width: 50vw;
+  height: 80vh;
+}
+
+.table-container {
+  margin: 1%;
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+}

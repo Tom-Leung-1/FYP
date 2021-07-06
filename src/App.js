@@ -6,7 +6,7 @@ import Home from "./Home";
 import Login from "./Login";
 import SignUp from "./SignUp";
 import BRegister from "./BRegister";
-
+import Order from "./Order";
 
 function App() {
   // exact component default Home
@@ -16,7 +16,8 @@ function App() {
         <Navbar/>
         <Switch>
         <div className="page">
-          <Route path="/" exact component={BRegister}/> 
+          <Route path="/" exact component={Order}/> 
+          <Route path="/register" exact component={BRegister}/> 
           <Route path="/home" component={Home}/>
           <Route path="/sign-in" component={Login}/>
           <Route path="/sign-up" component={SignUp}/>

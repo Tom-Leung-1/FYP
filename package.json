@@ -14,9 +14,11 @@
     "react-google-maps": "^9.4.5",
     "react-google-recaptcha": "^2.1.0",
     "react-helmet": "^6.1.0",
+    "react-icons": "^4.2.0",
     "react-responsive-carousel": "^3.2.18",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
+    "valid": "^0.1.1",
     "web-vitals": "^1.1.2"
   },
   "scripts": {
@@ -43,6 +45,5 @@
       "last 1 safari version"
     ]
   },
-
   "proxy": "https://www.google.com/"
 }

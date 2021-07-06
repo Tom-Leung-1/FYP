@@ -1,0 +1,50 @@
+.tbl-header {
+  border-bottom: solid #d5d7d6;
+}
+
+.tbl-content {
+  display: flex;
+  flex-direction: column;
+  height: 60vh;
+  overflow-x: auto;
+}
+
+.tbl-content::-webkit-scrollbar {
+  display: none;
+}
+
+.tbl-content {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.tbl-content > .row-wrapper {
+  margin-top: 7px;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  table-layout: fixed;
+}
+
+tr {
+  display: table-row;
+}
+
+thead {
+  display: table-header-group;
+}
+
+tbody {
+  display: table-row-group;
+}
+
+th {
+  text-align: center;
+  font-size: 12px;
+  color: #355b95;
+  font-weight: 700;
+  padding-bottom: 5px;
+}

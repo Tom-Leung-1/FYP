@@ -5,10 +5,11 @@ import ReCAPTCHA from "react-google-recaptcha";
 import GM from "./components/GoogleMap/GoogleMap"
 import axios from "axios"
 import config from "./config/config.json"
-import hkid from 'validid/esm/hkid.mjs';
-import normalize from 'validid/esm/utils/normalize.mjs';
+//import hkid from 'validid/esm/hkid.mjs';
+//import normalize from 'validid/esm/utils/normalize.mjs';
 
 /*@TODO
+'validid/esm/hkid.mjs'; dont work
 set the recaptcha (fetch)
 add a "please provide a valid image file in the BR tab" -> bug (the file chosen does not reflect the state change -> need a better input css)
 */
@@ -90,16 +91,16 @@ class BRegister extends Component {
         e.target.classList.remove("is-valid");
         e.target.classList.add('is-invalid');
       }
-      else if (id === "id" && !(hkid(normalize(value)) && value.match(validIdForm)))
-      {
-        this.setState({idValid: false});
-        if (!(hkid(normalize(value))))
-          this.setState({idError: 'Invalid HKID number.'});
-        else
-          this.setState({idError: 'Please input your ID Card number in correct format, Example: A123456(7).'});
-        e.target.classList.remove("is-valid");
-        e.target.classList.add('is-invalid');
-      }
+      // else if (id === "id" && !(hkid(normalize(value)) && value.match(validIdForm)))
+      // {
+      //   this.setState({idValid: false});
+      //   if (!(hkid(normalize(value))))
+      //     this.setState({idError: 'Invalid HKID number.'});
+      //   else
+      //     this.setState({idError: 'Please input your ID Card number in correct format, Example: A123456(7).'});
+      //   e.target.classList.remove("is-valid");
+      //   e.target.classList.add('is-invalid');
+      // }
       else
       {
         this.setState({[id + "Valid"]: true});
