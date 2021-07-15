@@ -4,6 +4,7 @@ import FoodItemRow from './FoodItemRow';
 import Table from '../Table/Table';
 import GM from "../GoogleMap/GoogleMap"
 import config from '../../config/config.json';
+import axios from "axios"
 
 class Detail extends Component {
     constructor(props) {
@@ -24,9 +25,9 @@ class Detail extends Component {
     //doesn't work in frontend, change it to backend code
     getExpectTime = async (origin, destination) => {
         const key = config["REACT_APP_GOOGLE_KEY"]
-        const response = await fetch(`https://maps.googleapis.com/maps/api/distancematrix/json?&origins=${origin.lat},${origin.lng}&destinations=${destination.lat},${destination.lng}&key=${key}`)
-        const data = await response.json()
-        console.log(data)
+        const res = await axios.get(`http://localhost:3001/expectedTime?origin=${JSON.stringify(origin)}&destination=${JSON.stringify(destination)}&key=${key}`)
+        const {distance, duration} = (res.data.rows[0].elements[0])
+        return {distance, duration}
     }
     
     render() {
@@ -48,7 +49,8 @@ class Detail extends Component {
     async componentDidMount() {
         const {ownerAddress} = this.state
         const position = await this.addressToLatLng("香港中文大學崇基學院")
-        const expectedTime = this.getExpectTime(ownerAddress, position)
+        const {distance, duration} = await this.getExpectTime(ownerAddress, position)
+        console.log("hello", {distance, duration})
         this.setState({position})
     }
 }
