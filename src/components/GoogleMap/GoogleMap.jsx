@@ -25,7 +25,8 @@ class Map extends Component {
         }
     }
     render() {
-        const {setMarker, setMap} = this.props
+        const {setMarker, setMap, position} = this.props
+        console.log("location", position)
         return (
             <div className="map-wrapper">
                 <LoadScript
@@ -36,11 +37,14 @@ class Map extends Component {
                         onLoad={setMap}
                         id="test"
                         mapContainerStyle={containerStyle}
-                        center={center}
+                        center= {position ? position : center}
                         zoom={14}
                     >
                         <DrawingManager
                             onMarkerComplete={setMarker}
+                        />
+                        <Marker
+                            position ={position}
                         />
                     </GoogleMap>
                 </LoadScript>
