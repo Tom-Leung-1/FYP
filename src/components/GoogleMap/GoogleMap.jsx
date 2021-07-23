@@ -1,6 +1,5 @@
 import React, {Component} from "react";
 import {useGoogleMap, GoogleMap, LoadScript, DrawingManager, Marker } from "@react-google-maps/api"
-import { faBus } from "@fortawesome/free-solid-svg-icons";
 import config from "../../config/config.json"
 import "./GoogleMap.css"
 import test from "../../images/public_black_24dp.svg"
@@ -22,24 +21,26 @@ class Map extends Component {
     constructor(props) {
         super(props) 
         this.state = {
-
+            restaurantInfo : []
         }
     }
     
     render() {
         const {setMarker, setMap, position, markersInfo} = this.props
+        const {restaurantInfo} = this.state
         console.log({markersInfo})
         console.log("location", position)
-        const markers = markersInfo.map(({lat, lng}) => {
+        const markers = markersInfo.map(({SS, lat, lng}) => 
             <Marker
-                position ={position}
+                key={SS} position ={{lat, lng}}
             />
-        })
+        )
+        console.log(markers)
         return (
             <div className="map-wrapper">
                 <LoadScript
                     googleMapsApiKey={key}
-                    libraries={['drawing']}
+                    libraries={['drawing', 'places']}
                 >
                     <GoogleMap
                         onLoad={setMap}
@@ -57,13 +58,22 @@ class Map extends Component {
                         {markers}
                         {/*this image path is not based on the current directory. It is based on public for some reasons!!!!*/}
                         {/* <Marker
-                            position ={{lat: 22.311680, lng: 114.168762}}
+                            position ={{lat: lat, lng: lng}}
                             icon="images/restaurant.svg"
                         />  */}
                     </GoogleMap>
                 </LoadScript>
             </div>
         )
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        console.log("test")
+        // const {restaurantInfo} = this.props
+        // if (restaurantInfo && prevState.restaurantInfo.length !== restaurantInfo.length) {
+        //     this.setState({restaurantInfo : restaurantInfo})
+        //     console.log("test")
+        // }
     }
 }
 

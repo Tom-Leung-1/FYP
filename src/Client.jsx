@@ -9,24 +9,27 @@ class Client extends Component {
             clientLat: null,
             clientLng: null,
             restaurantInfo: [],
+            lat: null,
+            lng: null,
+            key: 1
         };
     }
     
     render() {
-        const {clientLat, clientLng, restaurantInfo} = this.state
+        const {clientLat, clientLng, restaurantInfo, key} = this.state
         const position = {lat : clientLat, lng : clientLng} 
         console.log(position)
         return (
             <div>
                 <h1>Client</h1>
-                <Map position={position} markersInfo={restaurantInfo}/>
+                {restaurantInfo.length && <Map position={position} markersInfo={restaurantInfo} lat={null} lng ={null}/>}
             </div>
         );
     }
 
     loadRestaurants = async () => {
         const res = await axios.get(`http://localhost:3001/getRestaurantJsons`)
-        this.setState({restaurantInfo: res.data})
+        this.setState({restaurantInfo: res.data, lat: 22.311680, lng: 114.168762, key: 2})
 
     }
 
