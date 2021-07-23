@@ -1,25 +1,33 @@
 import React, { Component } from 'react';
 import "./Client.css"
 import Map from './components/GoogleMap/GoogleMap';
+import axios from 'axios';
 class Client extends Component {
     constructor(props) {
         super(props);
         this.state = {
             clientLat: null,
             clientLng: null,
+            restaurantInfo: [],
         };
     }
     
     render() {
-        const {clientLat, clientLng} = this.state
+        const {clientLat, clientLng, restaurantInfo} = this.state
         const position = {lat : clientLat, lng : clientLng} 
         console.log(position)
         return (
             <div>
                 <h1>Client</h1>
-                <Map position={position}/>
+                <Map position={position} markersInfo={restaurantInfo}/>
             </div>
         );
+    }
+
+    loadRestaurants = async () => {
+        const res = await axios.get(`http://localhost:3001/getRestaurantJsons`)
+        this.setState({restaurantInfo: res.data})
+
     }
 
     locationSuccess = (pos) => {
@@ -35,7 +43,7 @@ class Client extends Component {
     componentDidMount() {
        const location = navigator.geolocation
        location.getCurrentPosition(this.locationSuccess, this.locationError)
-       
+       this.loadRestaurants()
        console.log(location)
     }
 }

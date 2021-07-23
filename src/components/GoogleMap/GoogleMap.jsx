@@ -27,9 +27,14 @@ class Map extends Component {
     }
     
     render() {
-        console.log(faBus.icon[4])
-        const {setMarker, setMap, position} = this.props
+        const {setMarker, setMap, position, markersInfo} = this.props
+        console.log({markersInfo})
         console.log("location", position)
+        const markers = markersInfo.map(({lat, lng}) => {
+            <Marker
+                position ={position}
+            />
+        })
         return (
             <div className="map-wrapper">
                 <LoadScript
@@ -49,10 +54,12 @@ class Map extends Component {
                         <Marker
                             position ={position}
                         />
-                        <Marker
+                        {markers}
+                        {/*this image path is not based on the current directory. It is based on public for some reasons!!!!*/}
+                        {/* <Marker
                             position ={{lat: 22.311680, lng: 114.168762}}
                             icon="images/restaurant.svg"
-                        /> {/*this image path is not based on the current directory. It is based on public for some reasons!!!!*/}
+                        />  */}
                     </GoogleMap>
                 </LoadScript>
             </div>
