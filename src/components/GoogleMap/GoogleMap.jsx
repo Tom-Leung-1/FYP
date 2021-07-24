@@ -21,21 +21,21 @@ class Map extends Component {
     constructor(props) {
         super(props) 
         this.state = {
-            restaurantInfo : []
         }
     }
     
     render() {
-        const {setMarker, setMap, position, markersInfo} = this.props
-        const {restaurantInfo} = this.state
+        const {setMarker, setMap, position, markersInfo, setNameAdress} = this.props
         console.log({markersInfo})
         console.log("location", position)
-        const markers = markersInfo.map(({SS, lat, lng}) => 
+        const markers = markersInfo.map(({SS, ADR, lat, lng}, idx) => 
             <Marker
-                key={SS} position ={{lat, lng}}
+                key={idx} position ={{lat, lng}}
+                onClick={() => setNameAdress(SS, ADR)}
+                icon="images/restaurant.svg"
             />
         )
-        console.log(markers)
+        /*this image path is not based on the current directory. It is based on public for some reasons!!!!*/
         return (
             <div className="map-wrapper">
                 <LoadScript
@@ -56,24 +56,10 @@ class Map extends Component {
                             position ={position}
                         />
                         {markers}
-                        {/*this image path is not based on the current directory. It is based on public for some reasons!!!!*/}
-                        {/* <Marker
-                            position ={{lat: lat, lng: lng}}
-                            icon="images/restaurant.svg"
-                        />  */}
                     </GoogleMap>
                 </LoadScript>
             </div>
         )
-    }
-
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        console.log("test")
-        // const {restaurantInfo} = this.props
-        // if (restaurantInfo && prevState.restaurantInfo.length !== restaurantInfo.length) {
-        //     this.setState({restaurantInfo : restaurantInfo})
-        //     console.log("test")
-        // }
     }
 }
 

@@ -9,28 +9,35 @@ class Client extends Component {
             clientLat: null,
             clientLng: null,
             restaurantInfo: [],
-            lat: null,
-            lng: null,
-            key: 1
+            restaurantName: "",
+            restaurantAddress : "",
         };
+    }
+
+    setNameAdress = (restaurantName, restaurantAddress) => {
+        this.setState({restaurantName, restaurantAddress})
     }
     
     render() {
-        const {clientLat, clientLng, restaurantInfo, key} = this.state
+        const {clientLat, clientLng, restaurantInfo, restaurantName, restaurantAddress} = this.state
         const position = {lat : clientLat, lng : clientLng} 
         console.log(position)
         return (
             <div>
                 <h1>Client</h1>
-                {restaurantInfo.length && <Map position={position} markersInfo={restaurantInfo} lat={null} lng ={null}/>}
+                <div>
+                    <p>restaurant with government license</p>
+                    <p>Name: {restaurantName}</p>
+                    <p>Address: {restaurantAddress}</p>
+                </div>
+                <Map setNameAdress={this.setNameAdress} position={position} markersInfo={restaurantInfo} lat={null} lng ={null}/>
             </div>
         );
     }
 
     loadRestaurants = async () => {
         const res = await axios.get(`http://localhost:3001/getRestaurantJsons`)
-        this.setState({restaurantInfo: res.data, lat: 22.311680, lng: 114.168762, key: 2})
-
+        this.setState({restaurantInfo: res.data})
     }
 
     locationSuccess = (pos) => {
