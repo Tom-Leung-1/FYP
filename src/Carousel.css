@@ -1,8 +1,5 @@
-.carousel {
-  width: 500px;
-  height: 900px;
-}
-
-.slide {
-  width: auto;
+.carousel img {
+  width: 200px; /* You can set the dimensions to whatever you want */
+  height: 400px;
+  object-fit: cover;
 }
