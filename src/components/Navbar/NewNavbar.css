@@ -1,0 +1,35 @@
+.HomeNav {
+    background: linear-gradient(
+      90deg,
+      rgb(110, 94, 254) 0%,
+      rgba(73, 63, 252, 1) 100%
+    );
+    align-items: center;
+  }
+  
+ .HomeNav .navbar-brand {
+    font-size: 30px !important;
+    font-weight: bolder;
+}
+
+.HomeNav .nav-link {
+    font-size: 20px !important;
+    color: #FFF !important;;
+}
+
+.HomeNav .nav-link:hover {
+    background-color: #6d76f7;
+    border-radius: 6px;
+}
+
+/*
+                    {MenuItems.map((item, index)=> {
+                      return (
+                        <li key={index} className="nav-item mx-3 text-center"> 
+                          <Link to = {item.url} className={item.cName}>
+                              {item.title}
+                          </Link>
+                        </li>
+                      )
+                    })}
+                    */
