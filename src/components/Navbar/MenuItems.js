@@ -2,16 +2,16 @@ export const MenuItems = [ // export so other file can access || const map array
     {
         title: 'Home',
         url: "/home", // url
-        cName: 'nav-links' // class name so you don't have to manually type it 
+        cName: 'nav-link' // class name so you don't have to manually type it 
     },
     {
         title: 'Sign In',
         url: "/sign-in",
-        cName: 'nav-links'
+        cName: 'nav-link'
     },
     {
         title: 'Sign Up',
         url: "/sign-up",
-        cName: 'nav-links'
+        cName: 'nav-link'
     },
 ]
