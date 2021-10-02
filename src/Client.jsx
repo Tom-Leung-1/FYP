@@ -53,7 +53,7 @@ class Client extends Component {
     componentDidMount() {
        const location = navigator.geolocation
        location.getCurrentPosition(this.locationSuccess, this.locationError)
-       this.loadRestaurants()
+       // this.loadRestaurants() // geocoding is not precise enough
        console.log(location)
     }
 }

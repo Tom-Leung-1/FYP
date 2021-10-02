@@ -25,6 +25,7 @@ function App() {
         <Switch>
         <Route path="/test" component={mealMenu}/> 
         <Route path="/register" component={BRegister}/>
+        <Route path="/client" component={Client}/>
         <div className="page">
           <Navbar/>
           <Route path="/" exact component={Home}/>
