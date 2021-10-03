@@ -1,5 +1,5 @@
-import React, {Component} from "react";
-import {useGoogleMap, GoogleMap, LoadScript, DrawingManager, Marker } from "@react-google-maps/api"
+import React, { Component } from "react";
+import { useGoogleMap, GoogleMap, LoadScript, DrawingManager, Marker } from "@react-google-maps/api"
 import config from "../../config/config.json"
 import "./GoogleMap.css"
 import test from "../../images/public_black_24dp.svg"
@@ -19,18 +19,18 @@ const containerStyle = {
 
 class Map extends Component {
     constructor(props) {
-        super(props) 
+        super(props)
         this.state = {
         }
     }
-    
+
     render() {
-        const {setMarker, setMap, position, markersInfo, setNameAdress} = this.props
-        console.log({markersInfo})
+        const { setMarker, setMap, position, markersInfo, setNameAdress } = this.props
+        console.log({ markersInfo })
         console.log("location", position)
-        const markers = markersInfo.map(({SS, ADR, lat, lng}, idx) => 
+        const markers = markersInfo?.map(({ SS, ADR, lat, lng }, idx) =>
             <Marker
-                key={idx} position ={{lat, lng}}
+                key={idx} position={{ lat, lng }}
                 onClick={() => setNameAdress(SS, ADR)}
                 icon="images/restaurant.svg"
             />
@@ -46,14 +46,14 @@ class Map extends Component {
                         onLoad={setMap}
                         id="test"
                         mapContainerStyle={containerStyle}
-                        center= {position ? position : center}
+                        center={position ? position : center}
                         zoom={14}
                     >
                         <DrawingManager
                             onMarkerComplete={setMarker}
                         />
                         <Marker
-                            position ={position}
+                            position={position}
                         />
                         {markers}
                     </GoogleMap>
