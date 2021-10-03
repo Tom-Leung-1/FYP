@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Helmet } from "react-helmet";
 import './BRegister.css';
 import ReCAPTCHA from "react-google-recaptcha";
-import GM from "./components/GoogleMap/GoogleMap"
 import axios from "axios"
 import config from "./config/config.json"
 import TextInput from "./components/Inputs/TextInput"
@@ -29,12 +28,23 @@ class BRegister extends Component {
       phoneCheck: '',
       idCheck: '',
       restaurantCheck: '',
+      firstValue: '',
+      lastValue: '',
+      phoneValue: '',
+      idValue: '',
+      restaurantValue: '',
       selectedFile: null,
       address: null,
       marker: null,
       map: null,
       token: "",
     };
+  }
+
+  handleOnChange = (e) => {
+    const { id } = e.currentTarget
+    this.setState({ [id + "Value"]: e.currentTarget.value })
+    this.checkError(e);
   }
 
   checkError = (e) => {
@@ -56,10 +66,14 @@ class BRegister extends Component {
     this.setState({ [id + "Check"]: 'OK' });
   }
 
-  resetform() /*not done*/ {
+  resetForm = () => { //not done
     // window.location.reload(true);
-    document.getElementById('Bform').reset();
     this.setState({
+      firstValue: '',
+      lastValue: '',
+      phoneValue: '',
+      idValue: '',
+      restaurantValue: '',
       firstCheck: '',
       lastCheck: '',
       phoneCheck: '',
@@ -71,7 +85,7 @@ class BRegister extends Component {
 
   }
 
-  checkform = () => {
+  checkForm = () => {
     /* let address = document.getElementById("address"); */
     const { firstCheck, lastCheck, phoneCheck, idCheck, restaurantCheck } = this.state
     if (firstCheck + lastCheck + phoneCheck + idCheck + restaurantCheck !== "OKOKOKOKOK") {
@@ -157,6 +171,7 @@ class BRegister extends Component {
 
   render() {
     console.log("testing", process.env.REACT_RECAPTCHA_SITE_KEY)
+    const { firstValue, lastValue, phoneValue, idValue, restaurantValue } = this.state
     return (
       <div>
         <Helmet>
@@ -171,18 +186,18 @@ class BRegister extends Component {
               <div className="card-body bg-light">
                 <small className="text-secondary">* : Required</small>
                 <div className="row mb-4">
-                  <TextInput sm_md_lg="6_-1_4" id="first" required={true} placeholder="Tai Man" onChange={this.checkError} name="First Name" errorMsg={this.state.firstCheck} />
-                  <TextInput sm_md_lg="6_-1_4" id="last" required={true} placeholder="Chan" onChange={this.checkError} name="Last Name" errorMsg={this.state.lastCheck} />
+                  <TextInput value={firstValue} sm_md_lg="6_-1_4" id="first" required={true} placeholder="Tai Man" onChange={this.handleOnChange} name="First Name" errorMsg={this.state.firstCheck} />
+                  <TextInput value={lastValue} sm_md_lg="6_-1_4" id="last" required={true} placeholder="Chan" onChange={this.handleOnChange} name="Last Name" errorMsg={this.state.lastCheck} />
                 </div>
                 <div className="row mb-4">
-                  <TextInput sm_md_lg="5_-1_3" id="phone" required={true} placeholder="E.g. 23456781" onChange={this.checkError} name="Business Phone Number" errorMsg={this.state.phoneCheck} />
-                  <TextInput sm_md_lg="4_-1_2" id="id" required={true} placeholder="E.g. A123456(7)" onChange={this.checkError} name="HKID Card Number" errorMsg={this.state.idCheck} />
+                  <TextInput value={phoneValue} sm_md_lg="5_-1_3" id="phone" required={true} placeholder="E.g. 23456781" onChange={this.handleOnChange} name="Business Phone Number" errorMsg={this.state.phoneCheck} />
+                  <TextInput value={idValue} sm_md_lg="4_-1_2" id="id" required={true} placeholder="E.g. A123456(7)" onChange={this.handleOnChange} name="HKID Card Number" errorMsg={this.state.idCheck} />
                 </div>
                 <div className="row mb-4">
                   <FileInput accept=".jpg,.png,.jpeg" id="upload" required={true} onChange={this.fileSelectedHandler} name="Upload Business Registration (with jpg, png or jpeg format)" />
                 </div>
                 <div className="row mb-2">
-                  <TextInput sm_md_lg="-1_-1_8" id="restaurant" required={true} onChange={this.checkError} name="Restaurant Name" errorMsg={this.state.restaurantCheck} />
+                  <TextInput value={restaurantValue} sm_md_lg="-1_-1_8" id="restaurant" required={true} onChange={this.handleOnChange} name="Restaurant Name" errorMsg={this.state.restaurantCheck} />
                 </div>
                 <div className="row mb-2">
                   <AddressInput sm_md_lg="-1_-1_8" id="address" address={this.state.address} required={true} name="Address" onMarkerComplete={this.onMarkerComplete} />
@@ -193,8 +208,8 @@ class BRegister extends Component {
                 <ReCAPTCHA sitekey={config["REACT_RECAPTCHA_SITE_KEY"]} onChange={this.handleRecaptcha} />
                 <div className="row mb-4">
                   <div className="d-flex gap-5 justify-content-center">
-                    <button type="button" id="reset-btn" className="btn btn-sm boarder-2 shadow-sm mx-3 border border-1 float-right" onClick={this.reset}><b>Reset</b></button>
-                    <button type="button" id="upload" onClick={this.checkform} className="btn btn-sm shadow-sm float-right" style={{ backgroundColor: "#3F5BFF", color: "white" }}><b>Submit</b></button>
+                    <button type="button" id="reset-btn" className="btn btn-sm boarder-2 shadow-sm mx-3 border border-1 float-right" onClick={this.resetForm}><b>Reset</b></button>
+                    <button type="button" id="upload" onClick={this.checkForm} className="btn btn-sm shadow-sm float-right" style={{ backgroundColor: "#3F5BFF", color: "white" }}><b>Submit</b></button>
                   </div>
                 </div>
               </div>
