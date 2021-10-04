@@ -120,11 +120,6 @@ class BRegister extends Component {
     }
     const file = event.target.files[0]
     const fileExtension = file.name.split('.').pop();
-    if (fileExtension !== 'png' && fileExtension !== 'jpg' && fileExtension !== 'jpeg') {
-      console.log("No other extension but image!")
-      this.setState({ selectedFile: null })
-      return
-    }
     this.setState({ selectedFile: event.target.files[0] })
   }
 
