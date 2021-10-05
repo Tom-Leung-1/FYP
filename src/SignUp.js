@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Helmet } from "react-helmet";
 import { Link } from 'react-router-dom';
+import LargeTextInput from "./components/Inputs/LargeTextInput"
+var CryptoJS = require("crypto-js");
 
 class SignUp extends Component {
     
@@ -10,10 +12,13 @@ class SignUp extends Component {
                        emailValid: false,
                        passwordValid: false,
                        confirmPassValid: false,
-                       usernameError: 'Please set your username.',
-                       emailError: 'Please enter your email address.',
-                       passwordError: 'Please set your password.',
-                       confirmPassError: 'Please enter your password again for confirmation.',
+                       usernameValue: '',
+                       emailValue: '',
+                       passwordValue: '',
+                       usernameError: '',
+                       emailError: '',
+                       passwordError: '',
+                       confirmPassError: '',
                        showPass: false 
                      };
     }
@@ -29,22 +34,23 @@ class SignUp extends Component {
         {
           this.setState({usernameValid: false});
           this.setState({usernameError: 'Username cannot be empty.'});
-          e.target.classList.remove("is-valid");
-          e.target.classList.add('is-invalid');
+          //e.target.classList.remove("is-valid");
+          //e.target.classList.add('is-invalid');
         }
         else if (!(value.match(validName)))
         {
           this.setState({usernameValid: false});
           this.setState({usernameError: 'Username should be between 6 to 20 characters, which contain only characters, numeric digits and underscore.'});
-          e.target.classList.remove("is-valid");
-          e.target.classList.add('is-invalid');
+          //e.target.classList.remove("is-valid");
+          //e.target.classList.add('is-invalid');
         }
         else
         {
           this.setState({usernameValid: true});
-          this.setState({usernameError: ''});
-          e.target.classList.remove("is-invalid");
-          e.target.classList.add('is-valid');
+          this.setState({usernameError: 'OK'});
+          this.setState({usernameValue: value});
+          //e.target.classList.remove("is-invalid");
+          //e.target.classList.add('is-valid');
         }
     }
 
@@ -56,22 +62,23 @@ class SignUp extends Component {
         {
           this.setState({emailValid: false});
           this.setState({emailError: 'Email Address cannot be empty.'});
-          e.target.classList.remove("is-valid");
-          e.target.classList.add('is-invalid');
+          //e.target.classList.remove("is-valid");
+          //e.target.classList.add('is-invalid');
         }
         else if (!(value.match(validEmail)))
         {
           this.setState({emailValid: false});
           this.setState({emailError: 'Invalid email address.'});
-          e.target.classList.remove("is-valid");
-          e.target.classList.add('is-invalid');
+          //e.target.classList.remove("is-valid");
+          //e.target.classList.add('is-invalid');
         }
         else
         {
           this.setState({emailValid: true});
-          this.setState({emailError: ''});
-          e.target.classList.remove("is-invalid");
-          e.target.classList.add('is-valid');
+          this.setState({emailError: 'OK'});
+          this.setState({emailValue: value});
+          //e.target.classList.remove("is-invalid");
+          //e.target.classList.add('is-valid');
         }
     }
   
@@ -82,22 +89,23 @@ class SignUp extends Component {
         {
           this.setState({passwordValid: false});
           this.setState({passwordError: 'Password cannot be empty.'});
-          e.target.classList.remove("is-valid");
-          e.target.classList.add('is-invalid');
+          //e.target.classList.remove("is-valid");
+          //e.target.classList.add('is-invalid');
         }
         else if (!(value.match(validPass)))
         {
           this.setState({passwordValid: false});
           this.setState({passwordError: 'Password should be between 8 to 16 characters, which contain at least one uppercase letter.'});
-          e.target.classList.remove("is-valid");
-          e.target.classList.add('is-invalid');
+          //e.target.classList.remove("is-valid");
+          //e.target.classList.add('is-invalid');
         }
         else
         {
           this.setState({passwordValid: true});
-          this.setState({passwordError: ''});
-          e.target.classList.remove("is-invalid");
-          e.target.classList.add('is-valid');
+          this.setState({passwordError: 'OK'});
+          this.setState({password: CryptoJS.MD5(value).toString()});
+          //e.target.classList.remove("is-invalid");
+          //e.target.classList.add('is-valid');
         }
     }
 
@@ -107,22 +115,22 @@ class SignUp extends Component {
         {
           this.setState({confirmPassValid: false});
           this.setState({confirmPassError: 'Please enter your password again for confirmation.'});
-          e.target.classList.remove("is-valid");
-          e.target.classList.add('is-invalid');
+          //e.target.classList.remove("is-valid");
+          //e.target.classList.add('is-invalid');
         }
         else if (value != document.getElementById("password").value)
         {
           this.setState({confirmPassValid: false});
           this.setState({confirmPassError: 'The Confirm Password confirmation does not match.'});
-          e.target.classList.remove("is-valid");
-          e.target.classList.add('is-invalid');
+          //e.target.classList.remove("is-valid");
+          //e.target.classList.add('is-invalid');
         }
         else
         {
           this.setState({confirmPassValid: true});
-          this.setState({confirmPassError: ''});
-          e.target.classList.remove("is-invalid");
-          e.target.classList.add('is-valid');
+          this.setState({confirmPassError: 'OK'});
+          //e.target.classList.remove("is-invalid");
+          //e.target.classList.add('is-valid');
         }
     }
 
@@ -186,33 +194,25 @@ class SignUp extends Component {
             <Helmet>
               <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous" />
             </Helmet>
-            <div id="test" className="d-flex justify-content-center p-5">
+            <div id="signUpBox" className="d-flex justify-content-center p-5">
 
             <form className="shadow-lg" style={{ fontFamily: 'Ubuntu', width: '100%', maxWidth: '500px', padding: '40px', borderRadius: '20px', backgroundColor: 'rgba(255, 255, 255, 0.8)' }}>
               <h2 className="text-center mb-4 fw-normal"><strong>Create your account</strong></h2>
               
               <div className="form-floating mb-3">
-                <input type="text" className="form-control" id="username" placeholder="Username" onChange={(event) => this.checkUsername(event)}></input>
-                <label for="username" className="text-secondary">Username</label>
-                <div className="invalid-feedback" id="username-feedback">{this.state.usernameError}</div>
+                <LargeTextInput type="text" id="username" placeholder="Username" onChange={(event) => this.checkUsername(event)} name="Username" errorMsg={this.state.usernameError} />
               </div>
 
               <div className="form-floating mb-3">
-                <input type="email" className="form-control" id="email" placeholder="Email" onChange={(event) => this.checkEmail(event)}></input>
-                <label for="email" className="text-secondary">Email Address</label>
-                <div className="invalid-feedback" id="email-feedback">{this.state.emailError}</div>
+                <LargeTextInput type="email" id="email" placeholder="Email" onChange={(event) => this.checkEmail(event)} name="Email Address" errorMsg={this.state.emailError} />
               </div>
 
               <div className="form-floating mb-3">
-                <input type={this.state.showPass ? "text" : "password"} className="form-control" id="password" placeholder="Password" onChange={(event) => this.checkPassword(event)}></input>
-                <label for="password" className="text-secondary">Password</label>
-                <div className="invalid-feedback" id="password-feedback">{this.state.passwordError}</div>
+                <LargeTextInput type={this.state.showPass ? "text" : "password"} id="password" placeholder="Password" onChange={(event) => this.checkPassword(event)} name="Password" errorMsg={this.state.passwordError} />
               </div>
 
               <div className="form-floating mb-1">
-                <input type={this.state.showPass ? "text" : "password"} className="form-control" id="confirmpass" placeholder="Confirm password" onChange={(event) => this.confirmPassword(event)}></input>
-                <label for="password" className="text-secondary">Confirm password</label>
-                <div className="invalid-feedback" id="password-feedback">{this.state.confirmPassError}</div>
+                <LargeTextInput type={this.state.showPass ? "text" : "password"} id="confirmpass" placeholder="Confirm password" onChange={(event) => this.confirmPassword(event)} name="Confirm password" errorMsg={this.state.confirmPassError} />
               </div>
               
               <div className="form-check mb-4">

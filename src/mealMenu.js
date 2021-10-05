@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { DataGrid, GridToolbar } from '@material-ui/data-grid'; // 1. npm install @material-ui/core 2. npm install @material-ui/data-grid 3.npm install @material-ui/core
+import { DataGrid, GridToolbar } from '@mui/x-data-grid'; // 1. npm install @material-ui/core 2. npm install @material-ui/data-grid 3.npm install @material-ui/styles
 import { Helmet } from "react-helmet";
 
 const columns = [

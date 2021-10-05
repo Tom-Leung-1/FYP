@@ -11,7 +11,8 @@
 .login { 
   background: url(./BGImages/loginBg.jpg);
   width: 100%; 
-  height: 110vh; 
+  height: 10%; 
+  padding-bottom: 50%;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -20,7 +21,8 @@
 .signup { 
   background: url(./BGImages/signupBg.jpg);
   width: 100%; 
-  height: 100%; 
+  height: 10%; 
+  padding-bottom: 50%;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;

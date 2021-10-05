@@ -1,15 +1,20 @@
 import React, { Component } from 'react';
 import { Helmet } from "react-helmet";
 import { Link } from 'react-router-dom';
+import LargeTextInput from "./components/Inputs/LargeTextInput"
+var CryptoJS = require("crypto-js");
 
 class Login extends Component {
     
     constructor(props) {
         super(props);
-        this.state = { usernameValid: false,
+        this.state = { 
+                       username: '',
+                       password: '',
+                       usernameValid: false,
                        passwordValid: false,
-                       usernameError: 'Please enter your username.',
-                       passwordError: 'Please enter your password.',
+                       usernameError: '',
+                       passwordError: '',
                        showPass: false 
                      };
     }
@@ -20,37 +25,39 @@ class Login extends Component {
     
     checkUsername (e) {
         const value = e.target.value;
+        this.setState({username: value});
         if (value === "")
         {
           this.setState({usernameValid: false});
           this.setState({usernameError: 'Username cannot be empty.'});
-          e.target.classList.remove("is-valid");
-          e.target.classList.add('is-invalid');
+          //e.target.classList.remove("is-valid");
+          //e.target.classList.add('is-invalid');
         }
         else
         {
           this.setState({usernameValid: true});
-          this.setState({usernameError: ''});
-          e.target.classList.remove("is-invalid");
-          e.target.classList.add('is-valid');
+          this.setState({usernameError: 'OK'});
+          //e.target.classList.remove("is-invalid");
+          //e.target.classList.add('is-valid');
         }
     }
   
     checkPassword (e) {
         const value = e.target.value;
+        this.setState({password: CryptoJS.MD5(value).toString()});
         if (value === "")
         {
           this.setState({passwordValid: false});
           this.setState({passwordError: 'Password cannot be empty.'});
-          e.target.classList.remove("is-valid");
-          e.target.classList.add('is-invalid');
+          //e.target.classList.remove("is-valid");
+          //e.target.classList.add('is-invalid');
         }
         else
         {
           this.setState({passwordValid: true});
-          this.setState({passwordError: ''});
-          e.target.classList.remove("is-invalid");
-          e.target.classList.add('is-valid');
+          this.setState({passwordError: 'OK'});
+          //e.target.classList.remove("is-invalid");
+          //e.target.classList.add('is-valid');
         }
     }
 
@@ -94,15 +101,11 @@ class Login extends Component {
               <h2 className="text-center mb-4 fw-normal"><strong>Sign in</strong></h2>
               
               <div className="form-floating mb-3">
-                <input type="text" className="form-control" id="username" placeholder="Username" onChange={(event) => this.checkUsername(event)}></input>
-                <label for="username" className="text-secondary">Username</label>
-                <div className="invalid-feedback" id="username-feedback">{this.state.usernameError}</div>
+                <LargeTextInput value={this.state.username} type="text" id="Username" placeholder="Username" onChange={(event) => this.checkUsername(event)} name="Username" errorMsg={this.state.usernameError} />
               </div>
 
               <div className="form-floating mb-1">
-                <input type={this.state.showPass ? "text" : "password"} className="form-control" id="password" placeholder="Password" onChange={(event) => this.checkPassword(event)}></input>
-                <label for="password" className="text-secondary">Password</label>
-                <div className="invalid-feedback" id="password-feedback">{this.state.passwordError}</div>
+                <LargeTextInput type={this.state.showPass ? "text" : "password"} id="password" placeholder="Password" onChange={(event) => this.checkPassword(event)} name="Password" errorMsg={this.state.passwordError} />
               </div>
               
               <div className="form-check mb-4">
