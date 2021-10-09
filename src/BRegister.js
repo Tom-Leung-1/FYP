@@ -34,10 +34,11 @@ class BRegister extends Component {
       idValue: '',
       restaurantValue: '',
       selectedFile: null,
-      address: null,
+      addressValue: '',
       marker: null,
       map: null,
       token: "",
+      recaptchaKey: 1,
     };
   }
 
@@ -88,11 +89,41 @@ class BRegister extends Component {
   checkForm = () => {
     /* let address = document.getElementById("address"); */
     const { firstCheck, lastCheck, phoneCheck, idCheck, restaurantCheck } = this.state
-    if (firstCheck + lastCheck + phoneCheck + idCheck + restaurantCheck !== "OKOKOKOKOK") {
-      alert("Not Done!");
+    return (firstCheck + lastCheck + phoneCheck + idCheck + restaurantCheck === "OKOKOKOKOK")
+  }
+
+  submitForm = async (e) => {
+    const { addressValue } = this.state
+    e.preventDefault()
+    if (!await this.checkRecaptcha()) {
+      alert("Please click on Recaptcha.")
+      this.setState({ recaptchaKey: this.state.recaptchaKey === 1 ? 2 : 1 })
       return
     }
-    alert("Done")
+    if (!this.checkForm() || !addressValue.trim()) {
+      alert("Please provide the necessary credentials.")
+      this.setState({ recaptchaKey: this.state.recaptchaKey === 1 ? 2 : 1 })
+      return
+    }
+    if (!this.state.selectedFile) {
+      alert("Please upload registration file.")
+      this.setState({ recaptchaKey: this.state.recaptchaKey === 1 ? 2 : 1 })
+      return
+    }
+    this.uploadCredentials()
+    this.fileUploadHandler(e)
+    alert("done")
+  }
+
+  uploadCredentials = () => {
+    const { firstValue, lastValue, phoneValue, idValue, restaurantValue, addressValue } = this.state
+    axios.post(`http://localhost:3001/uploadRegistration`, { firstValue, lastValue, phoneValue, idValue, restaurantValue, addressValue })
+      .then(response => {
+        console.log(response)
+      })
+      .catch(error => {
+        console.log(error)
+      })
   }
 
   changeAddress = (event) => {
@@ -110,7 +141,7 @@ class BRegister extends Component {
     console.log(marker)
     fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${key}`)
       .then(response => response.json())
-      .then(data => this.setState({ marker: marker, address: data.results[0].formatted_address }));
+      .then(data => this.setState({ marker: marker, addressValue: data.results[0].formatted_address }));
   }
 
   fileSelectedHandler = event => {
@@ -124,10 +155,6 @@ class BRegister extends Component {
   }
 
   fileUploadHandler = event => {
-    if (!this.state.selectedFile) {
-      console.log("no")
-      return
-    }
     const formData = new FormData();
     const imagefile = this.state.selectedFile;
     formData.append("file", imagefile);
@@ -154,26 +181,16 @@ class BRegister extends Component {
     }
   }
 
-  submit = async event => {
-    if (await this.checkRecaptcha()) {
-      console.log("success")
-      this.fileUploadHandler(event)
-    }
-    else {
-      console.log("Recaptcha fail")
-    }
-  }
-
   render() {
     console.log("testing", process.env.REACT_RECAPTCHA_SITE_KEY)
-    const { firstValue, lastValue, phoneValue, idValue, restaurantValue } = this.state
+    const { firstValue, lastValue, phoneValue, idValue, restaurantValue, recaptchaKey } = this.state
     return (
       <div>
         <Helmet>
           <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous" />
         </Helmet>
         <div id="BformArea" className="justify-content-center p-5">
-          <form id="Bform">
+          <form id="Bform" onSubmit={this.submitForm}>
             <h2 className="fw-normal"><strong>Title</strong></h2>
             <hr className="mb-5" />
             <div className="card" style={{ backgroundColor: "#6E5EFE", borderRadius: "6px" }}>
@@ -195,16 +212,16 @@ class BRegister extends Component {
                   <TextInput value={restaurantValue} sm_md_lg="-1_-1_8" id="restaurant" required={true} onChange={this.handleOnChange} name="Restaurant Name" errorMsg={this.state.restaurantCheck} />
                 </div>
                 <div className="row mb-2">
-                  <AddressInput sm_md_lg="-1_-1_8" id="address" address={this.state.address} required={true} name="Address" onMarkerComplete={this.onMarkerComplete} />
+                  <AddressInput onChange={this.handleOnChange} sm_md_lg="-1_-1_8" id="address" address={this.state.addressValue} required={true} name="Address" onMarkerComplete={this.onMarkerComplete} />
                 </div>
                 <div className="row mb-4">
                   <TextAreaInput sm_md_lg="-1_-1_8" id="description" name="Description (Optional)" height="100px" />
                 </div>
-                <ReCAPTCHA sitekey={config["REACT_RECAPTCHA_SITE_KEY"]} onChange={this.handleRecaptcha} />
+                <ReCAPTCHA key={recaptchaKey} sitekey={config["REACT_RECAPTCHA_SITE_KEY"]} onChange={this.handleRecaptcha} />
                 <div className="row mb-4">
                   <div className="d-flex gap-5 justify-content-center">
                     <button type="button" id="reset-btn" className="btn btn-sm boarder-2 shadow-sm mx-3 border border-1 float-right" onClick={this.resetForm}><b>Reset</b></button>
-                    <button type="button" id="upload" onClick={this.checkForm} className="btn btn-sm shadow-sm float-right" style={{ backgroundColor: "#3F5BFF", color: "white" }}><b>Submit</b></button>
+                    <button type="submit" id="upload" onClick={this.submitForm} className="btn btn-sm shadow-sm float-right" style={{ backgroundColor: "#3F5BFF", color: "white" }}><b>Submit</b></button>
                   </div>
                 </div>
               </div>

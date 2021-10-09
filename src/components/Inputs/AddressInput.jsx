@@ -5,7 +5,7 @@ function AddressInput({ sm_md_lg, id, address, required, placeholder, onChange, 
     return (
         <div className={`${sm !== "-1" ? `col-sm-${sm}` : ""} ${md !== "-1" ? `col-md-${md}` : ""} ${lg !== "-1" ? `col-lg-${lg}` : ""}`}>
             <label htmlFor={id} className={`form-label ${required ? "required" : ""}`}><b><small>{name}</small></b></label>
-            <input type="text" id={id} className="form-control form-control-sm shadow-sm" value={address} onChange={onChange} />
+            <input onChange={onChange} type="text" id={id} className="form-control form-control-sm shadow-sm" value={address} onChange={onChange} />
             <GM setMarker={onMarkerComplete} />
             {/* {errorMsg && <div className="invalid-feedback">{errorMsg}</div>} */}
         </div>
