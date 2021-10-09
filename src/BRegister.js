@@ -110,14 +110,14 @@ class BRegister extends Component {
       this.setState({ recaptchaKey: this.state.recaptchaKey === 1 ? 2 : 1 })
       return
     }
-    this.uploadCredentials()
-    this.fileUploadHandler(e)
+    const filename = await this.fileUploadHandler(e)
+    this.uploadCredentials(filename)
     alert("done")
   }
 
-  uploadCredentials = () => {
+  uploadCredentials = (filename) => {
     const { firstValue, lastValue, phoneValue, idValue, restaurantValue, addressValue } = this.state
-    axios.post(`http://localhost:3001/uploadRegistration`, { firstValue, lastValue, phoneValue, idValue, restaurantValue, addressValue })
+    axios.post(`http://localhost:3001/uploadRegistration`, { firstValue, lastValue, phoneValue, idValue, restaurantValue, addressValue, filename })
       .then(response => {
         console.log(response)
       })
@@ -154,17 +154,19 @@ class BRegister extends Component {
     this.setState({ selectedFile: event.target.files[0] })
   }
 
-  fileUploadHandler = event => {
+  fileUploadHandler = async event => {
     const formData = new FormData();
     const imagefile = this.state.selectedFile;
     formData.append("file", imagefile);
-    axios.post('http://localhost:3001/upload', formData, {
+    let filename
+    await axios.post('http://localhost:3001/upload', formData, {
       //headers: {'Content-Type': 'multipart/form-data'}
     }).then(res => {
-      console.log(res.statusText)
+      filename = res.data.filename
     }).catch(error => {
       console.log("caught it!", error)
     })
+    return filename
   }
 
   checkRecaptcha = async () => {
