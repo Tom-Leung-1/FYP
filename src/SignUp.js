@@ -12,7 +12,7 @@ class SignUp extends Component {
         super(props);
         this.state = { usernameValue: '',
                        emailValue: '',
-                       passwordValue: '',
+                       password: '',
                        usernameError: '',
                        emailError: '',
                        passwordError: '',
@@ -27,7 +27,7 @@ class SignUp extends Component {
 
     handleOnChange = (e) => {
         const {id} = e.currentTarget
-        this.setState({ [id + "Value"]: e.currentTarget.value })
+        if (!(id === "password" || id === "confirmpass")) this.setState({ [id + "Value"]: e.currentTarget.value })
         this.checkError(e);
     }
 
@@ -116,15 +116,16 @@ class SignUp extends Component {
     submitForm = (e) => {
       e.preventDefault()
       if (this.checkForm()) {
-        return
-        const { usernameValue, emailValue, passwordValue} = this.state
-        axios.post(`http://localhost:3001/uploadRegistration`, {usernameValue, emailValue, passwordValue})
+        const { usernameValue, emailValue, password} = this.state
+        axios.post(`http://localhost:3001/signup`, {usernameValue, emailValue, password})
           .then(response => {
             console.log(response)
             alert("done!")
           })
           .catch(error => {
-            console.log(error)
+            if (error.response.status === 401) {
+              alert("Username or email is already used. Please use another.")
+            }
           })
       }
     }
