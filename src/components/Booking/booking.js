@@ -85,11 +85,12 @@ class Booking extends React.Component {
 
    
     render() {
+        const { restaurantName } = this.props
         return (
             <>
-            <div>
-              <h2>Booking</h2>
-              <FormControl variant="filled" sx={{ m: 1, minWidth: 160 }}>
+            <p className="fw-bold text-center pt-1">Make a reservation<hr className="mb-0"/></p>
+            <div className="mx-5">
+              <FormControl variant="standard" sx={{ mb: 1, minWidth: 160 }} className="col-2 mx-4">
                 <InputLabel id="nop">No. of people</InputLabel>
                 <Select
                   labelId="nop"
@@ -103,9 +104,9 @@ class Booking extends React.Component {
                 </Select>
               </FormControl>
 
-              <FormControl sx={{ m: 1, minWidth: 160 }}>
+              <FormControl sx={{mb: 1, minWidth: 160 }} className="col-2 mx-4">
                 <TextField 
-                  variant="filled" 
+                  variant="standard" 
                   label="Date" 
                   InputLabelProps={{ shrink: true }}
                   InputProps={{inputProps: { min: this.currentDate(), onKeyDown: (event) => {event.preventDefault();}} }}
@@ -114,7 +115,7 @@ class Booking extends React.Component {
                   defaultValue={this.currentDate()} />
               </FormControl>
 
-              <FormControl variant="filled" sx={{ m: 1, minWidth: 160 }}>
+              <FormControl variant="standard" sx={{minWidth: 160 }} className="col-2 mx-4">
                 <InputLabel id="time">Time</InputLabel>
                 <Select
                   labelId="time"
@@ -127,10 +128,10 @@ class Booking extends React.Component {
                   {this.timeOpitions()}
                 </Select>
               </FormControl>
-              <FormControl variant="filled" sx={{ m: 2, minWidth: 160 }}>
-                <button type="button" className="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#exampleModal">Book Now</button>
+              <FormControl variant="filled" sx={{mt: 1,  minWidth: 160 }} className="col-2 mx-4">
+                <button type="button" className="btn btn-primary mb-3" style={{backgroundColor:"#6E5EFE"}} data-bs-toggle="modal" data-bs-target="#BookingModal">Book Now</button>
               </FormControl>
-              <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal fade" id="BookingModal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-scrollable">
                   <div class="modal-content">
                     <div class="modal-header">
@@ -139,7 +140,7 @@ class Booking extends React.Component {
                     <div class="modal-body" style={{lineHeight: 2}}>
                       <p>You are making a reservation for <br/>
                          <b>{this.state.nop} people</b> at <br/>
-                         <b>Red Lobster Hong Kong</b> on <br/> 
+                         <b>{restaurantName}</b> on <br/> 
                          <b>{this.dateForm(this.state.date)}, {this.state.time}</b>
                          <br/><br/>
                          <b>

@@ -6,7 +6,10 @@ import './NewNavbar.css';
 class Navbar extends Component {
     
     navbarShadow() {
-        let nav = document.getElementById("HomeNav");
+        let nav;
+        if (document.getElementById("HomeNav") === null) return;
+        else
+          nav = document.getElementById("HomeNav");
         if (window.scrollY > 2)
           nav.classList.add("shadow");
         else
@@ -23,7 +26,7 @@ class Navbar extends Component {
             <header className="sticky-top">
             <nav className="navbar navbar-expand-lg navbar-dark HomeNav" id="HomeNav">
               <div className="container-fluid">
-                <div className="navbar-brand mx-4"><i className="fas fa-utensils"></i> Our title</div>
+                <div className="navbar-brand mx-1"><i className="fas fa-utensils"></i> Our title</div>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#HomeNavMenu" aria-controls="HomeNavMenu" aria-expanded="false" aria-label="Toggle navigation">
                   <span className="navbar-toggler-icon"></span>
                 </button>

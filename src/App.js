@@ -11,7 +11,7 @@ import mealMenu from "./mealMenu";
 import Order from "./Order";
 import Client from './Client';
 import Detail from "./components/Detail/Detail";
-
+import ClientOrder from './ClientOrder';
 
 function App() {
   return (
@@ -20,6 +20,7 @@ function App() {
         <Helmet>
           <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous" />
           <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.1/font/bootstrap-icons.css"></link>
         </Helmet>
 
         <Switch>
@@ -33,6 +34,7 @@ function App() {
             <Route path="/sign-in" component={Login} />
             <Route path="/sign-up" component={SignUp} />
             <Route path="/detail" component={Detail} />
+            <Route path="/new" component={ClientOrder} />
 
           </div>
         </Switch>

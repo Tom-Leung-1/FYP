@@ -1,0 +1,42 @@
+.COmenu .nav-pills .nav-link {
+    padding: 20px;
+    width: 150px;
+    height: 60px;
+    border: none;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background: #fff;
+    color: #333;
+    transition: all 0.3s;
+    font-size:18px;
+  }
+
+.COmenu .nav-pills .nav-link.active {
+  background: -webkit-linear-gradient(90deg,rgb(110, 94, 254) 0%,rgba(73, 63, 252, 1) 100%);
+  background: -o-linear-gradient(90deg,rgb(110, 94, 254) 0%,rgba(73, 63, 252, 1) 100%);
+  background: linear-gradient(90deg,rgb(110, 94, 254) 0%,rgba(73, 63, 252, 1) 100%);
+  color: #fff;
+  box-shadow: 0 2px 15px rgb(0 0 0 / 10%);
+  font-weight: bold;
+}
+
+.COmenu .nav-pills .nav-link{
+    border-radius: 0px;
+}
+
+.COmenu .card .btn{
+    background: #6E5EFE;
+}
+
+.COmenu .nav{
+    position: sticky;
+    top: 85px;
+}
+
+.radio-p [type="radio"]:checked+label:after {
+  border-color: #00C851 !important;
+  border-width: thick;
+  background-color: #FFF;
+}
+
