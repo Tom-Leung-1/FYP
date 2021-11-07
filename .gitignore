@@ -4,7 +4,7 @@
 /node_modules
 /.pnp
 .pnp.js
-
+.vscode
 #config
 .env
 ./src/config/config.json

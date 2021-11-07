@@ -34,7 +34,9 @@ function App() {
             <Route path="/sign-in" component={Login} />
             <Route path="/sign-up" component={SignUp} />
             <Route path="/detail" component={Detail} />
-            <Route path="/new" component={ClientOrder} />
+            <Route path="/new">
+              <ClientOrder restaurantName="Horlicks!!"/>
+            </Route>
 
           </div>
         </Switch>
