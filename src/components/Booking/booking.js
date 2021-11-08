@@ -157,7 +157,7 @@ class Booking extends React.Component {
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
-                      <button type="sumbit" class="btn btn-primary">Book Now</button>
+                      <button type="sumbit" class="btn btn-primary" style={{backgroundColor:"#6E5EFE"}}>Book Now</button>
                     </div>
                   </div>
                 </div>

@@ -60,6 +60,9 @@ class ClientOrder extends React.Component {
       if(radio[0].checked) {
         this.setState({TakeAway: false});
       } 
+      if(radio[1].checked) {
+        this.setState({TakeAway: true});
+      } 
     }
     let bookingNo = document.getElementById("bookingNo").value;
     if(bookingNo !== "") this.setState({BookingNo: bookingNo});
@@ -141,6 +144,17 @@ class ClientOrder extends React.Component {
                 </div>
                 <div class="tab-pane fade" id="Snack" role="tabpanel" aria-labelledby="v-pills-profile-tab">
 
+
+              </div>
+              
+              <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                
+              <div class="card mb-1">
+                  <div class="card-body">
+                    <h5 class="card-title">Set 2</h5>
+                    <p class="card-text">$120</p>
+                    <p class="card-text"><small class="text-muted">Select</small></p>
+                  </div>
                 </div>
 
                 <div class="tab-pane fade" id="Dessert" role="tabpanel" aria-labelledby="v-pills-messages-tab">
@@ -166,25 +180,27 @@ class ClientOrder extends React.Component {
                   <span className="fw-bold">Eat in or take away?</span>
                   <form>
                     <div class="form-check">
-                      <input class="form-check-input" type="radio" name="radioTakeAway" />
+                      <input class="form-check-input" type="radio" name="radioTakeAway" onChange={()=>this.TakeAway()}/>
                       <label class="form-check-label" for="flexRadioDefault1">Eat in</label>
                     </div>
                     <div class="form-check">
-                      <input class="form-check-input" type="radio" name="radioTakeAway" checked />
+                      <input class="form-check-input" type="radio" name="radioTakeAway" onChange={()=>this.TakeAway()} />
                       <label class="form-check-label" for="flexRadioDefault1">Take away</label>
                     </div>
                   </form>
                   <small className="text-muted">*Eat in only for clients who have already make a reservation<br/><br/></small>
+                  <div style={{display: this.state.TakeAway == true ? "none" : "block"}}>
                   <span className="fw-bold">Reservation number (For eat in only)</span>
                   <input type="text" class="form-control mb-3" id="bookingNo"></input>
+                  </div>
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-primary" style={{backgroundColor:"#6E5EFE"}} data-bs-toggle="modal" data-bs-target={`#createOrder${restaurantName}`} data-bs-dismiss="modal">See Order Detail</button>
+                  <button type="button" class="btn btn-primary" style={{backgroundColor:"#6E5EFE"}} data-bs-toggle="modal" data-bs-target={"#createOrder"} data-bs-dismiss="modal" onClick={()=>this.TakeAway()}>See Order Detail</button>
                 </div>
               </div>
             </div>
           </div>
-          <div class="modal fade" id={`createOrder${restaurantName}`} tabindex="-1" aria-labelledby={`createOrder${restaurantName}Label`} aria-hidden="true">
+          <div class="modal fade" id={`createOrder`} tabindex="-1" aria-labelledby={`createOrder${restaurantName}Label`} aria-hidden="true">
             <div class="modal-dialog modal-fullscreen">
               <div class="modal-content">
                 <div class="modal-header">
@@ -192,6 +208,9 @@ class ClientOrder extends React.Component {
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                  <h5>{this.state.TakeAway ? "-Take Away-": "-Eat in-"}</h5>
+                  <h5>{this.state.TakeAway ? "": "Reservation number： " + this.state.BookingNo}</h5>
+                  <br/>
                   {this.showOrder()}
                 </div>
                 <div class="modal-footer">
@@ -200,6 +219,7 @@ class ClientOrder extends React.Component {
                 </div>
               </div>
             </div>
+          </div>
           </div>
         </>
       )

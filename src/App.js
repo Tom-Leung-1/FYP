@@ -7,7 +7,10 @@ import Home from "./Home";
 import Login from "./Login";
 import SignUp from "./SignUp";
 import BRegister from "./BRegister";
+import Searching from "./Searching";
 import mealMenu from "./mealMenu";
+import BookingStatus from "./BookingStatus";
+import TableStatus from "./TableStatus";
 import Order from "./Order";
 import Client from './Client';
 import Detail from "./components/Detail/Detail";
@@ -25,15 +28,18 @@ function App() {
 
         <Switch>
           <Route path="/test" component={mealMenu} />
+          <Route path="/booking" component={BookingStatus} />
+          <Route path="/table" component={TableStatus} />
           <Route path="/register" component={BRegister} />
-          <Route path="/client" component={Client} />
           <div className="page">
             <Navbar />
             <Route path="/" exact component={Home} />
             <Route path="/home" component={Home} />
+            <Route path="/search" component={Searching} />
             <Route path="/sign-in" component={Login} />
             <Route path="/sign-up" component={SignUp} />
             <Route path="/detail" component={Detail} />
+            <Route path="/client" component={Client} />
             <Route path="/new">
               <ClientOrder restaurantName="Horlicks!!"/>
             </Route>
