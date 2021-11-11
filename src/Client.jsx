@@ -34,9 +34,6 @@ class Client extends Component {
                                 <p className="fs-3 fw-bold">{restaurantName}</p>
                                 <p><i className="bi bi-star-fill" style={{color: "orange"}}></i> Restaurant with government license</p>
                                 
-                                <div className="d-grid gap-2 my-3">
-                                  <Link to="/new" type="button" className="btn btn-primary rounded-pill border-0" style={{backgroundColor:"#6E5EFE"}}><b>Look at the Menu / Make order</b></Link>
-                                </div>
                                 <div className="card px-4 py-1 mb-5 shadow-sm">
                                     <Booking restaurantName={restaurantName}/>
                                 </div>
@@ -60,6 +57,13 @@ class Client extends Component {
                                 <div className="pb-3">
                                 <span className="fw-bold"><i className="bi bi-pin-map-fill"></i> Map</span>
                                 <Map setNameAdress={this.setNameAdress}y position={position} markersInfo={restaurantInfo} lat={null} lng ={null}/>
+                                </div>
+
+                                <div className="pb-3">
+                                <span className="fw-bold"> Menu</span>
+                                <div className="d-grid gap-2">
+                                  <Link to="/new" type="button" className="btn btn-primary rounded-pill border-0" style={{backgroundColor:"#6E5EFE"}}><b>Look at the Menu / Make order</b></Link>
+                                </div>
                                 </div>
 
                                 <p className="pb-5">
@@ -102,6 +106,7 @@ class Client extends Component {
        location.getCurrentPosition(this.locationSuccess, this.locationError)
        // this.loadRestaurants() // geocoding is not precise enough
        console.log(location)
+       window.scrollTo(0, 0)
     }
 }
 

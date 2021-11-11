@@ -29,6 +29,10 @@
     background: #6E5EFE;
 }
 
+.COmenu .modal .btn{
+  background: #6E5EFE;
+}
+
 .COmenu .nav{
     position: sticky;
     top: 85px;
