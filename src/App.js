@@ -35,7 +35,7 @@ function App() {
             <Route path="/sign-up" component={SignUp} />
             <Route path="/detail" component={Detail} />
             <Route path="/new">
-              <ClientOrder restaurantName="Horlicks!!"/>
+              <ClientOrder restaurantId="0" restaurantName="Horlicks!"/>
             </Route>
 
           </div>

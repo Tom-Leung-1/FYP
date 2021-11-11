@@ -1,7 +1,7 @@
 import React from 'react';
 import NumberInput from "../Inputs/NumberInput"
 
-function MealOverlay({name, price, avalibleTime, maxOrder, imgSrc, addOnClick}) {
+function MealOverlay({withSetData, name, price, type, avalibleTime, maxOrder, imgSrc, addOnClick}) {
     return (
         <div class="modal fade" id={`mealDetail${name}`} tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
@@ -14,20 +14,19 @@ function MealOverlay({name, price, avalibleTime, maxOrder, imgSrc, addOnClick}) 
                     <p class="card-text"><small class="text-muted">Avalible Time: {avalibleTime}</small></p>
                     <NumberInput max={maxOrder} id={`noOf${name}`}/>
                     <p class="card-text"><small class="text-muted">At most {maxOrder} for an order</small></p>
-                    <h5 class="mb-2 mt-4">Drink</h5>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name={`radio${name}`} value="0" id="Horlicks(Hot)" />
-                        <label class="form-check-label" for="flexRadioDefault1">
-                        Horlicks(Hot)
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name={`radio${name}`} value="2" id="凍好利時 +$2" />
-                        <label class="form-check-label" for="flexRadioDefault1">
-                        凍好利時 +$2
-                        </label>
-                    </div>
-
+                    {type === "Set" ?
+                    <>
+                    <h5 class="mb-2 mt-4">Drinks</h5> 
+                    {withSetData?.filter(({type}) => type === "Drink").map((drink) => 
+                    
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name={`radio${name}`} value={drink.price} id={drink.name} />
+                            <label class="form-check-label" for="flexRadioDefault1">
+                            {drink.price ? drink.name + " +$" + drink.price : drink.name}
+                            </label>
+                        </div>)}
+                    </>
+                    : null}
                     <h5 class="mb-2 mt-4">Special Order</h5>
                     <textarea id={`specialOrder${name}`} class="form-control" rows="4" cols="50"/>
                     </div>

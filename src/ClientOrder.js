@@ -6,6 +6,7 @@ import NumberInput from "./components/Inputs/NumberInput"
 import Meal from "./components/MealOrder/Meal"
 import MealCard from "./components/MealOrder/MealCard"
 import MealOverlay from "./components/MealOrder/MealOverlay"
+import axios from "axios"
 
 let Order = [{Name: "琉璃冬", Price: 1000000000000}];
 
@@ -14,6 +15,7 @@ class ClientOrder extends React.Component {
     super(props);
     this.state = {
       data : null,
+      withSetData : null,
       TakeAway: true,
       BookingNo: "",
       Order: [],
@@ -21,20 +23,33 @@ class ClientOrder extends React.Component {
     };
   }
 
-  loadData = (id) => {
-    return [
-      {"name": "特別套餐", "type": "Set", "price": 20, "avalibleTime": "Full Day","maxOrder": 5},
-      {"name": "特別套餐", "type": "Set", "price": 20, "avalibleTime": "Full Day","maxOrder": 5},
-      {"name": "特別套餐", "type": "Set", "price": 20, "avalibleTime": "Full Day","maxOrder": 5},
-      {"name": "特別套餐", "type": "Set", "price": 20, "avalibleTime": "Full Day","maxOrder": 5},
-      {"name": "特別套餐", "type": "Set", "price": 20, "avalibleTime": "Full Day","maxOrder": 5},
-
-    ]
+  loadData = async (id) => {
+    let data
+    await axios.get(`http://localhost:3001/getdata?id=${id}`)
+      .then(response => {
+        data = response.data
+      })
+      .catch(error => {
+        console.log(error)
+    })
+    console.log(data)
+    return [data, data.filter(({withSet}) => withSet)]
   }
 
-  componentDidMount() {
+  dataFilter = (data, t) => {
+    const {withSetData} = this.state
+    if (!data) return data
+    return data.filter(({type, withSet}) => type === t && !withSet).map(({name, type, price, avalibleTime, maxOrder, photo}) =>  // {`images/meals/${photo}`}
+    <>
+      <MealCard name={name} price={price} avalibleTime={avalibleTime} maxOrder={maxOrder} imgSrc={`images/meals/${photo}`} addOnClick={()=>this.AddMeal(name, price)}/>
+      <MealOverlay withSetData={withSetData} name={name} price={price} type={type}avalibleTime={avalibleTime} maxOrder={maxOrder} imgSrc={`/images/meals/${photo}`} addOnClick={()=>this.AddMeal(name, price)}/>
+    </>)
+  }
+
+  componentDidMount = async () => {
     const {restaurantId} = this.props
-    this.setState({data : this.loadData(restaurantId)})
+    const [data, withSetData] = await this.loadData(restaurantId)
+    this.setState({data, withSetData})
   }
 
   drinkOpitions = () => {
@@ -118,8 +133,9 @@ class ClientOrder extends React.Component {
   }
 
     render() {
-      const {restaurantName} = this.props
+      const {restaurantName, restaurantId} = this.props
       const {data} = this.state
+      console.log("hello", {data})
       return (
         <>
           <h4 className="m-3">Restaurnt: <b>{restaurantName}</b></h4>
@@ -133,22 +149,18 @@ class ClientOrder extends React.Component {
               </div>
               <div class="tab-content col" id="v-pills-tabContent">
                 <div class="tab-pane fade show active" id="Set" role="tabpanel" aria-labelledby="v-pills-home-tab">
-                  {data?.map(({name, type, price, avalibleTime, maxOrder}) => 
-                  <>
-                    <MealCard name={name} price={price} avalibleTime={avalibleTime} maxOrder={maxOrder} imgSrc="images/2.jpg" addOnClick={()=>this.AddMeal(name, price)}/>
-                    <MealOverlay name={name} price={price} avalibleTime={avalibleTime} maxOrder={maxOrder} imgSrc="images/2.jpg" addOnClick={()=>this.AddMeal(name, price)}/>
-                  </>)}
+                  {this.dataFilter(data, 'Set')}
                 </div>
                 <div class="tab-pane fade" id="Snack" role="tabpanel" aria-labelledby="v-pills-profile-tab">
-
+                  {this.dataFilter(data, 'Snack')}
                 </div>
 
                 <div class="tab-pane fade" id="Dessert" role="tabpanel" aria-labelledby="v-pills-messages-tab">
-                  
+                  {this.dataFilter(data, 'Dessert')}
                 </div>
 
                 <div class="tab-pane fade" id="Drink" role="tabpanel" aria-labelledby="v-pills-settings-tab">
-                  
+                  {this.dataFilter(data, 'Drink')}
                 </div>
               </div>
             </div>
@@ -179,16 +191,16 @@ class ClientOrder extends React.Component {
                   <input type="text" class="form-control mb-3" id="bookingNo"></input>
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-primary" style={{backgroundColor:"#6E5EFE"}} data-bs-toggle="modal" data-bs-target={`#createOrder${restaurantName}`} data-bs-dismiss="modal">See Order Detail</button>
+                  <button type="button" class="btn btn-primary" style={{backgroundColor:"#6E5EFE"}} data-bs-toggle="modal" data-bs-target={`#createOrder${restaurantId}`} data-bs-dismiss="modal">See Order Detail</button>
                 </div>
               </div>
             </div>
           </div>
-          <div class="modal fade" id={`createOrder${restaurantName}`} tabindex="-1" aria-labelledby={`createOrder${restaurantName}Label`} aria-hidden="true">
+          <div class="modal fade" id={`createOrder${restaurantId}`} tabindex="-1" aria-labelledby={`createOrder${restaurantId}Label`} aria-hidden="true">
             <div class="modal-dialog modal-fullscreen">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h3 class="modal-title" id={`createOrder${restaurantName}Label`}>Create Order</h3>
+                  <h3 class="modal-title" id={`createOrder${restaurantId}Label`}>Create Order</h3>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
