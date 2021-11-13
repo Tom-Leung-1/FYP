@@ -50,7 +50,7 @@ class Home extends React.Component {
                     data.map((restaurant, index) => (
                         <Link to = "/client" style={{ textDecoration: 'none', color: 'black'}}>
                         <div onMouseOver={()=>this.handleMouse(index)} onMouseOut={()=>this.handleMouse(index)} key={index+1} className="card d-inline-block m-2 shadow" style={{ width:this.state.selected===index ? 270:250 }}>
-                            <img src={"/images/"+restaurant.pic} alt=" {restaurant.name}" style={{width: "100%", height: this.state.selected===index ? 230:210, objectFit:"cover"}} />
+                            <img src={"/images/"+restaurant.pic} alt=" {restaurant.name}" style={{width: "100%", height: 210, objectFit:"cover"}} />
                             <div className="card-body">
                             <h5 className="card-title fw-bolder">{restaurant.name}</h5>
                             </div>

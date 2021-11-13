@@ -15,6 +15,8 @@ import Order from "./Order";
 import Client from './Client';
 import Detail from "./components/Detail/Detail";
 import ClientOrder from './ClientOrder';
+import PaymentChoice from './PaymentChoice';
+import DoneOrder from './DoneOrder';
 
 function App() {
   return (
@@ -31,6 +33,8 @@ function App() {
           <Route path="/booking" component={BookingStatus} />
           <Route path="/table" component={TableStatus} />
           <Route path="/register" component={BRegister} />
+          <Route path="/pay" component={PaymentChoice} />
+          <Route path="/doneOrder" component={DoneOrder} />
           <div className="page">
             <Navbar />
             <Route path="/" exact component={Home} />
