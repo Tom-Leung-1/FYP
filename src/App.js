@@ -8,7 +8,7 @@ import Login from "./Login";
 import SignUp from "./SignUp";
 import BRegister from "./BRegister";
 import Searching from "./Searching";
-import mealMenu from "./mealMenu";
+import MealMenu from "./MealMenu";
 import BookingStatus from "./BookingStatus";
 import TableStatus from "./TableStatus";
 import Order from "./Order";
@@ -27,7 +27,9 @@ function App() {
         </Helmet>
 
         <Switch>
-          <Route path="/test" component={mealMenu} />
+          <Route path="/menu">
+             <MealMenu restaurantId="0"/>
+          </Route>
           <Route path="/booking" component={BookingStatus} />
           <Route path="/table" component={TableStatus} />
           <Route path="/register" component={BRegister} />

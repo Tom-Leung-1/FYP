@@ -8,8 +8,6 @@ import MealCard from "./components/MealOrder/MealCard"
 import MealOverlay from "./components/MealOrder/MealOverlay"
 import axios from "axios"
 
-let Order = [{Name: "琉璃冬", Price: 1000000000000}];
-
 class ClientOrder extends React.Component {
   constructor(props) {
     super(props);

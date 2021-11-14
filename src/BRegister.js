@@ -159,7 +159,7 @@ class BRegister extends Component {
     const imagefile = this.state.selectedFile;
     formData.append("file", imagefile);
     let filename
-    await axios.post('http://localhost:3001/upload', formData, {
+    await axios.post('http://localhost:3001/uploadReg', formData, {
       //headers: {'Content-Type': 'multipart/form-data'}
     }).then(res => {
       filename = res.data.filename
