@@ -75,10 +75,10 @@ class CreateMeal extends Component {
     return filename
   }
 
-  insertNewMeal = async () => {
-    const {name, type, price, avalibleTime, remarks, withSet, newPhotoUrl} = this.state
+  insertNewMeal = async (fileName) => {
+    const {name, type, price, avalibleTime, remarks, withSet} = this.state
     const {restaurantId} = this.props
-    await axios.post(`http://localhost:3001/insertMeal`, {restaurantId, name, type, price, avalibleTime, remarks, withSet, newPhotoUrl})
+    await axios.post(`http://localhost:3001/insertMeal`, {restaurantId, name, type, price, avalibleTime, remarks, withSet, fileName})
       .then(response => {
         console.log(response)
       })
@@ -88,9 +88,16 @@ class CreateMeal extends Component {
     console.log("new")
   }
 
-  modify = () => {
-    const {id, name, type, price, avalibleTime, remarks, withSet, newPhotoUrl} = this.state
+  modify = async (fileName) => {
+    const {id, name, type, price, avalibleTime, remarks, withSet} = this.state
     const {restaurantId} = this.props
+    await axios.post(`http://localhost:3001/updateMeal`, {id, restaurantId, name, type, price, avalibleTime, remarks, withSet, fileName})
+      .then(response => {
+        console.log(response)
+      })
+      .catch(error => {
+        console.log(error)
+    })
     console.log("modify")
   }
 
@@ -98,15 +105,16 @@ class CreateMeal extends Component {
     e.preventDefault();
     const {id} = this.state
     const fileName = await this.fileUploadHandler()
-    console.log(fileName)
-    return
     if(!id) {
-      this.createNew();
+      await this.insertNewMeal(fileName);
+      document.querySelector(`#close-modal-btn${id ? id : ""}`).click();
     }
     else {
-      this.modify();
+      await this.modify(fileName);
+      document.querySelector(`#hidden-btn${id ? id : ""}`).click();
     }
-    document.querySelector(`#close-modal-btn${id ? id : ""}`).click();
+    this.props.reFetchData()
+    
   }
   
   render() {
@@ -118,6 +126,7 @@ class CreateMeal extends Component {
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="exampleModalLabel"><strong>{`${id ? "Modify" : "Create"} Meal`}</strong></h5>
+              <button style={{display: "none"}} id={`hidden-btn${id ? id : ""}`} type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               <button id={`close-modal-btn${id ? id : ""}`} type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={this.resetField}></button>
             </div>
             <form onSubmit={this.handleSubmit}>

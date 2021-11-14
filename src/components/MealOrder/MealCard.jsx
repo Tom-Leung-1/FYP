@@ -1,6 +1,6 @@
 import React from 'react';
 
-function MealCard({name, price, avalibleTime, maxOrder, imgSrc, addOnClick}) {
+function MealCard({id, name, price, avalibleTime, maxOrder, imgSrc, addOnClick}) {
     return (
         <div class="card mb-1 mx-3" id={`mealCard${name}`}>                  
             <div class="card-body mt-1">
@@ -9,7 +9,7 @@ function MealCard({name, price, avalibleTime, maxOrder, imgSrc, addOnClick}) {
                 <h5 class="card-text text-danger">${price}</h5>
                 <p class="card-text"><small class="text-muted">Avalible Time: {avalibleTime}</small>
                 <br/>
-                <button type="button" class="btn btn-primary btn-sm" style={{float:"right"}} data-bs-toggle="modal" data-bs-target={`#mealDetail${name}`}>Select</button></p>
+                <button type="button" class="btn btn-primary btn-sm" style={{float:"right"}} data-bs-toggle="modal" data-bs-target={`#mealDetail${id}`}>Select</button></p>
             </div>
         </div>
     );

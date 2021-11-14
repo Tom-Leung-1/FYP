@@ -60,12 +60,38 @@ class MealMenu extends React.Component {
             return (
             <strong>
               <button type="button" title="edit" data-bs-toggle="modal" data-bs-target={`#meal${id}`} className="btn p-1 mx-2"><i class="fas fa-edit"></i></button>
-              <button type="button" title="delete" className="btn p-1 mx-2"><i class="fas fa-trash"></i></button>
+              <button onClick={() => this.deleteRow(id)} type="button" title="delete" className="btn p-1 mx-2"><i class="fas fa-trash"></i></button>
             </strong>
           )}
         },
       ],
     };
+  }
+
+  deleteRow = async (id) => {
+    if(window.confirm('Please click OK to delete the meal.')) {
+      await this.deleteMeal(id)
+      this.reFetchData()
+      return 
+    }
+    alert("no")
+  }
+
+  deleteMeal = async (id) => {
+    await axios.get(`http://localhost:3001/deleteMeal?id=${id}`)
+    .then(response => {
+      console.log(response)
+    })
+    .catch(error => {
+      console.log(error)
+    })
+  }
+
+  reFetchData = async () => {
+    const {restaurantId} = this.props
+    const data = await this.loadData(restaurantId)
+    console.log()
+    this.setState({data})
   }
 
   handlePageSizeChange = (pageSize) => {
@@ -79,6 +105,7 @@ class MealMenu extends React.Component {
   render() {
     const {columns, data, pageSize} = this.state
     const {restaurantId} = this.props
+    console.log("hello", {data})
     return (
       <>
       <Helmet>
@@ -93,9 +120,9 @@ class MealMenu extends React.Component {
           <div class="d-grid col-10 mx-auto">
             <button type="button" className="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#newMeal">Create Meal</button>
           </div>
-          <CreateMeal/>
+          <CreateMeal reFetchData={this.reFetchData} restaurantId={restaurantId}/>
           {data?.map(({restaurantId, id, name, type, price, avalibleTime, remarks, withSet, photo}) => 
-            <CreateMeal restaurantId={restaurantId} id={id} photo={photo} name={name} type={type} price={price} avalibleTime={avalibleTime} remarks={remarks} onChange={this.handleValueOnChange} withSet={withSet}/>
+            <CreateMeal reFetchData={this.reFetchData} restaurantId={restaurantId} id={id} photo={photo} name={name} type={type} price={price} avalibleTime={avalibleTime} remarks={remarks} onChange={this.handleValueOnChange} withSet={withSet}/>
           )}
           <DataGrid
             rows={data}

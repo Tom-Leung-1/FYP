@@ -1,9 +1,9 @@
 import React from 'react';
 import NumberInput from "../Inputs/NumberInput"
 
-function MealOverlay({withSetData, name, price, type, avalibleTime, maxOrder, imgSrc, addOnClick}) {
+function MealOverlay({id, withSetData, name, price, type, avalibleTime, maxOrder, imgSrc, addOnClick}) {
     return (
-        <div class="modal fade" id={`mealDetail${name}`} tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+        <div class="modal fade" id={`mealDetail${id}`} tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-body">

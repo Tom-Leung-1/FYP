@@ -35,16 +35,16 @@ class ClientOrder extends React.Component {
         console.log(error)
     })
     console.log(data)
-    return [data, data.filter(({withSet}) => withSet)]
+    return [data, data?.filter(({withSet}) => withSet)]
   }
 
   dataFilter = (data, t) => {
     const {withSetData} = this.state
     if (!data) return data
-    return data.filter(({type, withSet}) => type === t && !withSet).map(({name, type, price, avalibleTime, maxOrder, photo}) =>  // {`images/meals/${photo}`}
+    return data.filter(({type, withSet}) => type === t && !withSet).map(({id, name, type, price, avalibleTime, maxOrder, photo}) =>  // {`images/meals/${photo}`}
     <>
-      <MealCard name={name} price={price} avalibleTime={avalibleTime} maxOrder={maxOrder} imgSrc={`images/meals/${photo}`} addOnClick={()=>this.AddMeal(name, price)}/>
-      <MealOverlay withSetData={withSetData} name={name} price={price} type={type}avalibleTime={avalibleTime} maxOrder={maxOrder} imgSrc={`/images/meals/${photo}`} addOnClick={()=>this.AddMeal(name, price)}/>
+      <MealCard id={id} name={name} price={price} avalibleTime={avalibleTime} maxOrder={maxOrder} imgSrc={`images/meals/${photo}`} addOnClick={()=>this.AddMeal(name, price)}/>
+      <MealOverlay id={id} withSetData={withSetData} name={name} price={price} type={type}avalibleTime={avalibleTime} maxOrder={maxOrder} imgSrc={`/images/meals/${photo}`} addOnClick={()=>this.AddMeal(name, price)}/>
     </>)
   }
 
