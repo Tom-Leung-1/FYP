@@ -7,6 +7,8 @@ import Meal from "./components/MealOrder/Meal"
 import MealCard from "./components/MealOrder/MealCard"
 import MealOverlay from "./components/MealOrder/MealOverlay"
 import axios from "axios"
+import SelectInput from '@mui/material/Select/SelectInput';
+import { Link } from 'react-router-dom';
 
 class ClientOrder extends React.Component {
   constructor(props) {
@@ -14,8 +16,10 @@ class ClientOrder extends React.Component {
     this.state = {
       data : null,
       withSetData : null,
-      TakeAway: true,
+      TakeAwayErr: "",
+      TakeAway: null,
       BookingNo: "",
+      BookingNoErr: "",
       Order: [],
       Total: 0,
     };
@@ -72,13 +76,25 @@ class ClientOrder extends React.Component {
     for (let i = 0; i < radio.length; i++) {
       if(radio[0].checked) {
         this.setState({TakeAway: false});
+        this.setState({TakeAwayErr: ""});
       } 
       if(radio[1].checked) {
         this.setState({TakeAway: true});
+        this.setState({TakeAwayErr: ""});
       } 
     }
     let bookingNo = document.getElementById("bookingNo").value;
-    if(bookingNo !== "") this.setState({BookingNo: bookingNo});
+        this.setState({BookingNo: bookingNo, BookingNoErr: ""});
+  }
+
+  CheckTakeAway = () => {
+    this.TakeAway();
+    if (this.state.TakeAway === null)
+        this.setState({TakeAwayErr: "Please choose whether eat in or eat away"}); 
+    else if (this.state.TakeAway === false & this.state.BookingNo === "")
+        this.setState({BookingNoErr: "Please enter your reservation number"}); 
+    else
+        document.getElementById("detailBtn").click();
   }
 
   AddMeal = (name, price) => {
@@ -177,24 +193,29 @@ class ClientOrder extends React.Component {
                 </div>
                 <div class="modal-body">
                   <span className="fw-bold">Eat in or take away?</span>
+                  <br/>
+                  <small className="text-danger fw-bolder"><i class="bi bi-exclamation-triangle" style={{display: this.state.TakeAwayErr ? "inline" : "none"}}></i> {this.state.TakeAwayErr}</small>
                   <form>
                     <div class="form-check">
-                      <input class="form-check-input" type="radio" name="radioTakeAway" onChange={()=>this.TakeAway()}/>
+                      <input class="form-check-input" type="radio" name="radioTakeAway" style={{borderColor: this.state.TakeAwayErr ? "#ff4136" : ""}} onChange={()=>this.TakeAway()}/>
                       <label class="form-check-label" for="flexRadioDefault1">Eat in</label>
                     </div>
                     <div class="form-check">
-                      <input class="form-check-input" type="radio" name="radioTakeAway" onChange={()=>this.TakeAway()} />
+                      <input class="form-check-input" type="radio" name="radioTakeAway" style={{borderColor: this.state.TakeAwayErr ? "#ff4136" : ""}} onChange={()=>this.TakeAway()} />
                       <label class="form-check-label" for="flexRadioDefault1">Take away</label>
                     </div>
                   </form>
                   <small className="text-muted">*Eat in only for clients who have already make a reservation<br/><br/></small>
-                  <div style={{display: this.state.TakeAway == true ? "none" : "block"}}>
+                  <div style={{display: this.state.TakeAway !== false ? "none" : "block"}}>
                   <span className="fw-bold">Reservation number (For eat in only)</span>
-                  <input type="text" class="form-control mb-3" id="bookingNo"></input>
+                  <br/>
+                  <small className="text-danger fw-bolder"><i class="bi bi-exclamation-triangle" style={{display: this.state.BookingNoErr ? "inline" : "none"}}></i> {this.state.BookingNoErr}</small>
+                  <input type="text" class="form-control mb-3" id="bookingNo" onChange={()=>this.TakeAway()}></input>
                   </div>
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-primary" style={{backgroundColor:"#6E5EFE"}} data-bs-toggle="modal" data-bs-target={`#createOrder${restaurantId}`} data-bs-dismiss="modal" onClick={()=>this.TakeAway()}>See Order Detail</button>
+                <button type="button" class="btn btn-primary" style={{backgroundColor:"#6E5EFE"}} onClick={()=>this.CheckTakeAway()}>See Order Detail</button>
+                  <button type="button" class="btn btn-primary" style={{backgroundColor:"#6E5EFE", display: "none"}} data-bs-toggle="modal" data-bs-target={`#createOrder${restaurantId}`} data-bs-dismiss="modal" id="detailBtn">See Order Detail</button>
                 </div>
               </div>
             </div>
@@ -214,7 +235,7 @@ class ClientOrder extends React.Component {
                 </div>
                 <div class="modal-footer">
                   <h3 class="mr-auto"><b>Total: <span class="text-danger">${this.state.Total}</span></b></h3>
-                  <button type="button" class="btn btn-primary" style={{backgroundColor:"#6E5EFE"}}>Create</button>
+                  <Link to="/pay" type="button" class="btn btn-primary" style={{backgroundColor:"#6E5EFE"}}>Create</Link>
                 </div>
               </div>
             </div>
