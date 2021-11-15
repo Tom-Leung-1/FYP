@@ -17,6 +17,7 @@ import ClientOrder from './ClientOrder';
 import PaymentChoice from './PaymentChoice';
 import DoneOrder from './DoneOrder';
 import OwnerOption from './OwnerOption';
+import RProfile from './RProfile';
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
           <Route path="/pay" component={PaymentChoice} />
           <Route path="/doneOrder" component={DoneOrder} />
           <Route path="/OwnerOption" component={OwnerOption} />
+          <Route path="/profile" component={RProfile} />
           <div className="page">
             <Navbar />
             <Route path="/" exact component={Home} />
