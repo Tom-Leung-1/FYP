@@ -31,14 +31,14 @@ class PaymentChoice extends Component {
                         </Link>
                         <br/>
                         <p className="mx-3">
-                        <i class="bi bi-square-fill"></i> Eat in
+                        <i class="bi bi-square-fill"></i> Delivery
                         <br/>
                         pay to cashier/waiter in restaurant
                         <br/>
                         <br/>
                         <i class="bi bi-square-fill"></i> Take away
                         <br/>
-                        pay to courier (Take-away)
+                        pay to courier
                         </p>
 
                     </div>

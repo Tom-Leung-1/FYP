@@ -18,8 +18,6 @@ class ClientOrder extends React.Component {
       withSetData : null,
       TakeAwayErr: "",
       TakeAway: null,
-      BookingNo: "",
-      BookingNoErr: "",
       Order: [],
       Total: 0,
     };
@@ -83,16 +81,12 @@ class ClientOrder extends React.Component {
         this.setState({TakeAwayErr: ""});
       } 
     }
-    let bookingNo = document.getElementById("bookingNo").value;
-        this.setState({BookingNo: bookingNo, BookingNoErr: ""});
   }
 
   CheckTakeAway = () => {
     this.TakeAway();
     if (this.state.TakeAway === null)
-        this.setState({TakeAwayErr: "Please choose whether eat in or eat away"}); 
-    else if (this.state.TakeAway === false & this.state.BookingNo === "")
-        this.setState({BookingNoErr: "Please enter your reservation number"}); 
+        this.setState({TakeAwayErr: "Please choose whether delivery or eat away"}); 
     else
         document.getElementById("detailBtn").click();
   }
@@ -192,26 +186,19 @@ class ClientOrder extends React.Component {
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                  <span className="fw-bold">Eat in or take away?</span>
+                  <span className="fw-bold">Delivery or take away?</span>
                   <br/>
                   <small className="text-danger fw-bolder"><i class="bi bi-exclamation-triangle" style={{display: this.state.TakeAwayErr ? "inline" : "none"}}></i> {this.state.TakeAwayErr}</small>
                   <form>
                     <div class="form-check">
                       <input class="form-check-input" type="radio" name="radioTakeAway" style={{borderColor: this.state.TakeAwayErr ? "#ff4136" : ""}} onChange={()=>this.TakeAway()}/>
-                      <label class="form-check-label" for="flexRadioDefault1">Eat in</label>
+                      <label class="form-check-label" for="flexRadioDefault1">Delivery</label>
                     </div>
                     <div class="form-check">
                       <input class="form-check-input" type="radio" name="radioTakeAway" style={{borderColor: this.state.TakeAwayErr ? "#ff4136" : ""}} onChange={()=>this.TakeAway()} />
                       <label class="form-check-label" for="flexRadioDefault1">Take away</label>
                     </div>
                   </form>
-                  <small className="text-muted">*Eat in only for clients who have already make a reservation<br/><br/></small>
-                  <div style={{display: this.state.TakeAway !== false ? "none" : "block"}}>
-                  <span className="fw-bold">Reservation number (For eat in only)</span>
-                  <br/>
-                  <small className="text-danger fw-bolder"><i class="bi bi-exclamation-triangle" style={{display: this.state.BookingNoErr ? "inline" : "none"}}></i> {this.state.BookingNoErr}</small>
-                  <input type="text" class="form-control mb-3" id="bookingNo" onChange={()=>this.TakeAway()}></input>
-                  </div>
                 </div>
                 <div class="modal-footer">
                 <button type="button" class="btn btn-primary" style={{backgroundColor:"#6E5EFE"}} onClick={()=>this.CheckTakeAway()}>See Order Detail</button>
@@ -228,8 +215,7 @@ class ClientOrder extends React.Component {
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                  <h5>{this.state.TakeAway ? "-Take Away-": "-Eat in-"}</h5>
-                  <h5>{this.state.TakeAway ? "": "Reservation number： " + this.state.BookingNo}</h5>
+                  <h5>{this.state.TakeAway ? "-Take Away-": "-Delivery-"}</h5>
                   <br/>
                   {this.showOrder()}
                 </div>
