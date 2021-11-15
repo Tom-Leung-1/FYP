@@ -16,7 +16,7 @@ import Detail from "./components/Detail/Detail";
 import ClientOrder from './ClientOrder';
 import PaymentChoice from './PaymentChoice';
 import DoneOrder from './DoneOrder';
-import OrderList from './OrderList';
+import OwnerOption from './OwnerOption';
 
 function App() {
   return (
@@ -36,7 +36,7 @@ function App() {
           <Route path="/register" component={BRegister} />
           <Route path="/pay" component={PaymentChoice} />
           <Route path="/doneOrder" component={DoneOrder} />
-          <Route path="/orderlist" component={OrderList} />
+          <Route path="/OwnerOption" component={OwnerOption} />
           <div className="page">
             <Navbar />
             <Route path="/" exact component={Home} />

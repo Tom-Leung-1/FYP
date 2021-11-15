@@ -4,6 +4,9 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
+import AdapterDateFns from '@material-ui/lab/AdapterDateFns';
+import LocalizationProvider from '@material-ui/lab/LocalizationProvider';
+import MobileTimePicker from '@material-ui/lab/MobileTimePicker';
 
 var maxnop = 8;
 var minH = 17;
@@ -12,13 +15,16 @@ var maxH = 22;
 var maxM = 0;
 var s = 60;
 
+var start = new Date(0, 0, 0, minH, minM);
+
 class Booking extends React.Component {
    
   constructor(props) {
     super(props);
     this.state = { nop: 2,
                    date: this.currentDate(),
-                   time: `${minM < 10 ? `${minH}:0${minM}` : `${minH}:${minM}`}`
+                   time: start,
+                   timeStr: this.format12H(start)
                  };
     this.nopChange = this.nopChange.bind(this);
     this.dateChange = this.dateChange.bind(this);
@@ -69,9 +75,21 @@ class Booking extends React.Component {
    }
 
    timeChange(event) {
-    const value = event.target.value;
-     this.setState({time: value});
-   }
+        const value = event;
+        this.setState({time: value});
+        this.setState({timeStr: this.format12H(value)});
+    }   
+
+    format12H (date) {
+        var hours = date.getHours();
+        var minutes = date.getMinutes();
+        var ampm = hours >= 12 ? 'pm' : 'am';
+        hours = hours % 12;
+        hours = hours < 10 ? '0' + hours : hours;
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+        var strTime = hours + ':' + minutes + ' ' + ampm;
+        return strTime;
+    }
 
    currentDate() {
      var date = new Date();
@@ -116,17 +134,17 @@ class Booking extends React.Component {
               </FormControl>
 
               <FormControl variant="standard" sx={{minWidth: 160 }} className="col-2 mx-4">
-                <InputLabel id="time">Time</InputLabel>
-                <Select
-                  labelId="time"
-                  id="time"
+                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                <MobileTimePicker
+                  renderInput={(params) => <TextField variant="standard" {...params}/>}
+                  label="Time"
+                  InputLabelProps={{ shrink: true }}
                   value={this.state.time}
-                  label="No. of people"
                   onChange={this.timeChange}
-                  defaultValue={`${minM < 10 ? `${minH}:0${minM}` : `${minH}:${minM}`}`}
-                >
-                  {this.timeOpitions()}
-                </Select>
+                  minTime={new Date(0, 0, 0, minH, minM)}
+                  maxTime={new Date(0, 0, 0, maxH, maxM)}
+                />
+                </LocalizationProvider>
               </FormControl>
               <FormControl variant="filled" sx={{mt: 1,  minWidth: 160 }} className="col-2 mx-4">
                 <button type="button" className="btn btn-primary mb-3" style={{backgroundColor:"#6E5EFE"}} data-bs-toggle="modal" data-bs-target="#BookingModal">Book Now</button>
@@ -141,7 +159,7 @@ class Booking extends React.Component {
                       <p>You are making a reservation for <br/>
                          <b>{this.state.nop} people</b> at <br/>
                          <b>{restaurantName}</b> on <br/> 
-                         <b>{this.dateForm(this.state.date)}, {this.state.time}</b>
+                         <b>{this.dateForm(this.state.date)}, {this.state.timeStr}</b>
                          <br/><br/>
                          <b>
                          Restaurant availability and table arrangement are subject to change based on different reasons. 
