@@ -50,6 +50,9 @@ const rows = [
   { id: 7, date: '01/11/2021', time: '17:00', name: 'Ben Ben', nop: 3 },
 ];
 
+const limit = 100;
+let now = 30;
+
 class BookingStatus extends React.Component {
   
   constructor(props) {
@@ -92,60 +95,20 @@ class BookingStatus extends React.Component {
         </div>
 
         <div className="col-sm-4">
-        <h5 className="fw-normal mt-3"><strong>Table Status</strong></h5>
-        <div id="table_status_tips">
-          <small><span class="bg-primary"></span>Seated</small>
-          <br/>
-          <small><span class="bg-success"></span>Free</small>
-          <br/>
-          <small><span class="bg-warning"></span>Wait for booking</small>
-          <br/>
-          <small><span class="bg-danger"></span>Not Available</small>
-        </div>
+        <h5 className="fw-normal mt-3"><strong>Booking Status</strong></h5>
         <input type="date" class="form-control my-2"/>
         <select className="form-select mt-2 mb-4" aria-label="time">
-          <option value="17:00">17:00</option>
-          <option value="18:00">18:00</option>
-          <option value="19:00">19:00</option>
-          <option value="20:00">20:00</option>
-          <option value="21:00">21:00</option>
-          <option value="22:00">22:00</option>
+          <option value="17:00">17:00-18:00</option>
+          <option value="18:00">18:00-19:00</option>
+          <option value="19:00">19:00-20:00</option>
+          <option value="20:00">20:00-21:00</option>
+          <option value="21:00">21:00-22:00</option>
         </select>
 
-        <div class="card bg-warning mb-2">
-          <div class="card-body">
-            TBL-1 10pers
-          </div>
-        </div>
-        <div class="card bg-primary text-white mb-2">
-          <div class="card-body">
-            TBL-2 10pers
-          </div>
-        </div>
-        <div class="card bg-success text-white mb-2">
-          <div class="card-body">
-            TBL-3 4pers
-          </div>
-        </div>
-        <div class="card bg-success text-white mb-2">
-          <div class="card-body">
-            TBL-4 4pers
-          </div>
-        </div>
-        <div class="card bg-primary text-white mb-2">
-          <div class="card-body">
-            TBL-5 8pers
-          </div>
-        </div>
-        <div class="card bg-primary text-white mb-2">
-          <div class="card-body">
-            TBL-6 8pers
-          </div>
-        </div>
-        <div class="card bg-danger text-white mb-2">
-          <div class="card-body">
-            TBL-7 2pers
-          </div>
+        <div className="fs-4">
+          Booking quota:
+          <br/>
+          {now}/{limit}
         </div>
 
         </div>  
