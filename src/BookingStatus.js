@@ -76,7 +76,9 @@ class BookingStatus extends React.Component {
         <div className="container p-2">
         <h2 className="fw-normal mt-3"><strong>Table Reservation</strong></h2>
         <hr/>
+
         <div className="row">
+        
 
         <div className="col-sm-8">
         <DataGrid

@@ -10,6 +10,7 @@ import BRegister from "./BRegister";
 import Searching from "./Searching";
 import MealMenu from "./mealMenu";
 import BookingStatus from "./BookingStatus";
+import BookingSetting from "./BookingSetting";
 import Order from "./Order";
 import Client from './Client';
 import Detail from "./components/Detail/Detail";
@@ -34,6 +35,7 @@ function App() {
              <MealMenu restaurantId="0"/>
           </Route>
           <Route path="/booking" component={BookingStatus} />
+          <Route path="/booksetting" component={BookingSetting} />
           <Route path="/register" component={BRegister} />
           <Route path="/pay" component={PaymentChoice} />
           <Route path="/doneOrder" component={DoneOrder} />
