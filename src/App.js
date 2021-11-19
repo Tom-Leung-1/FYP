@@ -12,6 +12,7 @@ import MealMenu from "./mealMenu";
 import BookingStatus from "./BookingStatus";
 import BookingSetting from "./BookingSetting";
 import Order from "./Order";
+import OrderList from "./OrderList";
 import Client from './Client';
 import Detail from "./components/Detail/Detail";
 import ClientOrder from './ClientOrder';
@@ -41,6 +42,7 @@ function App() {
           <Route path="/doneOrder" component={DoneOrder} />
           <Route path="/OwnerOption" component={OwnerOption} />
           <Route path="/profile" component={RProfile} />
+          <Route path="/orderlist" component={OrderList} />
           <div className="page">
             <Navbar />
             <Route path="/" exact component={Home} />

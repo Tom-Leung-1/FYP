@@ -30,7 +30,7 @@ class BookingSetting extends Component {
                 <h5 className="fw-normal mt-3"><strong>Avalible Weekday</strong></h5>
                 {this.weekdayOpitions()}
                 <h5 className="fw-normal mt-3"><strong>Avalible Time Range</strong></h5>
-                <div className="input-group mb-3" style={{width:"40vw"}}>
+                <div className="input-group mb-3" style={{width:"20em"}}>
                     <input type="time" className="form-control"/>
                     <span class="input-group-text">to</span>
                     <input type="time" className="form-control"/>
