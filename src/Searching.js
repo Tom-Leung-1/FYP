@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 //import CustomCarousel from "./Carousel";
 import "./Home.css"
 import { Helmet } from "react-helmet";
+import axios from "axios"
 
 const data = [
     {pic: "1.jpg", name: "H1"},
@@ -34,7 +35,10 @@ class Searching extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { selected: -1 };
+        this.state = {
+            data: null,
+            selected: -1,
+        };
     }
 
 	handleMouse(index) {
@@ -45,41 +49,71 @@ class Searching extends React.Component {
     }
 
     render() {
+        const {searchUpdate, searchTag} = this.props
+        const {data} = this.state
         return (
             <>
-            <div className="searching">
-                <div className="container p-3">
-                    <SearchBox/>
-                </div>
-                <div className="container px-5 pb-3 text-muted fst-italic">
-                    searching： <span className="fw-bold">H</span>
-                    <br/>
-                    result: <span className="fw-bold">{data.length}</span>
-                </div>
-                        
+                <div className="searching">
+                    <div className="container p-3">
+                        <SearchBox searchUpdate={searchUpdate}/>
+                    </div>
+                    <div className="container px-5 pb-3 text-muted fst-italic">
+                        {searchTag && 
+                        <> 
+                            <span>searching：
+                                <span className="fw-bold">{searchTag}</span>
+                            </span> 
+                            <br/> 
+                        </>}
+                        result: <span className="fw-bold">{data?.length || 0}</span>
+                    </div>
+                            
 
-                <div className="container pb-3">
-                    <div className="d-flex flex-wrap justify-content-center">
-                    {
-                    data.map((restaurant, index) => (
-                        <Link to = "/client" style={{ textDecoration: 'none', color: 'black'}}>
-                        <div onMouseOver={()=>this.handleMouse(index)} onMouseOut={()=>this.handleMouse(index)} key={index+1} className="card d-inline-block m-2 shadow" style={{ width:this.state.selected===index ? 270:250 }}>
-                            <img src={"/images/"+restaurant.pic} alt=" {restaurant.name}" style={{width: "100%", height: this.state.selected===index ? 230:210, objectFit:"cover"}} />
-                            <div className="card-body">
-                            <h5 className="card-title fw-bolder">{restaurant.name}</h5>
-                            </div>
-                        </div>
-                        </Link>
-                    ))
-                    }
-                    </div>     
+                    <div className="container pb-3">
+                        <div className="d-flex flex-wrap justify-content-center">
+                        {
+                        data?.map(({restaurant, photo}, index) => (
+                            <Link to = "/client" style={{ textDecoration: 'none', color: 'black'}}>
+                                <div onMouseOver={()=>this.handleMouse(index)} onMouseOut={()=>this.handleMouse(index)} key={index+1} className="card d-inline-block m-2 shadow" style={{ width:this.state.selected===index ? 270:250 }}>
+                                    <img src={photo ? `/images/restaurants/${photo}` : `/images/restaurants/default.png`} alt={`${photo}`} style={{width: "100%", height: this.state.selected===index ? 230:210, objectFit:"cover"}} />
+                                    <div className="card-body">
+                                        <h5 className="card-title fw-bolder">{restaurant}</h5>
+                                    </div>
+                                </div>
+                            </Link>
+                        ))
+                        }
+                        </div>     
+                    </div>
                 </div>
-
-                
-            </div>
             </>
         )
     }
+
+    componentDidMount = async () => {
+        const {searchTag} = this.props
+        const data = await this.loadRestaurants(searchTag)
+        this.setState({data})
+    }
+
+    componentDidUpdate = async (prevProps) => {
+        if (this.props.searchTag !== prevProps.searchTag) {
+            this.setState({data : await this.loadRestaurants(this.props.searchTag)})
+        }
+    }
+
+    loadRestaurants = async (searchTag) => {
+        let data
+        await axios.get(`http://localhost:3001/getRestaurants?searchTag=${searchTag}`)
+          .then(response => {
+            data = response.data
+          })
+          .catch(error => {
+            console.log(error)
+        })
+        console.log(data)
+        return data
+      }
 }
 
 

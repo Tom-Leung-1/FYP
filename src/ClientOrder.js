@@ -46,6 +46,14 @@ class ClientOrder extends React.Component {
     </>)
   }
 
+  getDataType = (data) => {
+    const typeSet = new Set()
+    data?.forEach(({type}) => {
+      typeSet.add(type)
+    })
+    return Array.from(typeSet)
+  }
+
   componentDidMount = async () => {
     const {restaurantId} = this.props
     const [data, withSetData] = await this.loadData(restaurantId)
@@ -146,33 +154,31 @@ class ClientOrder extends React.Component {
     render() {
       const {restaurantName, restaurantId} = this.props
       const {data} = this.state
-      console.log("hello", {data})
+      const typeSet = this.getDataType(data)
       return (
         <>
           <h4 className="m-3">Restaurnt: <b>{restaurantName}</b></h4>
           <div className="m-3 COmenu mb-5">
             <div class="d-flex align-items-start">
               <div class="nav flex-column nav-pills me-1 bg-light shadow" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                <button class="nav-link active justify-content-center" data-bs-toggle="pill" data-bs-target="#Set" type="button" role="tab" aria-controls="Set" aria-selected="true">Set</button>
-                <button class="nav-link justify-content-center" data-bs-toggle="pill" data-bs-target="#Snack" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false">Snack</button>
-                <button class="nav-link justify-content-center" data-bs-toggle="pill" data-bs-target="#Dessert" type="button" role="tab" aria-controls="v-pills-messages" aria-selected="false">Dessert</button>
-                <button class="nav-link justify-content-center" data-bs-toggle="pill" data-bs-target="#Drink" type="button" role="tab" aria-controls="v-pills-settings" aria-selected="false">Drink</button>
+                {typeSet.map((type, idx) => {
+                  return idx ?
+                  <button class="nav-link justify-content-center" data-bs-toggle="pill" data-bs-target={`#${type}`} type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false">{type}</button>
+                  :
+                  <button class="nav-link active justify-content-center" data-bs-toggle="pill" data-bs-target={`#${type}`} type="button" role="tab" aria-controls="Set" aria-selected="true">{type}</button>
+                })}
               </div>
               <div class="tab-content col" id="v-pills-tabContent">
-                <div class="tab-pane fade show active" id="Set" role="tabpanel" aria-labelledby="v-pills-home-tab">
-                  {this.dataFilter(data, 'Set')}
-                </div>
-                <div class="tab-pane fade" id="Snack" role="tabpanel" aria-labelledby="v-pills-profile-tab">
-                  {this.dataFilter(data, 'Snack')}
-                </div>
-
-                <div class="tab-pane fade" id="Dessert" role="tabpanel" aria-labelledby="v-pills-messages-tab">
-                  {this.dataFilter(data, 'Dessert')}
-                </div>
-
-                <div class="tab-pane fade" id="Drink" role="tabpanel" aria-labelledby="v-pills-settings-tab">
-                  {this.dataFilter(data, 'Drink')}
-                </div>
+                {typeSet.map((type, idx) => {
+                  return idx ?
+                  <div class="tab-pane fade" id={type} role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                    {this.dataFilter(data, type)}
+                  </div>
+                  :
+                  <div class="tab-pane fade show active" id={type} role="tabpanel" aria-labelledby="v-pills-home-tab">
+                    {this.dataFilter(data, type)}
+                  </div>
+                })}
               </div>
             </div>
           </div>  

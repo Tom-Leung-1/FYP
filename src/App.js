@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import './App.css';
 import Navbar from "./components/Navbar/NewNavbar";
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
@@ -8,7 +8,7 @@ import Login from "./Login";
 import SignUp from "./SignUp";
 import BRegister from "./BRegister";
 import Searching from "./Searching";
-import MealMenu from "./mealMenu";
+import MealMenu from "./MealMenu";
 import BookingStatus from "./BookingStatus";
 import BookingSetting from "./BookingSetting";
 import Order from "./Order";
@@ -21,46 +21,69 @@ import DoneOrder from './DoneOrder';
 import OwnerOption from './OwnerOption';
 import RProfile from './RProfile';
 
-function App() {
-  return (
-    <Router>
-      <div className="App">
-        <Helmet>
-          <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous" />
-          <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.1/font/bootstrap-icons.css"></link>
-        </Helmet>
 
-        <Switch>
-          <Route path="/menu">
-             <MealMenu restaurantId="0"/>
-          </Route>
-          <Route path="/booking" component={BookingStatus} />
-          <Route path="/booksetting" component={BookingSetting} />
-          <Route path="/register" component={BRegister} />
-          <Route path="/pay" component={PaymentChoice} />
-          <Route path="/doneOrder" component={DoneOrder} />
-          <Route path="/OwnerOption" component={OwnerOption} />
-          <Route path="/profile" component={RProfile} />
-          <Route path="/orderlist" component={OrderList} />
-          <div className="page">
-            <Navbar />
-            <Route path="/" exact component={Home} />
-            <Route path="/home" component={Home} />
-            <Route path="/search" component={Searching} />
-            <Route path="/sign-in" component={Login} />
-            <Route path="/sign-up" component={SignUp} />
-            <Route path="/detail" component={Detail} />
-            <Route path="/client" component={Client} />
-            <Route path="/new">
-              <ClientOrder restaurantId="0" restaurantName="Horlicks"/>
+
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      searchTag : "",
+
+    };
+  }
+  
+  searchUpdate = (searchTag) => {
+    console.log(searchTag)
+    this.setState({searchTag})
+  }
+
+  render() {
+    const {searchTag} = this.state
+    return (
+      <Router>
+        <div className="App">
+          <Helmet>
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous" />
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.1/font/bootstrap-icons.css"></link>
+          </Helmet>
+          <Switch>
+            <Route path="/menu">
+              <MealMenu restaurantId="0"/>
             </Route>
+            <Route path="/booking" component={BookingStatus} />
+            <Route path="/booksetting" component={BookingSetting} />
+            <Route path="/register" component={BRegister} />
+            <Route path="/pay" component={PaymentChoice} />
+            <Route path="/doneOrder" component={DoneOrder} />
+            <Route path="/OwnerOption" component={OwnerOption} />
+            <Route path="/profile" component={RProfile} />
+            <Route path="/orderlist" component={OrderList} />
+            <div className="page">
+              <Navbar />
+              <Route path="/" exact>
+                <Home searchUpdate={this.searchUpdate}/>
+              </Route>
+              <Route path="/home">
+                <Home searchUpdate={this.searchUpdate}/>
+              </Route>
+              <Route path="/search">
+                <Searching searchTag={searchTag} searchUpdate={this.searchUpdate} searchTag={searchTag}/>
+              </Route>
+              <Route path="/sign-in" component={Login} />
+              <Route path="/sign-up" component={SignUp} />
+              <Route path="/detail" component={Detail} />
+              <Route path="/client" component={Client} />
+              <Route path="/new">
+                <ClientOrder restaurantId="0" restaurantName="Horlicks"/>
+              </Route>
 
-          </div>
-        </Switch>
-      </div>
-    </Router>
-  );
+            </div>
+          </Switch>
+        </div>
+      </Router>
+    );
+  }
 }
 
 export default App;

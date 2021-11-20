@@ -2,52 +2,50 @@ import React, { Component } from 'react';
 //import {Button} from "./Button";
 //import 'bootstrap/dist/css/bootstrap.min.css';
 import "./SearchBox.css";
-
-/*
-export const SearchBox = (props) => {
-    return (
-        <>
-        <div className="boxBG d-flex justify-content-center">
-        <div className="homeSearch m-5 p-2">
-        <div className="input-group bg-light rounded rounded-pill shadow-sm">
-          <input type="search" placeholder="Find Restaurant!" aria-describedby="button-addon1" className="form-control rounded rounded-pill border-0 bg-light m-2"/>
-          <div className="input-group-append">
-            <button id="button-addon1" type="submit" className="btn btn-link rounded rounded-pill m-2"><i className="fa fa-search"></i></button>
-          </div>
-        </div>
-        </div>
-        </div>
-        </>
-        
-    );
-}
-*/
+import { Link } from 'react-router-dom';
 
 class SearchBox extends Component {
 
   constructor(props) {
     super(props);
     this.state = { 
-                    hover: false
-                 };
+      hover: false,
+      searchInput: "",
+    };
   }
 
-  handleMouse() {
-    if (this.state.hover != true)
-        this.setState({hover: true});
-    else
-        this.setState({hover: false});
+  handleMouse = () => {
+    this.setState({hover : !this.state.hover})
+  }
+
+  handleOnClick = () => {
+    const {searchInput} = this.state
+    this.props.searchUpdate(searchInput)
+  }
+
+  handleOnChange = (e) => {
+    this.setState({searchInput : e.currentTarget.value})
+  }
+
+  handleOnKeyUp = (e) => {
+    if (e.keyCode === 13) {
+      this.handleOnClick()
+      this.props.homePage && this.props.toSearchPage()
+    }
   }
 
   render() {
+    const {hover, searchInput} = this.state
       return(
         <>
-        <div className={`input-group bg-light rounded rounded-pill border ${this.state.hover ? "shadow" : "shadow-sm"}`} onMouseEnter={()=>this.handleMouse()} onMouseLeave={()=>this.handleMouse()}>
-          <input type="search" placeholder="Find Restaurant by name here!" aria-describedby="button-addon1" className="form-control rounded rounded-pill border-0 bg-light m-2"/>
-          <div className="input-group-append">
-            <button id="button-addon1" type="submit" className="btn btn-link rounded rounded-pill m-2"><i className="fa fa-search"></i></button>
+          <div className={`input-group bg-light rounded rounded-pill border ${hover ? "shadow" : "shadow-sm"}`} onMouseEnter={this.handleMouse} onMouseLeave={this.handleMouse}>
+            <input onKeyUp={this.handleOnKeyUp} onChange={this.handleOnChange} value={searchInput} type="search" placeholder="Find Restaurant by name here!" aria-describedby="button-addon1" className="form-control rounded rounded-pill border-0 bg-light m-2"/>
+            <div className="input-group-append">
+              <button id="button-addon1" type="submit" className="btn btn-link rounded rounded-pill m-2" onClick={this.handleOnClick}>
+                <Link to="/search"><i className="fa fa-search"></i></Link>
+              </button>
+            </div>
           </div>
-        </div>
         </>
       )
   }
