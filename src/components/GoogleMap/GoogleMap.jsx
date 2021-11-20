@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { useGoogleMap, GoogleMap, LoadScript, DrawingManager, Marker } from "@react-google-maps/api"
+import { useGoogleMap, GoogleMap, LoadScript, DrawingManager, Marker, InfoWindow } from "@react-google-maps/api"
 import config from "../../config/config.json"
 import "./GoogleMap.css"
 import test from "../../images/public_black_24dp.svg"
@@ -21,19 +21,44 @@ class Map extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            markerIdx: -1
         }
     }
 
+    markerOnClick = (markerIdx) => {
+        this.setState({markerIdx})
+    }
+
+    handleCloseWindow = () => {
+        this.setState({markerIdx : -1})
+    }
+
     render() {
-        const { setMarker, setMap, position, markersInfo, setNameAdress } = this.props
+        const { setMarker, setMap, position, markersInfo, toRestaurantPage} = this.props
+        const {markerIdx} = this.state
         console.log({ markersInfo })
         console.log("location", position)
-        const markers = markersInfo?.map(({ SS, ADR, lat, lng }, idx) =>
+        const markers = markersInfo?.map(({lat, lng, restaurant, address}, idx) =>
             <Marker
-                key={idx} position={{ lat, lng }}
-                onClick={() => setNameAdress(SS, ADR)}
-                icon="images/restaurant.svg"
-            />
+                key={idx} 
+                position={{ lat, lng }}
+                icon="images/dish.png"
+                onMouseOver={() => this.markerOnClick(idx)}
+                onMouseOut={this.handleCloseWindow}
+                onClick={toRestaurantPage}
+            >
+                    {markerIdx === idx && 
+                        <InfoWindow 
+                            poisiton={{lat, lng}}
+                            onCloseClick={this.handleCloseWindow}
+                        >
+                                <div>
+                                    {restaurant}
+                                    <br/>
+                                    {address}
+                                </div>
+                        </InfoWindow>}
+            </Marker>
         )
         /*this image path is not based on the current directory. It is based on public for some reasons!!!!*/
         return (
@@ -49,13 +74,16 @@ class Map extends Component {
                         center={position ? position : center}
                         zoom={14}
                     >
+                        {setMarker && 
                         <DrawingManager
                             onMarkerComplete={setMarker}
-                        />
+                        />}
                         <Marker
                             position={position}
                         />
                         {markers}
+                        
+                        
                     </GoogleMap>
                 </LoadScript>
             </div>

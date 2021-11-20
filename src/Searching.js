@@ -7,30 +7,6 @@ import "./Home.css"
 import { Helmet } from "react-helmet";
 import axios from "axios"
 
-const data = [
-    {pic: "1.jpg", name: "H1"},
-    {pic: "1.jpg", name: "H2"},
-    {pic: "1.jpg", name: "H3"},
-    {pic: "1.jpg", name: "H4"},
-    {pic: "1.jpg", name: "H5"},
-    {pic: "1.jpg", name: "H6"},
-    {pic: "1.jpg", name: "H7"},
-    {pic: "1.jpg", name: "H8"},
-    {pic: "1.jpg", name: "H9"},
-    {pic: "1.jpg", name: "H901"},
-    {pic: "1.jpg", name: "H902"},
-    {pic: "1.jpg", name: "H903"},
-    {pic: "1.jpg", name: "H915"},
-    {pic: "1.jpg", name: "H945"},
-    {pic: "1.jpg", name: "H956"},
-    {pic: "1.jpg", name: "H999"},
-    
-    {pic: "1.jpg", name: "Hayou"},
-    {pic: "2.jpg", name: "Harmonic"},
-    {pic: "3_.jpg", name: "Hello"},
-    {pic: "c_test.jpg", name: "Horlicks"},
-];
-
 class Searching extends React.Component {
 
     constructor(props) {
@@ -113,7 +89,7 @@ class Searching extends React.Component {
         })
         console.log(data)
         return data
-      }
+    }
 }
 
 

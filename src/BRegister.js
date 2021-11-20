@@ -23,6 +23,8 @@ class BRegister extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      lat : -1,
+      lng : -1,
       firstCheck: '',
       lastCheck: '',
       phoneCheck: '',
@@ -93,7 +95,7 @@ class BRegister extends Component {
   }
 
   submitForm = async (e) => {
-    const { addressValue } = this.state
+    const { addressValue, lat, lng } = this.state
     e.preventDefault()
     if (!await this.checkRecaptcha()) {
       alert("Please click on Recaptcha.")
@@ -107,6 +109,11 @@ class BRegister extends Component {
     }
     if (!this.state.selectedFile) {
       alert("Please upload registration file.")
+      this.setState({ recaptchaKey: this.state.recaptchaKey === 1 ? 2 : 1 })
+      return
+    }
+    if (lat === -1 || lng === -1) {
+      alert("Please provide the restaurant location by clicking on the google map.")
       this.setState({ recaptchaKey: this.state.recaptchaKey === 1 ? 2 : 1 })
       return
     }
@@ -138,10 +145,10 @@ class BRegister extends Component {
     this.state.marker?.setMap(null);
     const lat = marker.position.lat()
     const lng = marker.position.lng()
-    console.log(marker)
+    console.log(marker, {lat, lng})
     fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${key}`)
       .then(response => response.json())
-      .then(data => this.setState({ marker: marker, addressValue: data.results[0].formatted_address }));
+      .then(data => this.setState({ marker: marker, addressValue: data.results[0].formatted_address, lat, lng }));
   }
 
   fileSelectedHandler = event => {
