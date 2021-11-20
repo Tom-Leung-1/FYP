@@ -11,6 +11,7 @@ import FileInput from './components/Inputs/FileInput';
 import { test } from "./helpers/DBFunctions"
 import hkid from 'validid/esm/hkid.mjs';
 import normalize from 'validid/esm/utils/normalize.mjs';
+import { withRouter } from 'react-router-dom';
 
 /*@TODO
 add a "please provide a valid image file in the BR tab" -> bug (the file chosen does not reflect the state change -> need a better input css)
@@ -120,6 +121,8 @@ class BRegister extends Component {
     const filename = await this.fileUploadHandler(e)
     this.uploadCredentials(filename)
     alert("done")
+    let path = `OwnerOption`;
+    this.props.history.push(path);
   }
 
   uploadCredentials = (filename) => {
