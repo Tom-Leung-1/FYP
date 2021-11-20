@@ -9,13 +9,6 @@ import axios from "axios"
 import "./Home.css"
 import { Helmet } from "react-helmet";
 
-const data = [
-    {pic: "1.jpg", name: "Hayou"},
-    {pic: "2.jpg", name: "Harmonic"},
-    {pic: "3_.jpg", name: "Hello"},
-    {pic: "c_test.jpg", name: "Horlicks"},
-];
-
 class Home extends React.Component {
 
     constructor(props) {
@@ -39,11 +32,10 @@ class Home extends React.Component {
 
     toRestaurantPage = () => {
         this.props.history.push('/client')
-    }
-    
+    }    
 
     render() {
-        const {searchUpdate} = this.props
+        const {searchUpdate, selectRestaurant} = this.props
         const {data} = this.state
         return (
             <>
@@ -61,16 +53,19 @@ class Home extends React.Component {
                     <div className="container p-3">
                         <h1>Selected Restaurant</h1>
                         <div className="d-flex flex-wrap justify-content-center">
-                            {data?.map(({restaurant, photo}, index) => (
+                            {data?.map((datum, index) => {
+                                const {restaurant, photo} = datum
+                                return (
                                 <Link to = "/client" style={{ textDecoration: 'none', color: 'black'}}>
-                                    <div onMouseOver={()=>this.handleMouse(index)} onMouseOut={()=>this.handleMouse(index)} key={index+1} className="card d-inline-block m-2 shadow" style={{ width:this.state.selected===index ? 270:250 }}>
+                                    <div onClick={() => selectRestaurant(datum)} onMouseOver={()=>this.handleMouse(index)} onMouseOut={()=>this.handleMouse(index)} key={index+1} className="card d-inline-block m-2 shadow" style={{ width:this.state.selected===index ? 270:250 }}>
                                         <img src={photo ? `/images/restaurants/${photo}` : `/images/restaurants/default.png`} alt={`${photo}`} style={{width: "100%", height: 210, objectFit:"cover"}} />
                                         <div className="card-body">
-                                        <h5 className="card-title fw-bolder">{restaurant}</h5>
+                                            <h5 className="card-title fw-bolder">{restaurant}</h5>
                                         </div>
                                     </div>
                                 </Link>
-                            ))}
+                                )
+                            })}
                         </div>     
                     </div>
                 </div>

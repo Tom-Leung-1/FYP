@@ -28,7 +28,12 @@ class App extends Component {
     super(props);
     this.state = {
       searchTag : "",
-
+      lat : -1,
+      lng : -1,
+      photo : "",
+      description : "",
+      restaurant: "",
+      address: "",
     };
   }
   
@@ -37,8 +42,13 @@ class App extends Component {
     this.setState({searchTag})
   }
 
+  selectRestaurant = (datum) => {
+    const {lat, lng, photo, restaurant, address, description} = datum
+    this.setState({lat, lng, photo, restaurant, address, description})
+  }
+
   render() {
-    const {searchTag} = this.state
+    const {searchTag, lat, lng, photo, description, restaurant, address} = this.state
     return (
       <Router>
         <div className="App">
@@ -62,18 +72,20 @@ class App extends Component {
             <div className="page">
               <Navbar />
               <Route path="/" exact>
-                <Home searchUpdate={this.searchUpdate}/>
+                <Home selectRestaurant={this.selectRestaurant} searchUpdate={this.searchUpdate}/>
               </Route>
               <Route path="/home">
-                <Home searchUpdate={this.searchUpdate}/>
+                <Home selectRestaurant={this.selectRestaurant} searchUpdate={this.searchUpdate}/>
               </Route>
               <Route path="/search">
-                <Searching searchTag={searchTag} searchUpdate={this.searchUpdate} searchTag={searchTag}/>
+                <Searching selectRestaurant={this.selectRestaurant} searchTag={searchTag} searchUpdate={this.searchUpdate} searchTag={searchTag}/>
               </Route>
               <Route path="/sign-in" component={Login} />
               <Route path="/sign-up" component={SignUp} />
               <Route path="/detail" component={Detail} />
-              <Route path="/client" component={Client} />
+              <Route path="/client">
+                <Client lat={lat} lng={lng} photo={photo} description={description} restaurant={restaurant} address={address}/>
+              </Route>
               <Route path="/new">
                 <ClientOrder restaurantId="0" restaurantName="Horlicks"/>
               </Route>

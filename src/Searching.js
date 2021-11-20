@@ -25,7 +25,7 @@ class Searching extends React.Component {
     }
 
     render() {
-        const {searchUpdate, searchTag} = this.props
+        const {searchUpdate, searchTag, selectRestaurant} = this.props
         const {data} = this.state
         return (
             <>
@@ -47,18 +47,19 @@ class Searching extends React.Component {
 
                     <div className="container pb-3">
                         <div className="d-flex flex-wrap justify-content-center">
-                        {
-                        data?.map(({restaurant, photo}, index) => (
+                        {data?.map((datum, index) => {
+                            const {restaurant, photo} = datum
+                            return (
                             <Link to = "/client" style={{ textDecoration: 'none', color: 'black'}}>
-                                <div onMouseOver={()=>this.handleMouse(index)} onMouseOut={()=>this.handleMouse(index)} key={index+1} className="card d-inline-block m-2 shadow" style={{ width:this.state.selected===index ? 270:250 }}>
+                                <div onClick={() => selectRestaurant(datum)} onMouseOver={()=>this.handleMouse(index)} onMouseOut={()=>this.handleMouse(index)} key={index+1} className="card d-inline-block m-2 shadow" style={{ width:this.state.selected===index ? 270:250 }}>
                                     <img src={photo ? `/images/restaurants/${photo}` : `/images/restaurants/default.png`} alt={`${photo}`} style={{width: "100%", height: this.state.selected===index ? 230:210, objectFit:"cover"}} />
                                     <div className="card-body">
                                         <h5 className="card-title fw-bolder">{restaurant}</h5>
                                     </div>
                                 </div>
                             </Link>
-                        ))
-                        }
+                            )
+                        })}
                         </div>     
                     </div>
                 </div>
