@@ -48,7 +48,7 @@ class Home extends React.Component {
                     </div>
                     <div className="container p-3 mt-3">
                         <h1>Find your favourite restaurant through map!</h1>
-                        <Map toRestaurantPage={this.toRestaurantPage} setNameAdress={null} position={null} markersInfo={data} lat={null} lng ={null} className="boarder"/>
+                        <Map selectRestaurant={selectRestaurant} toRestaurantPage={this.toRestaurantPage} setNameAdress={null} position={null} markersInfo={data} lat={null} lng ={null} className="boarder"/>
                     </div>
                     <div className="container p-3">
                         <h1>Selected Restaurant</h1>

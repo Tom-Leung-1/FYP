@@ -25,7 +25,7 @@ class Map extends Component {
         }
     }
 
-    markerOnClick = (markerIdx) => {
+    markerOnMouseOver = (markerIdx) => {
         this.setState({markerIdx})
     }
 
@@ -33,20 +33,29 @@ class Map extends Component {
         this.setState({markerIdx : -1})
     }
 
+    restaurantRedirection = (datum) => {
+        this.props.selectRestaurant(datum)
+        this.props.toRestaurantPage()
+    }
+
+
+
     render() {
-        const { setMarker, setMap, position, markersInfo, toRestaurantPage} = this.props
+        const {selectRestaurant, setMarker, setMap, position, markersInfo, toRestaurantPage} = this.props
         const {markerIdx} = this.state
         console.log({ markersInfo })
         console.log("location", position)
-        const markers = markersInfo?.map(({lat, lng, restaurant, address}, idx) =>
-            <Marker
+        const markers = markersInfo?.map((datum, idx) => {
+            const {lat, lng, restaurant, address} = datum
+            return (
+                <Marker
                 key={idx} 
                 position={{ lat, lng }}
                 icon="images/dish.png"
-                onMouseOver={() => this.markerOnClick(idx)}
+                onMouseOver={() => this.markerOnMouseOver(idx)}
                 onMouseOut={this.handleCloseWindow}
-                onClick={toRestaurantPage}
-            >
+                onClick={() => this.restaurantRedirection(datum)}
+                >
                     {markerIdx === idx && 
                         <InfoWindow 
                             poisiton={{lat, lng}}
@@ -58,8 +67,9 @@ class Map extends Component {
                                     {address}
                                 </div>
                         </InfoWindow>}
-            </Marker>
-        )
+                </Marker>
+            )
+        })
         /*this image path is not based on the current directory. It is based on public for some reasons!!!!*/
         return (
             <div className="map-wrapper">
