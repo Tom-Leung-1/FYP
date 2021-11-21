@@ -26,6 +26,7 @@ import ClientOption from './ClientOption';
 import UProfile from './UProfile';
 import RProfileSetting from './RProfileSetting';
 import UProfileSetting from './UProfileSetting';
+import UserType from './UserType';
 
 class App extends Component {
   constructor(props) {
@@ -77,6 +78,7 @@ class App extends Component {
             <Route path="/ClientOption" component={ClientOption} />
             <Route path="/uprofile" component={UProfile} />
             <Route path="/UprofileSetting" component={UProfileSetting} />
+            <Route path="/UserType" component={UserType} />
             <div className="page">
               <Navbar />
               <Route path="/" exact>
