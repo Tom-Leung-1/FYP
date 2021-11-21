@@ -12,6 +12,7 @@ import { test } from "./helpers/DBFunctions"
 import hkid from 'validid/esm/hkid.mjs';
 import normalize from 'validid/esm/utils/normalize.mjs';
 import { withRouter } from 'react-router-dom';
+import OpenHours from './components/OpenHours';
 
 /*@TODO
 add a "please provide a valid image file in the BR tab" -> bug (the file chosen does not reflect the state change -> need a better input css)
@@ -42,6 +43,8 @@ class BRegister extends Component {
       map: null,
       token: "",
       recaptchaKey: 1,
+      OpenHours: "",
+      OpenHoursCheck: "",
     };
   }
 
@@ -85,6 +88,8 @@ class BRegister extends Component {
       restaurantCheck: '',
       districtError: '',
       selectedFile: null,
+      OpenHours: "",
+      OpenHoursCheck: "",
     });
 
   }
@@ -98,6 +103,10 @@ class BRegister extends Component {
   submitForm = async (e) => {
     const { addressValue, lat, lng } = this.state
     e.preventDefault()
+    if (!this.state.OpenHoursCheck) {
+      alert("Weekday/time range of the open hours is missing.")
+      this.setState({ recaptchaKey: this.state.recaptchaKey === 1 ? 2 : 1 })
+    }
     if (!await this.checkRecaptcha()) {
       alert("Please click on Recaptcha.")
       this.setState({ recaptchaKey: this.state.recaptchaKey === 1 ? 2 : 1 })
@@ -193,6 +202,24 @@ class BRegister extends Component {
     }
   }
 
+  saveOH = (data, weekday, start, end) => {
+    this.setState({ OpenHours: data}); 
+    if (weekday.length === 0)
+    {
+        this.setState({ OpenHoursCheck: false}); 
+    }
+    else if (start.length === 0)
+    {
+        this.setState({ OpenHoursCheck: false}); 
+    }
+    else if (end.length === 0)
+    {
+        this.setState({ OpenHoursCheck: false}); 
+    }
+    else
+        this.setState({ OpenHoursCheck: true}); 
+  }
+
   render() {
     console.log("testing", process.env.REACT_RECAPTCHA_SITE_KEY)
     const { firstValue, lastValue, phoneValue, idValue, restaurantValue, recaptchaKey } = this.state
@@ -227,7 +254,7 @@ class BRegister extends Component {
                   <FileInput accept=".jpg,.png,.jpeg" id="uploadPhoto" required={true} name="Upload Photo of restaurant (with jpg, png or jpeg format)" />
                 </div>
                 <div className="row mb-2">
-                  <TextInput sm_md_lg="-1_-1_8" id="hours" required={true} name="Open Hours" />
+                  <OpenHours name="Open Hours" id="openHours" sm_md_lg="-1_-1_8" value={this.state.OpenHours} saveOH={this.saveOH} required={true} />
                 </div>
                 <div className="row mb-2">
                   <AddressInput onChange={this.handleOnChange} sm_md_lg="-1_-1_8" id="address" address={this.state.addressValue} required={true} name="Address" onMarkerComplete={this.onMarkerComplete} />

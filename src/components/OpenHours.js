@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
-class BookingSetting extends Component {
+class OpenHours extends Component {
 
     constructor(props) {
         super(props);
         this.state = { 
-                        weekday: "",
-                        start: "",
-                        end: "",
-                        all: "",
-                     };
+            weekday: "",
+            start: "",
+            end: "",
+            all: "",
+        };
       }
 
     weekdayOpitions = () => {
@@ -57,9 +57,9 @@ class BookingSetting extends Component {
         str = str.slice(0,-1);
         this.setState({weekday: str});
         if (this.state.end === "")
-            this.setState({all: str + " " +this.state.start});
+            this.props.saveOH(str + " " +this.state.start, str, this.state.start, this.state.end);
         else
-            this.setState({all: str + " " + this.state.start + "-" + this.state.end});
+            this.props.saveOH(str + " " + this.state.start + "-" + this.state.end, str, this.state.start, this.state.end);
             
       }
 
@@ -71,15 +71,16 @@ class BookingSetting extends Component {
             alert("End time should larger than start time!");
             this.setState({start: ""});
             this.setState({end: ""});
+            this.props.saveOH(this.state.weekday);
         }
         else
         {
             this.setState({start: startT});
             this.setState({end: endT});
             if (endT === "")
-                this.setState({all: this.state.weekday + " " + startT});
+                this.props.saveOH(this.state.weekday + " " + startT, this.state.weekday, startT, endT);
             else
-                this.setState({all: this.state.weekday + " " + startT + "-" + endT});
+                this.props.saveOH(this.state.weekday + " " + startT + "-" + endT, this.state.weekday, startT, endT);
             
         }
       }
@@ -87,46 +88,35 @@ class BookingSetting extends Component {
       checkInput () {
           if (this.state.weekday.length === 0)
           {
-              alert("Please choose at least one avalible weekaday!");
-              return
+              return false
           }
           if (this.state.start.length === 0)
           {
-              alert("Please input the start time of the avalible time range!");
-              return
+              return false
           }
           if (this.state.end.length === 0)
           {
-              alert("Please input the end time of the avalible time range!");
-              return
+              return false
           }
-          alert("OK");
-          let path = `OwnerOption`;
-          this.props.history.push(path);
-
+          return true
       }
 
     render() {
+        const [sm, md, lg] = this.props.sm_md_lg.split('_')
         return (
             <>
-            <div className="container p-2">
-                <h2 className="fw-normal mt-3"><strong>Reservation Setting</strong></h2>
-                <hr/>
-                {this.state.all}
-                <br/>
-
-                <h5 className="fw-normal mt-3"><strong>Avalible Weekday</strong></h5>
+            <div className={`${sm !== "-1" ? `col-sm-${sm}` : ""} ${md !== "-1" ? `col-md-${md}` : ""} ${lg !== "-1" ? `col-lg-${lg}` : ""}`}>
+                <label className={`form-label ${this.props.required ? "required" : ""}`} htmlFor={this.props.id}><b><small>{this.props.name}</small></b></label>
+                <input type="text" id={this.props.id} value={this.props.value} className="form-control form-control-sm shadow-sm bg-white mb-1" readonly="readonly"/>
                 {this.weekdayOpitions()}
-                <h5 className="fw-normal mt-3"><strong>Avalible Time Range</strong></h5>
                 <div className="input-group mb-3" style={{width:"20em"}}>
-                    <input type="time" value={this.state.start} className="form-control" id="start" onChange={()=>this.TimeChange()}/>
+                    <input type="time" value={this.state.start} className="form-control form-control-sm shadow-sm" id="start" onChange={()=>this.TimeChange()}/>
                     <span class="input-group-text">to</span>
-                    <input type="time" value={this.state.end} className="form-control" id="end" onChange={()=>this.TimeChange()}/>
+                    <input type="time" value={this.state.end} className="form-control form-control-sm shadow-sm" id="end" onChange={()=>this.TimeChange()}/>
                 </div>
-                <button type="submit" className="btn btn-primary" style={{float: "right"}} onClick={()=>this.checkInput()}>Save</button>
-            </div>      
+            </div>            
             </>
         );
     }
 };
-export default BookingSetting
+export default OpenHours
