@@ -24,7 +24,8 @@ import RecentOrder from './RecentOrder';
 import RecentBooking from './RecentBooking';
 import ClientOption from './ClientOption';
 import UProfile from './UProfile';
-
+import RProfileSetting from './RProfileSetting';
+import UProfileSetting from './UProfileSetting';
 
 class App extends Component {
   constructor(props) {
@@ -71,9 +72,11 @@ class App extends Component {
             <Route path="/doneOrder" component={DoneOrder} />
             <Route path="/OwnerOption" component={OwnerOption} />
             <Route path="/rprofile" component={RProfile} />
+            <Route path="/RProfileSetting" component={RProfileSetting} />
             <Route path="/orderlist" component={OrderList} />
             <Route path="/ClientOption" component={ClientOption} />
             <Route path="/uprofile" component={UProfile} />
+            <Route path="/UprofileSetting" component={UProfileSetting} />
             <div className="page">
               <Navbar />
               <Route path="/" exact>

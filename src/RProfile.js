@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Helmet } from "react-helmet";
+import { Link } from 'react-router-dom';
 
 class RProfile extends Component {
     
@@ -22,7 +23,7 @@ class RProfile extends Component {
               <h2 className="fw-normal"><strong>Restaurant Profile</strong></h2>
               <hr className="mb-4" />
 
-              <button type="button" className="btn btn-primary mb-2">Update Profile</button>
+              <Link to="./RProfileSetting" type="button" className="btn btn-primary mb-2">Update Profile</Link>
 
               <h5 className="fw-normal"><strong>Owner's Information:</strong></h5>
               <div className="row mb-2">

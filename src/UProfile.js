@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Helmet } from "react-helmet";
+import { Link } from 'react-router-dom';
 
 class UProfile extends Component {
     
@@ -22,7 +23,7 @@ class UProfile extends Component {
               <h2 className="fw-normal"><strong>User Profile</strong></h2>
               <hr className="mb-4" />
 
-              <button type="button" className="btn btn-primary mb-2" style={{backgroundColor:"#6E5EFE"}}>Update Profile</button>
+              <Link to="./UProfileSetting" type="button" className="btn btn-primary mb-2" style={{backgroundColor:"#6E5EFE"}}>Update Profile</Link>
 
               <table class="table table-hover">
               <tr>
