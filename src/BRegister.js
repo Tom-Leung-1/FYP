@@ -11,7 +11,7 @@ import FileInput from './components/Inputs/FileInput';
 import { test } from "./helpers/DBFunctions"
 import hkid from 'validid/esm/hkid.mjs';
 import normalize from 'validid/esm/utils/normalize.mjs';
-import { withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router';
 import OpenHours from './components/OpenHours';
 
 /*@TODO
@@ -37,7 +37,8 @@ class BRegister extends Component {
       phoneValue: '',
       idValue: '',
       restaurantValue: '',
-      selectedFile: null,
+      brFile: null,
+      resPhoto: null,
       addressValue: '',
       marker: null,
       map: null,
@@ -87,7 +88,7 @@ class BRegister extends Component {
       idCheck: '',
       restaurantCheck: '',
       districtError: '',
-      selectedFile: null,
+      brFile: null,
       OpenHours: "",
       OpenHoursCheck: "",
     });
@@ -101,7 +102,7 @@ class BRegister extends Component {
   }
 
   submitForm = async (e) => {
-    const { addressValue, lat, lng } = this.state
+    const {resPhoto, brFile, addressValue, lat, lng } = this.state
     e.preventDefault()
     if (!this.state.OpenHoursCheck) {
       alert("Weekday/time range of the open hours is missing.")
@@ -117,7 +118,7 @@ class BRegister extends Component {
       this.setState({ recaptchaKey: this.state.recaptchaKey === 1 ? 2 : 1 })
       return
     }
-    if (!this.state.selectedFile) {
+    if (!brFile) {
       alert("Please upload registration file.")
       this.setState({ recaptchaKey: this.state.recaptchaKey === 1 ? 2 : 1 })
       return
@@ -127,16 +128,16 @@ class BRegister extends Component {
       this.setState({ recaptchaKey: this.state.recaptchaKey === 1 ? 2 : 1 })
       return
     }
-    const filename = await this.fileUploadHandler(e)
-    this.uploadCredentials(filename)
+    const brFileName = await this.fileUploadHandler("brFile")
+    const photoFilename = resPhoto ? await this.fileUploadHandler("resPhoto") : ""
+    this.uploadCredentials(brFileName, photoFilename)
     alert("done")
-    let path = `OwnerOption`;
-    this.props.history.push(path);
+    this.props.history.push("/OwnerOption");
   }
 
-  uploadCredentials = (filename) => {
-    const { firstValue, lastValue, phoneValue, idValue, restaurantValue, addressValue } = this.state
-    axios.post(`http://localhost:3001/uploadRegistration`, { firstValue, lastValue, phoneValue, idValue, restaurantValue, addressValue, filename })
+  uploadCredentials = (brFileName, photoFilename) => {
+    const { firstValue, lastValue, phoneValue, idValue, restaurantValue, addressValue, lat, lng} = this.state
+    axios.post(`http://localhost:3001/uploadRegistration`, { firstValue, lastValue, phoneValue, idValue, restaurantValue, addressValue, brFileName, photoFilename, lat, lng})
       .then(response => {
         console.log(response)
       })
@@ -164,21 +165,20 @@ class BRegister extends Component {
   }
 
   fileSelectedHandler = event => {
+    const fileType = event.target.dataset.type
     if (event.target.files.length === 0) {
-      this.setState({ selectedFile: null })
+      this.setState({ [fileType]: null })
       return
     }
-    const file = event.target.files[0]
-    const fileExtension = file.name.split('.').pop();
-    this.setState({ selectedFile: event.target.files[0] })
+    this.setState({ [fileType]: event.target.files[0] })
   }
 
-  fileUploadHandler = async event => {
+  fileUploadHandler = async (fileType) => {
     const formData = new FormData();
-    const imagefile = this.state.selectedFile;
+    const imagefile = this.state[fileType];
     formData.append("file", imagefile);
     let filename
-    await axios.post('http://localhost:3001/uploadReg', formData, {
+    await axios.post(`http://localhost:3001/${fileType === "brFile" ? "uploadReg" : "uploadRes"}`, formData, {
       //headers: {'Content-Type': 'multipart/form-data'}
     }).then(res => {
       filename = res.data.filename
@@ -245,13 +245,13 @@ class BRegister extends Component {
                   <TextInput value={idValue} sm_md_lg="4_-1_2" id="id" required={true} placeholder="E.g. A123456(7)" onChange={this.handleOnChange} name="HKID Card Number" errorMsg={this.state.idCheck} />
                 </div>
                 <div className="row mb-4">
-                  <FileInput accept=".jpg,.png,.jpeg" id="upload" required={true} onChange={this.fileSelectedHandler} name="Upload Business Registration (with jpg, png or jpeg format)" />
+                  <FileInput fileType="brFile" accept=".jpg,.png,.jpeg" id="upload" required={true} onChange={this.fileSelectedHandler} name="Upload Business Registration (with jpg, png or jpeg format)" />
                 </div>
                 <div className="row mb-2">
                   <TextInput value={restaurantValue} sm_md_lg="-1_-1_8" id="restaurant" required={true} onChange={this.handleOnChange} name="Restaurant Name" errorMsg={this.state.restaurantCheck} />
                 </div>
                 <div className="row">
-                  <FileInput accept=".jpg,.png,.jpeg" id="uploadPhoto" required={true} name="Upload Photo of restaurant (with jpg, png or jpeg format)" />
+                  <FileInput fileType="resPhoto" accept=".jpg,.png,.jpeg" id="uploadPhoto" required={true} onChange={this.fileSelectedHandler} name="Upload Photo of restaurant (with jpg, png or jpeg format)" />
                 </div>
                 <div className="row mb-2">
                   <OpenHours name="Open Hours" id="openHours" sm_md_lg="-1_-1_8" value={this.state.OpenHours} saveOH={this.saveOH} required={true} />
@@ -266,7 +266,7 @@ class BRegister extends Component {
                 <div className="row mb-4">
                   <div className="d-flex gap-5 justify-content-center">
                     <button type="button" id="reset-btn" className="btn btn-sm boarder-2 shadow-sm mx-3 border border-1 float-right" onClick={this.resetForm}><b>Reset</b></button>
-                    <button type="submit" id="upload" onClick={this.submitForm} className="btn btn-sm shadow-sm float-right" style={{ backgroundColor: "#3F5BFF", color: "white" }}><b>Submit</b></button>
+                    <button type="submit" id="upload" className="btn btn-sm shadow-sm float-right" style={{ backgroundColor: "#3F5BFF", color: "white" }}><b>Submit</b></button>
                   </div>
                 </div>
               </div>
@@ -277,4 +277,4 @@ class BRegister extends Component {
     );
   }
 }
-export default BRegister;
+export default withRouter(BRegister);

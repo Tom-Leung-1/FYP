@@ -103,7 +103,9 @@ class App extends Component {
               <PaymentChoice sendOrder={this.sendOrder}/>
             </Route>
             <Route path="/doneOrder" component={DoneOrder} />
-            <Route path="/OwnerOption" component={OwnerOption} />
+            <Route path="/OwnerOption">
+              <OwnerOption/>
+            </Route>
             <Route path="/rprofile" component={RProfile} />
             <Route path="/RProfileSetting" component={RProfileSetting} />
             <Route path="/orderlist">
