@@ -41,8 +41,8 @@ class ClientOrder extends React.Component {
     if (!data) return data
     return data.filter(({type, withSet}) => type === t && !withSet).map(({id, name, type, price, avalibleTime, maxOrder, photo}) =>  // {`images/meals/${photo}`}
     <>
-      <MealCard id={id} name={name} price={price} avalibleTime={avalibleTime} maxOrder={maxOrder} imgSrc={`images/meals/${photo}`} addOnClick={()=>this.AddMeal(name, price)}/>
-      <MealOverlay id={id} withSetData={withSetData} name={name} price={price} type={type}avalibleTime={avalibleTime} maxOrder={maxOrder} imgSrc={`/images/meals/${photo}`} addOnClick={()=>this.AddMeal(name, price)}/>
+      <MealCard id={id} name={name} price={price} avalibleTime={avalibleTime} imgSrc={`images/meals/${photo}`}/>
+      <MealOverlay id={id} withSetData={withSetData} name={name} price={price} type={type}avalibleTime={avalibleTime} maxOrder={maxOrder} imgSrc={`/images/meals/${photo}`} addOnClick={()=>this.AddMeal(id, name, price)}/>
     </>)
   }
 
@@ -94,61 +94,46 @@ class ClientOrder extends React.Component {
   CheckTakeAway = () => {
     this.TakeAway();
     if (this.state.TakeAway === null)
-        this.setState({TakeAwayErr: "Please choose whether delivery or eat away"}); 
+        this.setState({TakeAwayErr: "Please choose an option below"}); 
     else
         document.getElementById("detailBtn").click();
   }
 
-  AddMeal = (name, price) => {
+  AddMeal = (id, name, price) => {
+    
+    const totalNumber =  document.getElementById("noOf" + id).value
 
-    const orderDetail = this.state.Order.slice(0);
+    const orderDetail = [...this.state.Order];
 
-    let fName = name + " x" + document.getElementById("noOf" + name).value;
+    const fName = name + " x" + totalNumber;
 
-    let fPrice = price * document.getElementById("noOf" + name).value;
+    const radio = [...document.getElementsByName("radio" + id)]?.filter(btn => btn.checked);
 
-    let specialOrder = [];
+    const [drinkPrice, drink] = radio.length ? [radio[0].value, radio[0].dataset.name + " x" + totalNumber] : [0, ""];
 
-    let radio = document.getElementsByName("radio" + name);
+    const fPrice = (price  + parseFloat(drinkPrice)) * totalNumber
 
-    for (let i = 0; i < radio.length; i++) {
-      if(radio[i].checked) {
-        specialOrder.push(radio[i].id);
-        fPrice += parseFloat(radio[i].value) * document.getElementById("noOf" + name).value;
-      } 
-    }
+    const special = document.getElementById("specialOrder" + id).value;
 
-    specialOrder.push(document.getElementById("specialOrder" + name).value);
+    orderDetail.push({name: fName, price: fPrice, drink, special});
 
-    orderDetail.push({Name: fName, Price: fPrice, Special: specialOrder});
-
-    this.setState({Order: orderDetail});
-
-    this.setState({Total: this.state.Total + fPrice});
+    this.setState({Order: orderDetail, Total: this.state.Total + fPrice});
 
   }
 
   showOrder = () => {
 
-    var arr = [];
-
-    for (let i = 1; i <= this.state.Order.length; i++) {
-      arr.push(
-        <h5>{this.state.Order[i-1].Name} <span style={{float:"right"}}>${this.state.Order[i-1].Price}</span></h5>
-      );
-
-
-      for (let j = 0; j < this.state.Order[i-1].Special.length; j++)
-        if (this.state.Order[i-1].Special[j].length > 0)
-          arr.push(
-            <><small class="text-muted">+ {this.state.Order[i-1].Special[j]}</small><br/></>
-          );
-
-      arr.push(<br/>);
-    }
-
-    return arr;
-
+    const {Order} = this.state
+    return (Order.map(item => {
+      return (
+        <>
+        <h5>{item.name} <span style={{float:"right"}}>${item.price}</span></h5>
+        {item.drink ? <><small class="text-muted">+ {item.drink}</small><br/></> : null}
+        {item.special ? <><small class="text-muted">+ {item.special}</small><br/></> : null}
+        </>
+      )
+    }))
+    
   }
 
     render() {

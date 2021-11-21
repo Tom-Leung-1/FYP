@@ -2,8 +2,15 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 class UserType extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            
+        };
+    }
 
     render() {
+        const {owner} = this.props
         return (
             <>
             <div className="container p-5 mt-5">
@@ -24,7 +31,7 @@ class UserType extends Component {
                         </p>
                     </div>
                     <div className="card border-0 bg-light my-3" style={{width:"50vh"}}>
-                        <Link to="/register" type="button" className="btn btn-primary btn-lg fs-4 shadow border-0" style={{height: "18vh", width:"50vh", background: "#6E5EFE"}}>
+                        <Link to={owner ? "/OwnerOption" : "/register"} type="button" className="btn btn-primary btn-lg fs-4 shadow border-0" style={{height: "18vh", width:"50vh", background: "#6E5EFE"}}>
                             <i className="bi bi-shop d-flex flex-wrap justify-content-center mt-3"></i>
                             Restaurant Owner
                         </Link>
@@ -34,7 +41,6 @@ class UserType extends Component {
                             <br/>
                             You can use our website to mange the order and reservation of your restaurant!
                         </p>
-
                     </div>
                 </div>
 

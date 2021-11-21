@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 //import CustomCarousel from "./Carousel";
 import { Helmet } from "react-helmet";
 
-
+// name, special order, price, order id, drinks, done, restaurantId,
+// merge with same order No, -> key dict (value: ordersItem)
 const data = [
     {
     OrderNo: 123456,

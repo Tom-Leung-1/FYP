@@ -3,6 +3,7 @@ import { Helmet } from "react-helmet";
 import { Link } from 'react-router-dom';
 import LargeTextInput from "./components/Inputs/LargeTextInput"
 import axios from "axios"
+import {withRouter} from 'react-router';
 
 var CryptoJS = require("crypto-js");
 
@@ -121,6 +122,8 @@ class SignUp extends Component {
           .then(response => {
             console.log(response)
             alert("done!")
+            this.props.signInSetting(response.data)
+            this.props.history.push('/UserType')
           })
           .catch(error => {
             if (error.response.status === 401) {
@@ -193,4 +196,4 @@ class SignUp extends Component {
     }
 }
 
-export default SignUp;
+export default withRouter(SignUp);

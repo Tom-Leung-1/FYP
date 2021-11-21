@@ -12,7 +12,7 @@ function MealOverlay({id, withSetData, name, price, type, avalibleTime, maxOrder
                     <h3>{name}</h3>
                     <h5 class="text-danger">${price}</h5>
                     <p class="card-text"><small class="text-muted">Avalible Time: {avalibleTime}</small></p>
-                    <NumberInput max={maxOrder} id={`noOf${name}`}/>
+                    <NumberInput max={maxOrder} id={`noOf${id}`}/>
                     <p class="card-text"><small class="text-muted">At most {maxOrder} for an order</small></p>
                     {type === "Set" ?
                     <>
@@ -20,7 +20,7 @@ function MealOverlay({id, withSetData, name, price, type, avalibleTime, maxOrder
                     {withSetData?.filter(({type}) => type === "Drink").map((drink) => 
                     
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name={`radio${name}`} value={drink.price} id={drink.name} />
+                            <input class="form-check-input" type="radio" name={`radio${id}`} value={drink.price} id={drink.id} data-name={drink.name}/>
                             <label class="form-check-label" for="flexRadioDefault1">
                             {drink.price ? drink.name + " +$" + drink.price : drink.name}
                             </label>
@@ -28,7 +28,7 @@ function MealOverlay({id, withSetData, name, price, type, avalibleTime, maxOrder
                     </>
                     : null}
                     <h5 class="mb-2 mt-4">Special Order</h5>
-                    <textarea id={`specialOrder${name}`} class="form-control" rows="4" cols="50"/>
+                    <textarea id={`specialOrder${id}`} class="form-control" rows="4" cols="50"/>
                     </div>
                     <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onClick={addOnClick}>Add to Cart</button>
