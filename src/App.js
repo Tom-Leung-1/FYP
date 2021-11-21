@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import './App.css';
 import Navbar from "./components/Navbar/NewNavbar";
+import LoginNavbar from "./components/Navbar/LoginNavbar";
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Helmet } from "react-helmet";
 import Home from "./Home";
@@ -28,6 +29,11 @@ import RProfileSetting from './RProfileSetting';
 import UProfileSetting from './UProfileSetting';
 import UserType from './UserType';
 import axios from "axios"
+
+class NavRoute extends Component {
+  
+}
+
 
 class App extends Component {
   constructor(props) {
@@ -82,6 +88,10 @@ class App extends Component {
     })
   }
 
+  signOut = (num) => {
+    this.setState({userid: ""})
+  }
+
   render() {
     const {ownerRestaurantId, clientRestaurantId, owner, searchTag, lat, lng, photo, description, restaurant, address} = this.state
     return (
@@ -93,32 +103,8 @@ class App extends Component {
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.1/font/bootstrap-icons.css"></link>
           </Helmet>
           <Switch>
-            <Route path="/menu">
-              <MealMenu restaurantId={ownerRestaurantId}/>
-            </Route>
-            <Route path="/booking" component={BookingStatus} />
-            <Route path="/booksetting" component={BookingSetting} />
-            <Route path="/register" component={BRegister} />
-            <Route path="/pay">
-              <PaymentChoice sendOrder={this.sendOrder}/>
-            </Route>
-            <Route path="/doneOrder" component={DoneOrder} />
-            <Route path="/OwnerOption">
-              <OwnerOption/>
-            </Route>
-            <Route path="/rprofile" component={RProfile} />
-            <Route path="/RProfileSetting" component={RProfileSetting} />
-            <Route path="/orderlist">
-              <OrderList restaurantId={ownerRestaurantId}/>
-            </Route>
-            <Route path="/ClientOption" component={ClientOption} />
-            <Route path="/uprofile" component={UProfile} />
-            <Route path="/UprofileSetting" component={UProfileSetting} />
-            <Route path="/UserType">
-              <UserType owner={owner}/>
-            </Route> 
             <div className="page">
-              <Navbar />
+              {this.state.userid ? <LoginNavbar signOut={this.signOut}/> : <Navbar />}
               <Route path="/" exact>
                 <Home selectRestaurant={this.selectRestaurant} searchUpdate={this.searchUpdate}/>
               </Route>
@@ -143,6 +129,30 @@ class App extends Component {
               <Route path="/new">
                 <ClientOrder saveOrder={this.saveOrder} restaurantId={clientRestaurantId} restaurantName={restaurant}/>
               </Route>
+              <Route path="/menu">
+              <MealMenu restaurantId={ownerRestaurantId}/>
+            </Route>
+            <Route path="/booking" component={BookingStatus} />
+            <Route path="/booksetting" component={BookingSetting} />
+            <Route path="/register" component={BRegister} />
+            <Route path="/pay">
+              <PaymentChoice sendOrder={this.sendOrder}/>
+            </Route>
+            <Route path="/doneOrder" component={DoneOrder} />
+            <Route path="/OwnerOption">
+              <OwnerOption/>
+            </Route>
+            <Route path="/rprofile" component={RProfile} />
+            <Route path="/RProfileSetting" component={RProfileSetting} />
+            <Route path="/orderlist">
+              <OrderList restaurantId={ownerRestaurantId}/>
+            </Route>
+            <Route path="/ClientOption" component={ClientOption} />
+            <Route path="/uprofile" component={UProfile} />
+            <Route path="/UprofileSetting" component={UProfileSetting} />
+            <Route path="/UserType">
+              <UserType owner={owner}/>
+            </Route> 
 
             </div>
           </Switch>

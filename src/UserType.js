@@ -13,7 +13,7 @@ class UserType extends Component {
         const {owner} = this.props
         return (
             <>
-            <div className="container p-5 mt-5">
+            <div className="container mt-5">
                 <div className="d-flex flex-wrap justify-content-center fs-2">
                     Which kind of user you are?
                 </div>
