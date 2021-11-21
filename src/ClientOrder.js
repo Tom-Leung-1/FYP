@@ -9,6 +9,9 @@ import MealOverlay from "./components/MealOrder/MealOverlay"
 import axios from "axios"
 import SelectInput from '@mui/material/Select/SelectInput';
 import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
+import { margin } from '@mui/system';
 
 class ClientOrder extends React.Component {
   constructor(props) {
@@ -20,6 +23,7 @@ class ClientOrder extends React.Component {
       TakeAway: null,
       Order: [],
       Total: 0,
+      mealReady: true,
     };
   }
 
@@ -58,6 +62,7 @@ class ClientOrder extends React.Component {
     const {restaurantId} = this.props
     const [data, withSetData] = await this.loadData(restaurantId)
     this.setState({data, withSetData})
+    if (!data) this.setState({mealReady: false})
   }
 
   drinkOpitions = () => {
@@ -143,10 +148,16 @@ class ClientOrder extends React.Component {
       const {restaurantName, restaurantId} = this.props
       const {Order, Total, TakeAway, data} = this.state
       const typeSet = this.getDataType(data)
+
       return (
         <>
+        <Helmet>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
+        </Helmet>
           <h4 className="m-3">Restaurnt: <b>{restaurantName}</b></h4>
           <div className="m-3 COmenu mb-5">
+              <h1><center className="p-5" style={{display: this.state.mealReady ? "none" : "block"}}>Sorry, the menu is not ready.</center></h1>
+              <h1><center className="p-5 text-muted" style={{display: this.state.mealReady && typeSet.length <= 0  ? "block" : "none"}}><span className="spinner-grow"></span><br/>Loading...</center></h1>
             <div class="d-flex align-items-start">
               <div class="nav flex-column nav-pills me-1 bg-light shadow" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                 {typeSet.map((type, idx) => {
@@ -170,8 +181,8 @@ class ClientOrder extends React.Component {
               </div>
             </div>
           </div>  
-          <div class="d-grid col-12 ml-0 mr-1" style={{position: "fixed", bottom:0}}>
-            <button type="button" className="btn btn-primary mb-1" style={{backgroundColor:"#6E5EFE"}} data-bs-toggle="modal" data-bs-target="#takeAway">Create Order</button>
+          <div class="d-grid col-12" style={{position: "fixed", bottom:0}}>
+            <button type="button" className="btn btn-primary mb-2 border-0" style={{backgroundColor:"#6E5EFE", marginLeft:"20vw", marginRight:"20vw" }} data-bs-toggle="modal" data-bs-target="#takeAway" disabled={this.state.Order.length > 0 ? false : true}>Create Order</button>
           </div>
           <div class="modal fade" id="takeAway" tabindex="-1" aria-labelledby="takeAwayLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
