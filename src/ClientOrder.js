@@ -122,7 +122,6 @@ class ClientOrder extends React.Component {
   }
 
   showOrder = () => {
-
     const {Order} = this.state
     return (Order.map(item => {
       return (
@@ -133,12 +132,16 @@ class ClientOrder extends React.Component {
         </>
       )
     }))
-    
+  }
+
+  toPayment = (Order, Total, TakeAway) => {
+    this.props.saveOrder(Order, Total, TakeAway)
+    document.getElementById("detailBtn").click();
   }
 
     render() {
       const {restaurantName, restaurantId} = this.props
-      const {data} = this.state
+      const {Order, Total, TakeAway, data} = this.state
       const typeSet = this.getDataType(data)
       return (
         <>
@@ -193,7 +196,7 @@ class ClientOrder extends React.Component {
                 </div>
                 <div class="modal-footer">
                 <button type="button" class="btn btn-primary" style={{backgroundColor:"#6E5EFE"}} onClick={()=>this.CheckTakeAway()}>See Order Detail</button>
-                  <button type="button" class="btn btn-primary" style={{backgroundColor:"#6E5EFE", display: "none"}} data-bs-toggle="modal" data-bs-target={`#createOrder${restaurantId}`} data-bs-dismiss="modal" id="detailBtn">See Order Detail</button>
+                <button type="button" class="btn btn-primary" style={{backgroundColor:"#6E5EFE", display: "none"}} data-bs-toggle="modal" data-bs-target={`#createOrder${restaurantId}`} data-bs-dismiss="modal" id="detailBtn">See Order Detail</button>
                 </div>
               </div>
             </div>
@@ -212,7 +215,7 @@ class ClientOrder extends React.Component {
                 </div>
                 <div class="modal-footer">
                   <h3 class="mr-auto"><b>Total: <span class="text-danger">${this.state.Total}</span></b></h3>
-                  <Link to="/pay" type="button" class="btn btn-primary" style={{backgroundColor:"#6E5EFE"}}>Create</Link>
+                  <Link onClick={() => this.toPayment(Order, Total, TakeAway)} to="/pay" type="button" class="btn btn-primary" style={{backgroundColor:"#6E5EFE"}}>Create</Link>
                 </div>
               </div>
             </div>

@@ -27,6 +27,7 @@ import UProfile from './UProfile';
 import RProfileSetting from './RProfileSetting';
 import UProfileSetting from './UProfileSetting';
 import UserType from './UserType';
+import axios from "axios"
 
 class App extends Component {
   constructor(props) {
@@ -41,8 +42,15 @@ class App extends Component {
       address: "",
       userid: "",
       owner: 0,
+      clientOrder: [],
+      clientTotal: 0,
+      clientTakeaway: false,
+      clientRestaurantId: -1,
+      ownerRestaurantId : -1,
     };
   }
+
+  
   
   searchUpdate = (searchTag) => {
     console.log(searchTag)
@@ -50,17 +58,32 @@ class App extends Component {
   }
 
   selectRestaurant = (datum) => {
-    const {lat, lng, photo, restaurant, address, description} = datum
-    this.setState({lat, lng, photo, restaurant, address, description})
+    const {lat, lng, photo, restaurant, address, description, id} = datum
+    this.setState({lat, lng, photo, restaurant, address, description, clientRestaurantId : id})
   }
 
   signInSetting = (datum) => {
-    const {id, owner} = datum
-    this.setState({userid : id, owner})
+    const {id, owner, restaurantId} = datum
+    this.setState({userid : id, owner, ownerRestaurantId : restaurantId || -1})
+  }
+
+  saveOrder = (clientOrder, clientTotal, clientTakeaway) => {
+    this.setState({clientOrder, clientTotal, clientTakeaway})
+  }
+
+  sendOrder = async () => {
+    const {clientOrder, clientTotal, clientTakeaway, clientRestaurantId} = this.state
+    await axios.post(`http://localhost:3001/sendOrder`, {clientOrder, clientTotal, clientTakeaway, clientRestaurantId})
+    .then(response => {
+      console.log(response)
+    })
+    .catch(error => {
+      console.log(error)
+    })
   }
 
   render() {
-    const {owner, searchTag, lat, lng, photo, description, restaurant, address} = this.state
+    const {ownerRestaurantId, clientRestaurantId, owner, searchTag, lat, lng, photo, description, restaurant, address} = this.state
     return (
       <Router>
         <div className="App">
@@ -71,17 +94,21 @@ class App extends Component {
           </Helmet>
           <Switch>
             <Route path="/menu">
-              <MealMenu restaurantId="0"/>
+              <MealMenu restaurantId={ownerRestaurantId}/>
             </Route>
             <Route path="/booking" component={BookingStatus} />
             <Route path="/booksetting" component={BookingSetting} />
             <Route path="/register" component={BRegister} />
-            <Route path="/pay" component={PaymentChoice} />
+            <Route path="/pay">
+              <PaymentChoice sendOrder={this.sendOrder}/>
+            </Route>
             <Route path="/doneOrder" component={DoneOrder} />
             <Route path="/OwnerOption" component={OwnerOption} />
             <Route path="/rprofile" component={RProfile} />
             <Route path="/RProfileSetting" component={RProfileSetting} />
-            <Route path="/orderlist" component={OrderList} />
+            <Route path="/orderlist">
+              <OrderList restaurantId={ownerRestaurantId}/>
+            </Route>
             <Route path="/ClientOption" component={ClientOption} />
             <Route path="/uprofile" component={UProfile} />
             <Route path="/UprofileSetting" component={UProfileSetting} />
@@ -112,7 +139,7 @@ class App extends Component {
                 <Client lat={lat} lng={lng} photo={photo} description={description} restaurant={restaurant} address={address}/>
               </Route>
               <Route path="/new">
-                <ClientOrder restaurantId="0" restaurantName="Horlicks"/>
+                <ClientOrder saveOrder={this.saveOrder} restaurantId={clientRestaurantId} restaurantName={restaurant}/>
               </Route>
 
             </div>
