@@ -22,6 +22,8 @@ import OwnerOption from './OwnerOption';
 import RProfile from './RProfile';
 import RecentOrder from './RecentOrder';
 import RecentBooking from './RecentBooking';
+import ClientOption from './ClientOption';
+import UProfile from './UProfile';
 
 
 class App extends Component {
@@ -68,8 +70,10 @@ class App extends Component {
             <Route path="/pay" component={PaymentChoice} />
             <Route path="/doneOrder" component={DoneOrder} />
             <Route path="/OwnerOption" component={OwnerOption} />
-            <Route path="/profile" component={RProfile} />
+            <Route path="/rprofile" component={RProfile} />
             <Route path="/orderlist" component={OrderList} />
+            <Route path="/ClientOption" component={ClientOption} />
+            <Route path="/uprofile" component={UProfile} />
             <div className="page">
               <Navbar />
               <Route path="/" exact>

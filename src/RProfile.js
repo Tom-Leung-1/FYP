@@ -19,7 +19,7 @@ class RProfile extends Component {
 
             <div id="" className="container p-3">
 
-              <h2 className="fw-normal"><strong>Profile</strong></h2>
+              <h2 className="fw-normal"><strong>Restaurant Profile</strong></h2>
               <hr className="mb-4" />
 
               <button type="button" className="btn btn-primary mb-2">Update Profile</button>

@@ -203,7 +203,7 @@ class BRegister extends Component {
         </Helmet>
         <div id="BformArea" className="justify-content-center p-5">
           <form id="Bform" onSubmit={this.submitForm}>
-            <h2 className="fw-normal"><strong>Title</strong></h2>
+            <h2 className="fw-normal"><strong>Business Registration</strong></h2>
             <hr className="mb-5" />
             <div className="card" style={{ backgroundColor: "#6E5EFE", borderRadius: "6px" }}>
               <div className="card-header text-white">Please provide the following information to us.</div>
@@ -222,6 +222,12 @@ class BRegister extends Component {
                 </div>
                 <div className="row mb-2">
                   <TextInput value={restaurantValue} sm_md_lg="-1_-1_8" id="restaurant" required={true} onChange={this.handleOnChange} name="Restaurant Name" errorMsg={this.state.restaurantCheck} />
+                </div>
+                <div className="row">
+                  <FileInput accept=".jpg,.png,.jpeg" id="uploadPhoto" required={true} name="Upload Photo of restaurant (with jpg, png or jpeg format)" />
+                </div>
+                <div className="row mb-2">
+                  <TextInput sm_md_lg="-1_-1_8" id="hours" required={true} name="Open Hours" />
                 </div>
                 <div className="row mb-2">
                   <AddressInput onChange={this.handleOnChange} sm_md_lg="-1_-1_8" id="address" address={this.state.addressValue} required={true} name="Address" onMarkerComplete={this.onMarkerComplete} />

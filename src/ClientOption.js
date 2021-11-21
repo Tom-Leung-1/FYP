@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Helmet } from "react-helmet";
 
 
-class OwnerOption extends React.Component {
+class ClientOption extends React.Component {
 
     constructor(props) {
         super(props);
@@ -22,10 +22,10 @@ class OwnerOption extends React.Component {
                         <br/>
                         <p>What do you want to do?</p>
                         <div className="list-group">
-                            <Link to="/profile" className="list-group-item list-group-item-action border-0 bg-light"><i className="bi bi-arrow-right-circle"></i> Check restaurant's profile</Link>
-                            <Link to="/menu" className="list-group-item list-group-item-action border-0 bg-light"><i className="bi bi-arrow-right-circle"></i> Design menu</Link>
-                            <Link to="/orderlist" className="list-group-item list-group-item-action border-0 bg-light"><i className="bi bi-arrow-right-circle"></i> See received orders</Link>
-                            <Link to="/booking" className="list-group-item list-group-item-action border-0 bg-light"><i className="bi bi-arrow-right-circle"></i> Manage table reservation</Link>
+                            <Link to="/" className="list-group-item list-group-item-action border-0 bg-light"><i className="bi bi-arrow-right-circle"></i> Back to landing page and search restaurant</Link>
+                            <Link to="/recentorder" className="list-group-item list-group-item-action border-0 bg-light"><i className="bi bi-arrow-right-circle"></i> See recent orders</Link>
+                            <Link to="/recentbooking" className="list-group-item list-group-item-action border-0 bg-light"><i className="bi bi-arrow-right-circle"></i> Check recent reservations</Link>
+                            <Link to="/uprofile" className="list-group-item list-group-item-action border-0 bg-light"><i className="bi bi-arrow-right-circle"></i> Edit profile</Link>
                         </div>  
                     </section>
                 </div>
@@ -36,4 +36,4 @@ class OwnerOption extends React.Component {
 }
 
 
-export default OwnerOption
+export default ClientOption
