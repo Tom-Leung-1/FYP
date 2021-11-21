@@ -39,6 +39,8 @@ class App extends Component {
       description : "",
       restaurant: "",
       address: "",
+      userid: "",
+      owner: 0,
     };
   }
   
@@ -52,8 +54,13 @@ class App extends Component {
     this.setState({lat, lng, photo, restaurant, address, description})
   }
 
+  signInSetting = (datum) => {
+    const {id, owner} = datum
+    this.setState({userid : id, owner})
+  }
+
   render() {
-    const {searchTag, lat, lng, photo, description, restaurant, address} = this.state
+    const {owner, searchTag, lat, lng, photo, description, restaurant, address} = this.state
     return (
       <Router>
         <div className="App">
@@ -78,7 +85,9 @@ class App extends Component {
             <Route path="/ClientOption" component={ClientOption} />
             <Route path="/uprofile" component={UProfile} />
             <Route path="/UprofileSetting" component={UProfileSetting} />
-            <Route path="/UserType" component={UserType} />
+            <Route path="/UserType">
+              <UserType owner={owner}/>
+            </Route> 
             <div className="page">
               <Navbar />
               <Route path="/" exact>
@@ -90,8 +99,12 @@ class App extends Component {
               <Route path="/search">
                 <Searching selectRestaurant={this.selectRestaurant} searchTag={searchTag} searchUpdate={this.searchUpdate} searchTag={searchTag}/>
               </Route>
-              <Route path="/sign-in" component={Login} />
-              <Route path="/sign-up" component={SignUp} />
+              <Route path="/sign-in">
+                <Login signInSetting={this.signInSetting}/> 
+              </Route>
+              <Route path="/sign-up">
+                <SignUp signInSetting={this.signInSetting}/>
+              </Route>
               <Route path="/detail" component={Detail} />
               <Route path="/RecentOrder" component={RecentOrder} />
               <Route path="/RecentBooking" component={RecentBooking} />

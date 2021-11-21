@@ -1,6 +1,6 @@
 import React from 'react';
 
-function MealCard({id, name, price, avalibleTime, maxOrder, imgSrc, addOnClick}) {
+function MealCard({id, name, price, avalibleTime, imgSrc}) {
     return (
         <div class="card mb-1 mx-3" id={`mealCard${name}`}>                  
             <div class="card-body mt-1">

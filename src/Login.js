@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Helmet } from "react-helmet";
 import { Link } from 'react-router-dom';
 import LargeTextInput from "./components/Inputs/LargeTextInput"
+import {withRouter} from 'react-router';
 import axios from "axios"
 
 var CryptoJS = require("crypto-js");
@@ -11,12 +12,12 @@ class Login extends Component {
     constructor(props) {
         super(props);
         this.state = { 
-                       username: '',
-                       password: '',
-                       usernameError: '',
-                       passwordError: '',
-                       showPass: false 
-                     };
+          username: '',
+          password: '',
+          usernameError: '',
+          passwordError: '',
+          showPass: false 
+        };
     }
 
     submitForm = async (e) => {
@@ -27,6 +28,8 @@ class Login extends Component {
           .then(response => {
             console.log(response)
             alert("done!")
+            this.props.signInSetting(response.data[0])
+            this.props.history.push('/UserType')
           })
           .catch(error => {
             if (error.response.status === 401) {
@@ -129,4 +132,4 @@ class Login extends Component {
         );
     }
 }
-export default Login;
+export default withRouter(Login);
