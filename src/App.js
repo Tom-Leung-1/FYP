@@ -20,7 +20,8 @@ import PaymentChoice from './PaymentChoice';
 import DoneOrder from './DoneOrder';
 import OwnerOption from './OwnerOption';
 import RProfile from './RProfile';
-
+import RecentOrder from './RecentOrder';
+import RecentBooking from './RecentBooking';
 
 
 class App extends Component {
@@ -83,6 +84,8 @@ class App extends Component {
               <Route path="/sign-in" component={Login} />
               <Route path="/sign-up" component={SignUp} />
               <Route path="/detail" component={Detail} />
+              <Route path="/RecentOrder" component={RecentOrder} />
+              <Route path="/RecentBooking" component={RecentBooking} />
               <Route path="/client">
                 <Client lat={lat} lng={lng} photo={photo} description={description} restaurant={restaurant} address={address}/>
               </Route>
