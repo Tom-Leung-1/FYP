@@ -244,12 +244,12 @@ class RProfileSetting extends Component {
             <h2 className="fw-normal"><strong>Update Restaurant Profile</strong></h2>
             <hr className="mb-3" />
             <div className="row mb-4">
-                  <TextInput value={firstValue} sm_md_lg="6_-1_4" id="first" required={true} placeholder="Tai Man" onChange={this.handleOnChange} name="First Name" errorMsg={this.state.firstCheck} />
-                  <TextInput value={lastValue} sm_md_lg="6_-1_4" id="last" required={true} placeholder="Chan" onChange={this.handleOnChange} name="Last Name" errorMsg={this.state.lastCheck} />
+                  <TextInput value={firstValue} sm_md_lg="6_-1_4" id="first" required={true} placeholder="" onChange={this.handleOnChange} name="First Name" errorMsg={this.state.firstCheck} />
+                  <TextInput value={lastValue} sm_md_lg="6_-1_4" id="last" required={true} placeholder="" onChange={this.handleOnChange} name="Last Name" errorMsg={this.state.lastCheck} />
                 </div>
                 <div className="row mb-4">
-                  <TextInput value={phoneValue} sm_md_lg="5_-1_3" id="phone" required={true} placeholder="E.g. 23456781" onChange={this.handleOnChange} name="Business Phone Number" errorMsg={this.state.phoneCheck} />
-                  <TextInput value={idValue} sm_md_lg="4_-1_2" id="id" required={true} placeholder="E.g. A123456(7)" onChange={this.handleOnChange} name="HKID Card Number" errorMsg={this.state.idCheck} />
+                  <TextInput value={phoneValue} sm_md_lg="5_-1_3" id="phone" required={true} placeholder="" onChange={this.handleOnChange} name="Business Phone Number" errorMsg={this.state.phoneCheck} />
+                  <TextInput value={idValue} sm_md_lg="4_-1_2" id="id" required={true} placeholder="" onChange={this.handleOnChange} name="HKID Card Number" errorMsg={this.state.idCheck} />
                 </div>
                 <div className="row mb-4">
                   <FileInput fileType="brFile" accept=".jpg,.png,.jpeg" id="upload" required={true} onChange={this.fileSelectedHandler} name="Upload Business Registration (with jpg, png or jpeg format)" />
