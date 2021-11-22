@@ -9,8 +9,6 @@ import MealOverlay from "./components/MealOrder/MealOverlay"
 import axios from "axios"
 import SelectInput from '@mui/material/Select/SelectInput';
 import { Link } from 'react-router-dom';
-import { withRouter } from 'react-router-dom';
-import { useHistory } from "react-router-dom";
 import { margin } from '@mui/system';
 
 class ClientOrder extends React.Component {

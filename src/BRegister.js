@@ -100,6 +100,7 @@ class BRegister extends Component {
     });
     //reset checkbox
     document.querySelectorAll('input[type=checkbox]').forEach( el => el.checked = false );
+    window.scrollTo(0, 0)
   }
 
   checkForm = () => {
@@ -114,6 +115,7 @@ class BRegister extends Component {
     if (!this.state.OpenHoursCheck) {
       alert("Weekday/time range of the open hours is missing.")
       this.setState({ recaptchaKey: this.state.recaptchaKey === 1 ? 2 : 1 })
+      return
     }
     if (!await this.checkRecaptcha()) {
       alert("Please click on Recaptcha.")

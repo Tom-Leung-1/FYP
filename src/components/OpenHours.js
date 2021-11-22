@@ -66,15 +66,15 @@ class OpenHours extends Component {
       TimeChange() {
         let startT = document.getElementById("start").value;
         let endT = document.getElementById("end").value;
-        if (endT !== "" & endT < startT)
-        {
-            alert("End time should larger than start time!");
+        //if (endT !== "" & endT < startT)
+        //{
+            //alert("End time should larger than start time!");
             //this.setState({start: ""});
             //this.setState({end: ""});
-            this.props.saveOH(this.props.weekday+"", this.props.weekday, "", "");
-        }
-        else
-        {
+            //this.props.saveOH(this.props.weekday+"", this.props.weekday, "", "");
+        //}
+        //else
+        //{
             //this.setState({start: startT});
             //this.setState({end: endT});
             if (endT === "")
@@ -82,7 +82,7 @@ class OpenHours extends Component {
             else
                 this.props.saveOH(this.props.weekday + " " + startT + "-" + endT, this.props.weekday, startT, endT);
             
-        }
+        //}
       }
 
       checkInput () {

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import {withRouter} from 'react-router';
 
 class BookingSetting extends Component {
 
@@ -101,8 +102,7 @@ class BookingSetting extends Component {
               return
           }
           alert("OK");
-          let path = `OwnerOption`;
-          this.props.history.push(path);
+          this.props.history.push("/OwnerOption");
 
       }
 
@@ -129,4 +129,4 @@ class BookingSetting extends Component {
         );
     }
 };
-export default BookingSetting
+export default withRouter(BookingSetting)

@@ -13,6 +13,7 @@ import hkid from 'validid/esm/hkid.mjs';
 import normalize from 'validid/esm/utils/normalize.mjs';
 import { withRouter } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import OpenHours from "./components/OpenHours";
 
 /*@TODO
 add a "please provide a valid image file in the BR tab" -> bug (the file chosen does not reflect the state change -> need a better input css)
@@ -37,12 +38,18 @@ class RProfileSetting extends Component {
       phoneValue: '',
       idValue: '',
       restaurantValue: '',
-      selectedFile: null,
+      brFile: null,
+      resPhoto: null,
       addressValue: '',
       marker: null,
       map: null,
       token: "",
       recaptchaKey: 1,
+      OpenHours: "",
+      OpenWeekdays: "",
+      OpenStart: "",
+      OpenEnd: "",
+      OpenHoursCheck: "",
     };
   }
 
@@ -85,9 +92,16 @@ class RProfileSetting extends Component {
       idCheck: '',
       restaurantCheck: '',
       districtError: '',
-      selectedFile: null,
+      brFile: null,
+      OpenHours: "",
+      OpenWeekdays: "",
+      OpenStart: "",
+      OpenEnd: "",
+      OpenHoursCheck: "",
     });
-
+    //reset checkbox
+    document.querySelectorAll('input[type=checkbox]').forEach( el => el.checked = false );
+    window.scrollTo(0, 0)
   }
 
   checkForm = () => {
@@ -97,8 +111,13 @@ class RProfileSetting extends Component {
   }
 
   submitForm = async (e) => {
-    const { addressValue, lat, lng } = this.state
+    const {resPhoto, brFile, addressValue, lat, lng } = this.state
     e.preventDefault()
+    if (!this.state.OpenHoursCheck) {
+      alert("Weekday/time range of the open hours is missing.")
+      this.setState({ recaptchaKey: this.state.recaptchaKey === 1 ? 2 : 1 })
+      return
+    }
     if (!await this.checkRecaptcha()) {
       alert("Please click on Recaptcha.")
       this.setState({ recaptchaKey: this.state.recaptchaKey === 1 ? 2 : 1 })
@@ -109,7 +128,7 @@ class RProfileSetting extends Component {
       this.setState({ recaptchaKey: this.state.recaptchaKey === 1 ? 2 : 1 })
       return
     }
-    if (!this.state.selectedFile) {
+    if (!brFile) {
       alert("Please upload registration file.")
       this.setState({ recaptchaKey: this.state.recaptchaKey === 1 ? 2 : 1 })
       return
@@ -119,16 +138,16 @@ class RProfileSetting extends Component {
       this.setState({ recaptchaKey: this.state.recaptchaKey === 1 ? 2 : 1 })
       return
     }
-    const filename = await this.fileUploadHandler(e)
-    this.uploadCredentials(filename)
+    const brFileName = await this.fileUploadHandler("brFile")
+    const photoFilename = resPhoto ? await this.fileUploadHandler("resPhoto") : ""
+    this.uploadCredentials(brFileName, photoFilename)
     alert("done")
-    let path = `OwnerOption`;
-    this.props.history.push(path);
+    this.props.history.push("/rprofile");
   }
 
-  uploadCredentials = (filename) => {
-    const { firstValue, lastValue, phoneValue, idValue, restaurantValue, addressValue } = this.state
-    axios.post(`http://localhost:3001/uploadRegistration`, { firstValue, lastValue, phoneValue, idValue, restaurantValue, addressValue, filename })
+  uploadCredentials = (brFileName, photoFilename) => {
+    const { firstValue, lastValue, phoneValue, idValue, restaurantValue, addressValue, lat, lng} = this.state
+    axios.post(`http://localhost:3001/uploadRegistration`, { firstValue, lastValue, phoneValue, idValue, restaurantValue, addressValue, brFileName, photoFilename, lat, lng})
       .then(response => {
         console.log(response)
       })
@@ -156,21 +175,20 @@ class RProfileSetting extends Component {
   }
 
   fileSelectedHandler = event => {
+    const fileType = event.target.dataset.type
     if (event.target.files.length === 0) {
-      this.setState({ selectedFile: null })
+      this.setState({ [fileType]: null })
       return
     }
-    const file = event.target.files[0]
-    const fileExtension = file.name.split('.').pop();
-    this.setState({ selectedFile: event.target.files[0] })
+    this.setState({ [fileType]: event.target.files[0] })
   }
 
-  fileUploadHandler = async event => {
+  fileUploadHandler = async (fileType) => {
     const formData = new FormData();
-    const imagefile = this.state.selectedFile;
+    const imagefile = this.state[fileType];
     formData.append("file", imagefile);
     let filename
-    await axios.post('http://localhost:3001/uploadReg', formData, {
+    await axios.post(`http://localhost:3001/${fileType === "brFile" ? "uploadReg" : "uploadRes"}`, formData, {
       //headers: {'Content-Type': 'multipart/form-data'}
     }).then(res => {
       filename = res.data.filename
@@ -194,6 +212,25 @@ class RProfileSetting extends Component {
     }
   }
 
+  saveOH = (data, weekday, start, end) => {
+    this.setState({ OpenHours: data, OpenWeekdays: weekday, OpenStart: start, OpenEnd: end}); 
+
+    if (weekday.length === 0)
+    {
+        this.setState({ OpenHoursCheck: false}); 
+    }
+    else if (start.length === 0)
+    {
+        this.setState({ OpenHoursCheck: false}); 
+    }
+    else if (end.length === 0)
+    {
+        this.setState({ OpenHoursCheck: false}); 
+    }
+    else
+        this.setState({ OpenHoursCheck: true}); 
+  }
+
   render() {
     console.log("testing", process.env.REACT_RECAPTCHA_SITE_KEY)
     const { firstValue, lastValue, phoneValue, idValue, restaurantValue, recaptchaKey } = this.state
@@ -206,7 +243,7 @@ class RProfileSetting extends Component {
           <form id="RProfileSettingform" onSubmit={this.submitForm}>
             <h2 className="fw-normal"><strong>Update Restaurant Profile</strong></h2>
             <hr className="mb-3" />
-                <div className="row mb-4">
+            <div className="row mb-4">
                   <TextInput value={firstValue} sm_md_lg="6_-1_4" id="first" required={true} placeholder="Tai Man" onChange={this.handleOnChange} name="First Name" errorMsg={this.state.firstCheck} />
                   <TextInput value={lastValue} sm_md_lg="6_-1_4" id="last" required={true} placeholder="Chan" onChange={this.handleOnChange} name="Last Name" errorMsg={this.state.lastCheck} />
                 </div>
@@ -215,16 +252,16 @@ class RProfileSetting extends Component {
                   <TextInput value={idValue} sm_md_lg="4_-1_2" id="id" required={true} placeholder="E.g. A123456(7)" onChange={this.handleOnChange} name="HKID Card Number" errorMsg={this.state.idCheck} />
                 </div>
                 <div className="row mb-4">
-                  <FileInput accept=".jpg,.png,.jpeg" id="upload" required={true} onChange={this.fileSelectedHandler} name="Upload Business Registration (with jpg, png or jpeg format)" />
+                  <FileInput fileType="brFile" accept=".jpg,.png,.jpeg" id="upload" required={true} onChange={this.fileSelectedHandler} name="Upload Business Registration (with jpg, png or jpeg format)" />
                 </div>
                 <div className="row mb-2">
                   <TextInput value={restaurantValue} sm_md_lg="-1_-1_8" id="restaurant" required={true} onChange={this.handleOnChange} name="Restaurant Name" errorMsg={this.state.restaurantCheck} />
                 </div>
                 <div className="row">
-                  <FileInput accept=".jpg,.png,.jpeg" id="uploadPhoto" required={true} name="Upload Photo of restaurant (with jpg, png or jpeg format)" />
+                  <FileInput fileType="resPhoto" accept=".jpg,.png,.jpeg" id="uploadPhoto" required={true} onChange={this.fileSelectedHandler} name="Upload Photo of restaurant (with jpg, png or jpeg format)" />
                 </div>
                 <div className="row mb-2">
-                  <TextInput sm_md_lg="-1_-1_8" id="hours" required={true} name="Open Hours" />
+                  <OpenHours name="Open Hours" id="openHours" sm_md_lg="-1_-1_8" value={this.state.OpenHours} saveOH={this.saveOH} weekday={this.state.OpenWeekdays} start={this.state.OpenStart} end={this.state.OpenEnd} required={true} />
                 </div>
                 <div className="row mb-2">
                   <AddressInput onChange={this.handleOnChange} sm_md_lg="-1_-1_8" id="address" address={this.state.addressValue} required={true} name="Address" onMarkerComplete={this.onMarkerComplete} />
@@ -246,4 +283,4 @@ class RProfileSetting extends Component {
     );
   }
 }
-export default RProfileSetting;
+export default withRouter(RProfileSetting);
