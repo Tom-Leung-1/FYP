@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid'; // 1. npm install @material-ui/core 2. npm install @material-ui/data-grid 3.npm install @material-ui/styles
 import { Helmet } from "react-helmet";
+import axios from 'axios';
 
 const currencyFormatter = new Intl.NumberFormat('zh-HK', {
     style: 'currency',
@@ -127,8 +128,32 @@ class RecentOrder extends React.Component {
   constructor(props) {
     super(props);
     this.state = { 
-                    pageSize: 10
-                 };
+      pageSize: 10
+    };
+  }
+
+  getUserOrders = async () => {
+    const {userId} = this.props
+    let data
+    await axios.get(`http://localhost:3001/getUserOrders?id=${userId}`)
+      .then(response => {
+      data = response.data
+      })
+      .catch(error => {
+      console.log(error)
+      })
+    console.log(data)
+    return data
+  }
+
+  getOrdersItems = async () => {
+    
+  }
+
+  componentDidMount = async () => {
+    const orders = await this.getUserOrders()
+    const ordersItems = await this.getOrdersItems(orders)
+    this.setState({orders})
   }
 
   handlePageSizeChange = (params) => {

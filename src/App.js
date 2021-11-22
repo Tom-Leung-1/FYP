@@ -30,10 +30,6 @@ import UProfileSetting from './UProfileSetting';
 import UserType from './UserType';
 import axios from "axios"
 
-class NavRoute extends Component {
-  
-}
-
 
 class App extends Component {
   constructor(props) {
@@ -46,7 +42,7 @@ class App extends Component {
       description : "",
       restaurant: "",
       address: "",
-      userId: "",
+      userId: -1,
       owner: 0,
       clientOrder: [],
       clientTotal: 0,
@@ -79,8 +75,17 @@ class App extends Component {
   }
 
   sendOrder = async () => {
-    const {clientOrder, clientTotal, clientTakeaway, clientRestaurantId} = this.state
+    const {userId, restaurant, clientOrder, clientTotal, clientTakeaway, clientRestaurantId} = this.state
+    let orderId
     await axios.post(`http://localhost:3001/sendOrder`, {clientOrder, clientTotal, clientTakeaway, clientRestaurantId})
+    .then(response => {
+      orderId = response.data
+    })
+    .catch(error => {
+      console.log(error)
+      return
+    })
+    await axios.post(`http://localhost:3001/userOrder`, {userId, orderId, restaurant, clientTakeaway, clientTotal})
     .then(response => {
       console.log(response)
     })
@@ -122,7 +127,9 @@ class App extends Component {
                 <SignUp signInSetting={this.signInSetting}/>
               </Route>
               <Route path="/detail" component={Detail} />
-              <Route path="/RecentOrder" component={RecentOrder} />
+              <Route path="/RecentOrder">
+                 <RecentOrder userId={userId}/>
+              </Route>
               <Route path="/RecentBooking" component={RecentBooking} />
               <Route path="/client">
                 <Client lat={lat} lng={lng} photo={photo} description={description} restaurant={restaurant} address={address} openHours={openHours}/>
