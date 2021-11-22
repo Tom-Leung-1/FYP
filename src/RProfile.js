@@ -1,14 +1,18 @@
-import React, { Component } from 'react';
+import React, { Component, Profiler } from 'react';
 import { Helmet } from "react-helmet";
 import { Link } from 'react-router-dom';
+import Map from './components/GoogleMap/GoogleMap';
 import axios from "axios"
+import { lt } from 'date-fns/locale';
 
 class RProfile extends Component {
     
     constructor(props) {
       super(props);
       this.state = { 
-        data : null,      
+        data : null,
+        lat: null,
+        lng: null  
       };
     }
 
@@ -29,9 +33,15 @@ class RProfile extends Component {
       const data = await this.getRegData(ownerRestaurantId)
       console.log(data)
       this.setState({data})
+      if (data)
+      {
+        this.setState({lat: data[0].lat})
+        this.setState({lng: data[0].lng})
+      }
     }
 
     render() {
+      const {data,lat,lng} = this.state
       return (
         <>
           <Helmet>
@@ -46,12 +56,12 @@ class RProfile extends Component {
               <div className="col-sm-5 col-lg-3 mb-2">
                 <label htmlFor="first" className="form-label"><b><small>First Name</small></b></label>
                 <br/>
-                Tai Man
+                {data ? data[0].first_name : "-"}
               </div>
               <div className="col-sm-5 col-lg-2">
               <label htmlFor="last" className="form-label"><b><small>Last Name</small></b></label>
               <br/>
-                Chan
+              {data ? data[0].last_name : "-"}
               </div>
             </div>
 
@@ -59,12 +69,12 @@ class RProfile extends Component {
               <div className="col-sm-5 col-lg-3 mb-2">
                 <label htmlFor="phone" className="form-label"><b><small>Business Phone Number</small></b></label>
                 <br/>
-                234567481
+                {data ? data[0].phone : "-"}
               </div>
               <div className="col-sm-5 col-lg-2">
                 <label htmlFor="id" className="form-label"><b><small>HKID Card Number</small></b></label>
                 <br/>
-                A123456(3)
+                {data ? data[0].hkid : "-"}
               </div>
             </div>
             <h5 className="fw-normal"><strong>Restaurant's Information:</strong></h5>
@@ -72,27 +82,31 @@ class RProfile extends Component {
               <div className="col-sm-5 col-lg-3 mb-2">
                 <label htmlFor="rname" className="form-label"><b><small>Restaurant's Name</small></b></label>
                 <br/>
-                Horlicks
+                {data ? data[0].restaurant : "-"}
               </div>
               <div className="col-sm-5 col-lg-9">
               <label htmlFor="address" className="form-label"><b><small>Address</small></b></label>
               <br/>
-              Shop 888, 8/F, Dragon Centre, 37 Yen Chow Street, Sham Shui Po
+              {data ? data[0].address : "-"}
               </div>
+            </div>
+
+            <div className="row mb-4">
+              <label htmlFor="map" className="form-label"><b><small>Map</small></b></label>
+              <br/>
+              <Map position={{lat, lng}}/>
             </div>
 
             <div className="row mb-4">
               <div className="col-sm-5 col-lg-3 mb-4">
                 <label htmlFor="hour" className="form-label"><b><small>Open Hours</small></b></label>
                 <br/>
-                Tue-Sun: 5-11pm
+                {data ? data[0].open_hours : "-"}
               </div>
               <div className="col-sm-10 col-lg-10">
                 <label htmlFor="description" className="form-label"><b><small>Description</small></b></label>
                 <br/>
-                Horlicks pays homage to the great traditions and savoir-faire of French gastronomy, redefining fine dining with a contemporary vision. It is a place where taste is the restaurant’s raison d’être and the ultimate criteria of success. The restaurant serves as one of the few places in the world to possess an unparalleled presence from the gastronomy pioneer.
-                <br/>
-                Horlicks sources produce from the best regions and harvested at their optimal time, highlighting a deep appreciation for nature and an intimate understanding of the seasons. Sourcing from small-scale farms and line-caught fish, the restaurant ensures unparalleled quality and a distinctive tasting experience.
+                {data ? data[0].description.length > 0 ? data[0].description : "No description" : "-"}
               </div>
             </div>
           </div>
