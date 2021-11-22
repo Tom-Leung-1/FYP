@@ -145,8 +145,9 @@ class BRegister extends Component {
   }
 
   uploadCredentials = (brFileName, photoFilename) => {
-    const { firstValue, lastValue, phoneValue, idValue, restaurantValue, addressValue, lat, lng} = this.state
-    axios.post(`http://localhost:3001/uploadRegistration`, { firstValue, lastValue, phoneValue, idValue, restaurantValue, addressValue, brFileName, photoFilename, lat, lng})
+    const { userId } = this.props
+    const { firstValue, lastValue, phoneValue, idValue, restaurantValue, addressValue, lat, lng, OpenHours} = this.state
+    axios.post(`http://localhost:3001/uploadRegistration`, { firstValue, lastValue, phoneValue, idValue, restaurantValue, addressValue, brFileName, photoFilename, lat, lng, userId, OpenHours})
       .then(response => {
         console.log(response)
       })

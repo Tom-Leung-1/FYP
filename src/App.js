@@ -46,7 +46,7 @@ class App extends Component {
       description : "",
       restaurant: "",
       address: "",
-      userid: "",
+      userId: "",
       owner: 0,
       clientOrder: [],
       clientTotal: 0,
@@ -70,7 +70,7 @@ class App extends Component {
 
   signInSetting = (datum) => {
     const {id, owner, restaurantId} = datum
-    this.setState({userid : id, owner, ownerRestaurantId : restaurantId || -1})
+    this.setState({userId : id, owner, ownerRestaurantId : restaurantId || -1})
   }
 
   saveOrder = (clientOrder, clientTotal, clientTakeaway) => {
@@ -89,11 +89,11 @@ class App extends Component {
   }
 
   signOut = (num) => {
-    this.setState({userid: ""})
+    this.setState({userId: ""})
   }
 
   render() {
-    const {ownerRestaurantId, clientRestaurantId, owner, searchTag, lat, lng, photo, description, restaurant, address} = this.state
+    const {userId, ownerRestaurantId, clientRestaurantId, owner, searchTag, lat, lng, photo, description, restaurant, address} = this.state
     return (
       <Router>
         <div className="App">
@@ -104,7 +104,7 @@ class App extends Component {
           </Helmet>
           <Switch>
             <div className="page">
-              {this.state.userid ? <LoginNavbar signOut={this.signOut}/> : <Navbar />}
+              {userId ? <LoginNavbar signOut={this.signOut}/> : <Navbar />}
               <Route path="/" exact>
                 <Home selectRestaurant={this.selectRestaurant} searchUpdate={this.searchUpdate}/>
               </Route>
@@ -134,7 +134,9 @@ class App extends Component {
             </Route>
             <Route path="/booking" component={BookingStatus} />
             <Route path="/booksetting" component={BookingSetting} />
-            <Route path="/register" component={BRegister} />
+            <Route path="/register">
+              <BRegister userId={userId}/>
+            </Route>
             <Route path="/pay">
               <PaymentChoice sendOrder={this.sendOrder}/>
             </Route>
@@ -142,7 +144,9 @@ class App extends Component {
             <Route path="/OwnerOption">
               <OwnerOption/>
             </Route>
-            <Route path="/rprofile" component={RProfile} />
+            <Route path="/rprofile">
+              <RProfile ownerRestaurantId={ownerRestaurantId}/>
+            </Route>
             <Route path="/RProfileSetting" component={RProfileSetting} />
             <Route path="/orderlist">
               <OrderList restaurantId={ownerRestaurantId}/>

@@ -7,11 +7,11 @@ class BookingSetting extends Component {
     constructor(props) {
         super(props);
         this.state = { 
-                        weekday: "",
-                        start: "",
-                        end: "",
-                        all: "",
-                     };
+            weekday: "",
+            start: "",
+            end: "",
+            all: "",
+        };
       }
 
     weekdayOpitions = () => {
@@ -47,13 +47,10 @@ class BookingSetting extends Component {
                 {
                     str += weekday[i].value + "-" + weekday[j-1].value + ",";
                     i = j-1;
-                }
-                    
+                }  
                 else
                    str += weekday[i].value + ",";
-                
             }
-
         }
         str = str.slice(0,-1);
         this.setState({weekday: str});
@@ -109,22 +106,22 @@ class BookingSetting extends Component {
     render() {
         return (
             <>
-            <div className="container p-2">
-                <h2 className="fw-normal mt-3"><strong>Reservation Setting</strong></h2>
-                <hr/>
-                {this.state.all}
-                <br/>
+                <div className="container p-2">
+                    <h2 className="fw-normal mt-3"><strong>Reservation Setting</strong></h2>
+                    <hr/>
+                    {this.state.all}
+                    <br/>
 
-                <h5 className="fw-normal mt-3"><strong>Avalible Weekday</strong></h5>
-                {this.weekdayOpitions()}
-                <h5 className="fw-normal mt-3"><strong>Avalible Time Range</strong></h5>
-                <div className="input-group mb-3" style={{width:"20em"}}>
-                    <input type="time" value={this.state.start} className="form-control" id="start" onChange={()=>this.TimeChange()}/>
-                    <span class="input-group-text">to</span>
-                    <input type="time" value={this.state.end} className="form-control" id="end" onChange={()=>this.TimeChange()}/>
-                </div>
-                <button type="submit" className="btn btn-primary" style={{float: "right"}} onClick={()=>this.checkInput()}>Save</button>
-            </div>      
+                    <h5 className="fw-normal mt-3"><strong>Avalible Weekday</strong></h5>
+                    {this.weekdayOpitions()}
+                    <h5 className="fw-normal mt-3"><strong>Avalible Time Range</strong></h5>
+                    <div className="input-group mb-3" style={{width:"20em"}}>
+                        <input type="time" value={this.state.start} className="form-control" id="start" onChange={()=>this.TimeChange()}/>
+                        <span class="input-group-text">to</span>
+                        <input type="time" value={this.state.end} className="form-control" id="end" onChange={()=>this.TimeChange()}/>
+                    </div>
+                    <button type="submit" className="btn btn-primary" style={{float: "right"}} onClick={()=>this.checkInput()}>Save</button>
+                </div>      
             </>
         );
     }
