@@ -15,7 +15,7 @@ class Client extends Component {
     }
     
     render() {
-        const {lat, lng, photo, description, restaurant, address} = this.props
+        const {lat, lng, photo, description, restaurant, address, openHours} = this.props
         const position = {lat, lng} 
         return (
             <div className="bg-light">
@@ -34,7 +34,7 @@ class Client extends Component {
                                     <span className="fw-bold"><i className="bi bi-clock"></i> Hours</span>
                                     <br/>
                                     <small className="text-muted">
-                                    Tue-Sun: 5-11pm
+                                    {openHours}
                                     </small>
                                 </p>
 

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import {withRouter} from 'react-router';
+import axios from 'axios';
 
 class BookingSetting extends Component {
 
@@ -12,13 +13,30 @@ class BookingSetting extends Component {
             end: "",
             all: "",
         };
-      }
+    }
+
+    getTimeSetting = async () => {
+        const {restaurantId} = this.props
+        let data
+        await axios.get(`http://localhost:3001/getTimeSetting?id=${restaurantId}`)
+            .then(response => {
+            data = response.data
+            })
+            .catch(error => {
+            console.log(error)
+        })
+        console.log(data)
+        return data
+    }
+
+    componentDidMount = async () => {
+        const data = await this.getTimeSetting()
+        this.setState({all : data[0]?.['open_hours']})
+    }
 
     weekdayOpitions = () => {
         var arr = [];
         const weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
-
-    
         for (let i = 0; i < 7; i++) {
           arr.push(
               <div class="form-check form-check-inline">
@@ -27,7 +45,6 @@ class BookingSetting extends Component {
               </div>
           );
         }
-    
         return arr;
     }
 
@@ -58,10 +75,9 @@ class BookingSetting extends Component {
             this.setState({all: str + " " +this.state.start});
         else
             this.setState({all: str + " " + this.state.start + "-" + this.state.end});
-            
-      }
+    }
 
-      TimeChange() {
+    TimeChange() {
         let startT = document.getElementById("start").value;
         let endT = document.getElementById("end").value;
         if (endT !== "" & endT < startT)
@@ -80,28 +96,40 @@ class BookingSetting extends Component {
                 this.setState({all: this.state.weekday + " " + startT + "-" + endT});
             
         }
-      }
+    }
 
-      checkInput () {
-          if (this.state.weekday.length === 0)
-          {
-              alert("Please choose at least one avalible weekaday!");
-              return
-          }
-          if (this.state.start.length === 0)
-          {
-              alert("Please input the start time of the avalible time range!");
-              return
-          }
-          if (this.state.end.length === 0)
-          {
-              alert("Please input the end time of the avalible time range!");
-              return
-          }
-          alert("OK");
-          this.props.history.push("/OwnerOption");
+    saveTimeSetting = async () => {
+        const {all} = this.state
+        const {restaurantId} = this.props
+        await axios.post(`http://localhost:3001/saveTimeSetting`, {all, restaurantId})
+        .then(response => {
+            console.log(response)
+        })
+        .catch(error => {
+            console.log(error)
+        })
+    }
 
-      }
+    checkInput = async () => {
+        if (this.state.weekday.length === 0)
+        {
+            alert("Please choose at least one avalible weekaday!");
+            return
+        }
+        if (this.state.start.length === 0)
+        {
+            alert("Please input the start time of the avalible time range!");
+            return
+        }
+        if (this.state.end.length === 0)
+        {
+            alert("Please input the end time of the avalible time range!");
+            return
+        }
+        await this.saveTimeSetting()
+        alert("Time setting has been changed.");
+        this.props.history.push("/OwnerOption");
+    }
 
     render() {
         return (
@@ -111,7 +139,6 @@ class BookingSetting extends Component {
                     <hr/>
                     {this.state.all}
                     <br/>
-
                     <h5 className="fw-normal mt-3"><strong>Avalible Weekday</strong></h5>
                     {this.weekdayOpitions()}
                     <h5 className="fw-normal mt-3"><strong>Avalible Time Range</strong></h5>

@@ -53,6 +53,7 @@ class App extends Component {
       clientTakeaway: false,
       clientRestaurantId: -1,
       ownerRestaurantId : -1,
+      openHours: "",
     };
   }
 
@@ -65,7 +66,7 @@ class App extends Component {
 
   selectRestaurant = (datum) => {
     const {lat, lng, photo, restaurant, address, description, id} = datum
-    this.setState({lat, lng, photo, restaurant, address, description, clientRestaurantId : id})
+    this.setState({lat, lng, photo, restaurant, address, description, clientRestaurantId : id, openHours : datum['open_hours']})
   }
 
   signInSetting = (datum) => {
@@ -93,7 +94,7 @@ class App extends Component {
   }
 
   render() {
-    const {userId, ownerRestaurantId, clientRestaurantId, owner, searchTag, lat, lng, photo, description, restaurant, address} = this.state
+    const {openHours, userId, ownerRestaurantId, clientRestaurantId, owner, searchTag, lat, lng, photo, description, restaurant, address} = this.state
     return (
       <Router>
         <div className="App">
@@ -124,7 +125,7 @@ class App extends Component {
               <Route path="/RecentOrder" component={RecentOrder} />
               <Route path="/RecentBooking" component={RecentBooking} />
               <Route path="/client">
-                <Client lat={lat} lng={lng} photo={photo} description={description} restaurant={restaurant} address={address}/>
+                <Client lat={lat} lng={lng} photo={photo} description={description} restaurant={restaurant} address={address} openHours={openHours}/>
               </Route>
               <Route path="/new">
                 <ClientOrder saveOrder={this.saveOrder} restaurantId={clientRestaurantId} restaurantName={restaurant}/>
@@ -133,7 +134,9 @@ class App extends Component {
               <MealMenu restaurantId={ownerRestaurantId}/>
             </Route>
             <Route path="/booking" component={BookingStatus} />
-            <Route path="/booksetting" component={BookingSetting} />
+            <Route path="/booksetting">
+              <BookingSetting restaurantId={ownerRestaurantId}/>
+            </Route>
             <Route path="/register">
               <BRegister userId={userId}/>
             </Route>
