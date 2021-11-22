@@ -157,7 +157,9 @@ class App extends Component {
             <Route path="/rprofile">
               <RProfile ownerRestaurantId={ownerRestaurantId}/>
             </Route>
-            <Route path="/RProfileSetting" component={RProfileSetting} />
+            <Route path="/RProfileSetting">
+            <RProfileSetting restaurantId={ownerRestaurantId} />
+            </Route> 
             <Route path="/orderlist">
               <OrderList restaurantId={ownerRestaurantId}/>
             </Route>

@@ -12,6 +12,7 @@ class BookingSetting extends Component {
             start: "",
             end: "",
             all: "",
+
         };
     }
 
@@ -29,9 +30,58 @@ class BookingSetting extends Component {
         return data
     }
 
+    weekdayToNum(day) {
+        switch (day) {
+            case 'Sun': return 0;
+            case 'Mon': return 1;
+            case 'Tue': return 2;
+            case 'Wed': return 3;
+            case 'Thu': return 4;
+            case 'Fri': return 5;
+            case 'Sat': return 6;
+            default: return -1;
+        }
+    }
+
     componentDidMount = async () => {
         const data = await this.getTimeSetting()
         this.setState({all : data[0]?.['open_hours']})
+        try
+        {
+            let OH = data[0].open_hours
+            let dayTime = OH.split(" ")
+            let weekday = dayTime[0].split(",")
+            this.setState({weekday : dayTime[0]})
+            let check = [false,false,false,false,false,false,false,];
+            for (const day of weekday)
+            {
+                if (day.length === 3)
+                {
+                    check[this.weekdayToNum(day)] = true;
+                }
+                else
+                {
+                    let range = day.split("-")
+                    let start = this.weekdayToNum(range[0])
+                    let end = this.weekdayToNum(range[1])
+                    for (let i = start; i <= end; i++)
+                    {
+                        check[i] = true;
+                    }
+                }                
+            }
+            let initial = document.getElementsByName("weekday");
+            for (let i = 0; i < initial.length; i++) {
+                initial[i].checked = check[i];
+            }
+            let time = dayTime[1].split("-")
+            this.setState({start : time[0]})
+            this.setState({end : time[1]})
+            
+        }
+        catch (err) {
+            console.log("data error");
+        }
     }
 
     weekdayOpitions = () => {
@@ -40,7 +90,7 @@ class BookingSetting extends Component {
         for (let i = 0; i < 7; i++) {
           arr.push(
               <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="checkbox" id="checkbox" name="weekday" value={weekday[i].substring(0,3)} onClick={()=>this.weekdayStr()} />
+                  <input class="form-check-input" type="checkbox" id="checkbox" name="weekday" value={weekday[i].substring(0,3)} onClick={()=>this.weekdayStr()}/>
                   <label class="form-check-label" for="checkbox">{weekday[i].substring(0,3)}</label>
               </div>
           );

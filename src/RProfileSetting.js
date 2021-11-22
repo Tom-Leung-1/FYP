@@ -26,6 +26,7 @@ class RProfileSetting extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      data: [],
       lat : -1,
       lng : -1,
       firstCheck: '',
@@ -110,7 +111,7 @@ class RProfileSetting extends Component {
     return (firstCheck + lastCheck + phoneCheck + idCheck + restaurantCheck === "OKOKOKOKOK")
   }
 
-  submitForm = async (e) => {
+  updateForm = async (e) => {
     const {resPhoto, brFile, addressValue, lat, lng } = this.state
     e.preventDefault()
     if (!this.state.OpenHoursCheck) {
@@ -274,7 +275,7 @@ class RProfileSetting extends Component {
                   <div className="d-flex gap-5 justify-content-center">
                     <Link to="/rprofile" type="button" id="back-btn" className="btn btn-secondary btn-sm boarder-2 shadow-sm mx-3 border border-1 float-right"><b>Back</b></Link>
                     <button type="button" id="reset-btn" className="btn btn-sm boarder-2 shadow-sm mx-3 border border-1 float-right" onClick={this.resetForm}><b>Reset</b></button>
-                    <button type="submit" id="upload" onClick={this.submitForm} className="btn btn-sm shadow-sm float-right" style={{ backgroundColor: "#3F5BFF", color: "white" }}><b>Submit</b></button>
+                    <button type="submit" id="upload" onClick={this.updateForm} className="btn btn-sm shadow-sm float-right" style={{ backgroundColor: "#3F5BFF", color: "white" }}><b>Submit</b></button>
                   </div>
                 </div>
           </form>
@@ -282,5 +283,54 @@ class RProfileSetting extends Component {
       </div>
     );
   }
+
+  componentDidMount = async () => {
+    const {restaurantId} = this.props
+    const data = await this.loadData(restaurantId)
+    this.setState({data})
+    try{
+      this.setState({
+        firstValue: data[0].first_name,
+        lastValue: data[0].last_name,
+        phoneValue: data[0].phone,
+        idValue: data[0].hkid,
+        restaurantValue: data[0].restaurant,
+        firstCheck: 'OK',
+        lastCheck: 'OK',
+        phoneCheck: 'OK',
+        idCheck: 'OK',
+        restaurantCheck: 'OK',
+        addressValue: data[0].address,
+        lat: data[0].lat,
+        lng: data[0].lng,
+        districtError: '',
+        brFile: null,
+        OpenHours: data[0].open_hours,
+        OpenWeekdays: "",
+        OpenStart: "",
+        OpenEnd: "",
+        OpenHoursCheck: true,
+      });
+
+    }
+    catch (error) {
+      console.log(error);
+    }
+  }
+
+  loadData = async (id) => {
+    let data
+    await axios.get(`http://localhost:3001/getRegData?id=${id}`)
+      .then(response => {
+        data = response.data
+      })
+      .catch(error => {
+        console.log(error)
+    })
+    console.log(data)
+    return data || []
+  }
+
+
 }
 export default withRouter(RProfileSetting);

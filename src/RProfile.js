@@ -33,10 +33,14 @@ class RProfile extends Component {
       const data = await this.getRegData(ownerRestaurantId)
       console.log(data)
       this.setState({data})
-      if (data)
+      try
       {
         this.setState({lat: data[0].lat})
         this.setState({lng: data[0].lng})
+      }
+      catch (error)
+      {
+        console.log("no lat lng data");
       }
     }
 
