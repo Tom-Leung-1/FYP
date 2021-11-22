@@ -45,6 +45,9 @@ class BRegister extends Component {
       token: "",
       recaptchaKey: 1,
       OpenHours: "",
+      OpenWeekdays: "",
+      OpenStart: "",
+      OpenEnd: "",
       OpenHoursCheck: "",
     };
   }
@@ -90,9 +93,13 @@ class BRegister extends Component {
       districtError: '',
       brFile: null,
       OpenHours: "",
+      OpenWeekdays: "",
+      OpenStart: "",
+      OpenEnd: "",
       OpenHoursCheck: "",
     });
-
+    //reset checkbox
+    document.querySelectorAll('input[type=checkbox]').forEach( el => el.checked = false );
   }
 
   checkForm = () => {
@@ -203,7 +210,8 @@ class BRegister extends Component {
   }
 
   saveOH = (data, weekday, start, end) => {
-    this.setState({ OpenHours: data}); 
+    this.setState({ OpenHours: data, OpenWeekdays: weekday, OpenStart: start, OpenEnd: end}); 
+
     if (weekday.length === 0)
     {
         this.setState({ OpenHoursCheck: false}); 
@@ -254,7 +262,7 @@ class BRegister extends Component {
                   <FileInput fileType="resPhoto" accept=".jpg,.png,.jpeg" id="uploadPhoto" required={true} onChange={this.fileSelectedHandler} name="Upload Photo of restaurant (with jpg, png or jpeg format)" />
                 </div>
                 <div className="row mb-2">
-                  <OpenHours name="Open Hours" id="openHours" sm_md_lg="-1_-1_8" value={this.state.OpenHours} saveOH={this.saveOH} required={true} />
+                  <OpenHours name="Open Hours" id="openHours" sm_md_lg="-1_-1_8" value={this.state.OpenHours} saveOH={this.saveOH} weekday={this.state.OpenWeekdays} start={this.state.OpenStart} end={this.state.OpenEnd} required={true} />
                 </div>
                 <div className="row mb-2">
                   <AddressInput onChange={this.handleOnChange} sm_md_lg="-1_-1_8" id="address" address={this.state.addressValue} required={true} name="Address" onMarkerComplete={this.onMarkerComplete} />

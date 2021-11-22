@@ -55,11 +55,11 @@ class OpenHours extends Component {
 
         }
         str = str.slice(0,-1);
-        this.setState({weekday: str});
-        if (this.state.end === "")
-            this.props.saveOH(str + " " +this.state.start, str, this.state.start, this.state.end);
+        //this.setState({weekday: str});
+        if (this.props.end === "")
+            this.props.saveOH(str + " " +this.props.start, str, this.props.start, this.props.end);
         else
-            this.props.saveOH(str + " " + this.state.start + "-" + this.state.end, str, this.state.start, this.state.end);
+            this.props.saveOH(str + " " + this.props.start + "-" + this.props.end, str, this.props.start, this.props.end);
             
       }
 
@@ -69,18 +69,18 @@ class OpenHours extends Component {
         if (endT !== "" & endT < startT)
         {
             alert("End time should larger than start time!");
-            this.setState({start: ""});
-            this.setState({end: ""});
-            this.props.saveOH(this.state.weekday);
+            //this.setState({start: ""});
+            //this.setState({end: ""});
+            this.props.saveOH(this.props.weekday+"", this.props.weekday, "", "");
         }
         else
         {
-            this.setState({start: startT});
-            this.setState({end: endT});
+            //this.setState({start: startT});
+            //this.setState({end: endT});
             if (endT === "")
-                this.props.saveOH(this.state.weekday + " " + startT, this.state.weekday, startT, endT);
+                this.props.saveOH(this.props.weekday + " " + startT, this.props.weekday, startT, endT);
             else
-                this.props.saveOH(this.state.weekday + " " + startT + "-" + endT, this.state.weekday, startT, endT);
+                this.props.saveOH(this.props.weekday + " " + startT + "-" + endT, this.props.weekday, startT, endT);
             
         }
       }
@@ -110,9 +110,9 @@ class OpenHours extends Component {
                 <input type="text" id={this.props.id} value={this.props.value} className="form-control form-control-sm shadow-sm bg-white mb-1" readonly="readonly"/>
                 {this.weekdayOpitions()}
                 <div className="input-group mb-3" style={{width:"20em"}}>
-                    <input type="time" value={this.state.start} className="form-control form-control-sm shadow-sm" id="start" onChange={()=>this.TimeChange()}/>
+                    <input type="time" value={this.props.start} className="form-control form-control-sm shadow-sm" id="start" onChange={()=>this.TimeChange()}/>
                     <span class="input-group-text">to</span>
-                    <input type="time" value={this.state.end} className="form-control form-control-sm shadow-sm" id="end" onChange={()=>this.TimeChange()}/>
+                    <input type="time" value={this.props.end} className="form-control form-control-sm shadow-sm" id="end" onChange={()=>this.TimeChange()}/>
                 </div>
             </div>            
             </>
