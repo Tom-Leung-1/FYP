@@ -262,7 +262,7 @@ class BRegister extends Component {
                   <TextInput value={restaurantValue} sm_md_lg="-1_-1_8" id="restaurant" required={true} onChange={this.handleOnChange} name="Restaurant Name" errorMsg={this.state.restaurantCheck} />
                 </div>
                 <div className="row">
-                  <FileInput fileType="resPhoto" accept=".jpg,.png,.jpeg" id="uploadPhoto" required={true} onChange={this.fileSelectedHandler} name="Upload Photo of restaurant (with jpg, png or jpeg format)" />
+                  <FileInput fileType="resPhoto" accept=".jpg,.png,.jpeg" id="uploadPhoto" onChange={this.fileSelectedHandler} name="Upload Photo of restaurant (with jpg, png or jpeg format)" />
                 </div>
                 <div className="row mb-2">
                   <OpenHours name="Open Hours" id="openHours" sm_md_lg="-1_-1_8" value={this.state.OpenHours} saveOH={this.saveOH} weekday={this.state.OpenWeekdays} start={this.state.OpenStart} end={this.state.OpenEnd} required={true} />
