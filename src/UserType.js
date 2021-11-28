@@ -15,7 +15,7 @@ class UserType extends Component {
             <>
             <div className="container mt-5">
                 <div className="d-flex flex-wrap justify-content-center fs-2">
-                    Which kind of user you are?
+                    Which kind of users are you?
                 </div>
                 <div className="d-flex flex-wrap justify-content-center">
                     <div className="card border-0 bg-light my-3">
@@ -27,8 +27,8 @@ class UserType extends Component {
                         </Link>
                         <br/>
                         <p className="mx-5 d-flex fw-bold" style={{width: "22vw"}}>
-                            You can serach your favourite restaurant,
-                            make order or reservation through our website!
+                            You can serach for your favourite restaurants,
+                            make orders or reservations on our website!
                         </p>
                     </div>
                     <div className="card border-0 bg-light my-3" style={{width:"50vh"}}>
@@ -40,9 +40,9 @@ class UserType extends Component {
                         </Link>
                         <br/>
                         <p className="mx-3 d-flex fw-bold" style={{width: "22vw"}}>
-                            After you submit your information of your restaurant,
+                            After you submit your information about your restaurant,
                             <br/>
-                            You can use our website to mange the order and reservation of your restaurant!
+                            You can use our website to manage orders and reservations of your restaurant!
                         </p>
                     </div>
                 </div>
