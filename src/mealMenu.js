@@ -3,6 +3,7 @@ import { DataGrid, GridToolbar } from '@mui/x-data-grid'; // 1. npm install @mat
 import { Helmet } from "react-helmet";
 import axios from "axios";
 import CreateMeal from './CreateMeal';
+import { Link } from 'react-router-dom';
 class MealMenu extends React.Component {
 
   constructor(props) {
@@ -115,6 +116,12 @@ class MealMenu extends React.Component {
       
       <div className="mealMenuBg">
         <div className="container p-2" style={{width: '100%'}}>
+          <nav aria-label="breadcrumb" className="mt-3">
+            <ol className="breadcrumb">
+                <Link to="/OwnerOption" className="breadcrumb-item text-decoration-none">Restaurant Owner</Link>
+                <li className="breadcrumb-item active" aria-current="page">Design Menu</li>
+            </ol>
+          </nav>
           <h2 className="fw-normal mt-3"><strong>Design Menu</strong></h2>
           <hr/>
           <div class="d-grid col-10 mx-auto">

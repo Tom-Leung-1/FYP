@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import {withRouter} from 'react-router';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 class BookingSetting extends Component {
 
@@ -185,6 +186,12 @@ class BookingSetting extends Component {
         return (
             <>
                 <div className="container p-2">
+                     <nav aria-label="breadcrumb" className="mt-3">
+                       <ol className="breadcrumb">
+                         <Link to="/OwnerOption" className="breadcrumb-item text-decoration-none">Restaurant Owner</Link>
+                         <li className="breadcrumb-item active" aria-current="page">Reservation Setting</li>
+                       </ol>
+                    </nav>
                     <h2 className="fw-normal mt-3"><strong>Reservation Setting</strong></h2>
                     <hr/>
                     {this.state.all}
