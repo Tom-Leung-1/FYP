@@ -186,7 +186,7 @@ class SignUp extends Component {
                 <Link to="/sign-in" type="button" className="btn btn-link text-decoration-none"><small>Already have an account? Sign in</small></Link>
               </div>
               <div className="mt-5"> 
-              <p className="text-muted text-center">Copyright &copy; Test 2021.</p>
+              <p className="text-muted text-center">Copyright &copy; Foodcreek 2021.</p>
               </div>
             </form>
             </div>

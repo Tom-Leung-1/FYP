@@ -95,7 +95,7 @@ class App extends Component {
   }
 
   signOut = (num) => {
-    this.setState({userId: ""})
+    this.setState({userId: -1})
   }
 
   render() {
@@ -110,7 +110,7 @@ class App extends Component {
           </Helmet>
           <Switch>
             <div className="page">
-              {userId ? <LoginNavbar signOut={this.signOut}/> : <Navbar />}
+              {userId < 0 ? <Navbar /> : <LoginNavbar signOut={this.signOut}/>}
               <Route path="/" exact>
                 <Home selectRestaurant={this.selectRestaurant} searchUpdate={this.searchUpdate}/>
               </Route>

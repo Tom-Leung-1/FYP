@@ -118,12 +118,12 @@ class Login extends Component {
                     </div>
 
                     <div className="d-grid gap-2 d-md-flex justify-content-center">
-                      <button type="button" className="btn btn-link text-decoration-none me-md-5"><small>Forgot password?</small></button>
+                      <button type="button" className="btn btn-link text-decoration-none me-md-5" disabled><small>Forgot password?</small></button>
                       <Link to="/sign-up" type="button" className="btn btn-link text-decoration-none"><small>Don't have an account? Sign Up</small></Link>
                     </div>
 
                     <div className="mt-5"> 
-                      <p className="text-muted text-center">Copyright &copy; Test 2021.</p>
+                      <p className="text-muted text-center">Copyright &copy; Foodcreek 2021.</p>
                     </div>
                   </form>
                 </div>
