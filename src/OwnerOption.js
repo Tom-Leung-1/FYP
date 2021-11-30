@@ -25,7 +25,7 @@ class OwnerOption extends React.Component {
                             <Link to="/menu" className="list-group-item list-group-item-action border-0 bg-light"><i className="bi bi-arrow-right-circle"></i> Design menu</Link>
                             <Link to="/orderlist" className="list-group-item list-group-item-action border-0 bg-light"><i className="bi bi-arrow-right-circle"></i> See received orders</Link>
                             <Link to="/booking" className="list-group-item list-group-item-action border-0 bg-light fst-italic" style={{pointerEvents: "none"}}><i className="bi bi-arrow-right-circle"></i> Manage table reservation (Coming soon)</Link>
-                            <Link to="/bookSetting" className="list-group-item list-group-item-action border-0 bg-light"><i className="bi bi-arrow-right-circle"></i> Set reservation time slot</Link>
+                            <Link to="/bookSetting" className="list-group-item list-group-item-action border-0 bg-light"><i className="bi bi-arrow-right-circle"></i> Set table reservation/opening time</Link>
                             <Link to="/rprofile" className="list-group-item list-group-item-action border-0 bg-light"><i className="bi bi-arrow-right-circle"></i> Check restaurant's profile</Link>
                         </div>  
                     </section>

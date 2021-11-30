@@ -51,7 +51,7 @@ class App extends Component {
       ownerRestaurantId : -1,
       openHours: "",
     };
-  }
+  } 
 
   
   
