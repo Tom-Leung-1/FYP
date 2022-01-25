@@ -150,7 +150,7 @@ class App extends Component {
             <Route path="/pay">
               <PaymentChoice sendOrder={this.sendOrder}/>
             </Route>
-            <Route path="/doneOrder" component={DoneOrder} />
+            <Route path="/doneOrder" component={DoneOrder}/>
             <Route path="/OwnerOption">
               <OwnerOption/>
             </Route>
@@ -158,14 +158,14 @@ class App extends Component {
               <RProfile ownerRestaurantId={ownerRestaurantId}/>
             </Route>
             <Route path="/RProfileSetting">
-            <RProfileSetting restaurantId={ownerRestaurantId} />
+            <RProfileSetting restaurantId={ownerRestaurantId}/>
             </Route> 
             <Route path="/orderlist">
               <OrderList restaurantId={ownerRestaurantId}/>
             </Route>
-            <Route path="/ClientOption" component={ClientOption} />
-            <Route path="/uprofile" component={UProfile} />
-            <Route path="/UprofileSetting" component={UProfileSetting} />
+            <Route path="/ClientOption" component={ClientOption}/>
+            <Route path="/uprofile" component={UProfile}/>
+            <Route path="/UprofileSetting" component={UProfileSetting}/>
             <Route path="/UserType">
               <UserType owner={owner}/>
             </Route> 

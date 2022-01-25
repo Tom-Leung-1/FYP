@@ -8,7 +8,6 @@ import TextInput from "./components/Inputs/TextInput"
 import AddressInput from "./components/Inputs/AddressInput"
 import TextAreaInput from './components/Inputs/TextAreaInput';
 import FileInput from './components/Inputs/FileInput';
-import { test } from "./helpers/DBFunctions"
 import hkid from 'validid/esm/hkid.mjs';
 import normalize from 'validid/esm/utils/normalize.mjs';
 import { withRouter } from 'react-router-dom';

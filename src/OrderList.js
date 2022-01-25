@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 //import CustomCarousel from "./Carousel";
 import { Helmet } from "react-helmet";
+import { groupBy } from "./helpers/data"
 import axios from "axios"
 
 // name, special order, price, order id, drinks, done, restaurantId,
@@ -41,7 +42,7 @@ class OrderList extends React.Component {
       .catch(error => {
         console.log(error)
       })
-    return this.groupBy(data, "order_id")
+    return groupBy(data, "order_id")
   }
 
   showOrderList = () => {

@@ -133,7 +133,7 @@ class BookingSetting extends Component {
         let endT = document.getElementById("end").value;
         if (endT !== "" & endT < startT)
         {
-            alert("End time should larger than start time!");
+            alert("End time should be later than start time!");
             this.setState({start: ""});
             this.setState({end: ""});
         }
@@ -196,7 +196,7 @@ class BookingSetting extends Component {
                     <hr/>
                     {this.state.all}
                     <br/>
-                    <h5 className="fw-normal mt-3"><strong>Avalible Weekday</strong></h5>
+                    <h5 className="fw-normal mt-3"><strong>Avalible Days</strong></h5>
                     {this.weekdayOpitions()}
                     <h5 className="fw-normal mt-3"><strong>Avalible Time Range</strong></h5>
                     <div className="input-group mb-3" style={{width:"20em"}}>
