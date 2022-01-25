@@ -52,9 +52,15 @@ class RProfile extends Component {
             <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous" />
           </Helmet>
           <div id="" className="container p-3">
+          <nav aria-label="breadcrumb" className="mt-3">
+            <ol className="breadcrumb">
+                <Link to="/OwnerOption" className="breadcrumb-item text-decoration-none">Restaurant Owner</Link>
+                <li className="breadcrumb-item active" aria-current="page">Restaurant Profile</li>
+            </ol>
+          </nav>
             <h2 className="fw-normal"><strong>Restaurant Profile</strong></h2>
             <hr className="mb-4" />
-            <Link to="./RProfileSetting" type="button" className="btn btn-primary mb-2">Update Profile</Link>
+            <Link to="./RProfileSetting" type="button" className="btn btn-primary mb-2 disabled">Update Profile</Link>
             <h5 className="fw-normal"><strong>Owner's Information:</strong></h5>
             <div className="row mb-2">
               <div className="col-sm-5 col-lg-3 mb-2">
