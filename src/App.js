@@ -132,7 +132,7 @@ class App extends Component {
               </Route>
               <Route path="/RecentBooking" component={RecentBooking} />
               <Route path="/client">
-                <Client userId={userId} lat={lat} lng={lng} photo={photo} description={description} restaurant={restaurant} address={address} openHours={openHours}/>
+                <Client clientRestaurantId={clientRestaurantId} userId={userId} lat={lat} lng={lng} photo={photo} description={description} restaurant={restaurant} address={address} openHours={openHours}/>
               </Route>
               <Route path="/new">
                 <ClientOrder saveOrder={this.saveOrder} restaurantId={clientRestaurantId} restaurantName={restaurant}/>

@@ -49,7 +49,6 @@ class Booking extends React.Component {
         }
       }
     })
-    console.log(daysOkay)
     // time
     const [start, end] = time.split("-")
     // check
@@ -62,20 +61,26 @@ class Booking extends React.Component {
 
   sendBooking = async () => {
     const {noPeople, dateTime} = this.state
-    const {userId} = this.props
+    const {userId, clientRestaurantId} = this.props
     if (!this.validBooking()) {
       alert("Please input valid booking time and date based on the opening hours.")
       return
     }
-    
-    // const sent = await axios.post(`http://localhost:3001/sendBooking`, {clientOrder, clientTotal, clientTakeaway, clientRestaurantId})
-    // .then(response => {
-    //   orderId = response.data
-    // })
-    // .catch(error => {
-    //   console.log(error)
-    //   return
-    // })
+    if (userId == -1) {
+      alert("Please login to our system before booking any table reservations.")
+      return
+    }
+    await axios.post(`http://localhost:3001/sendBooking`, {noPeople, dateTime, userId, clientRestaurantId})
+    .then(response => {
+      console.log(response.data)
+      alert("You have successfully booked a table reservation!")
+      document.querySelector("#reservation-close-btn").click();
+      return
+    })
+    .catch(error => {
+      console.log(error)
+      return
+    })
   }
 
   dateChange = (event) => {
@@ -122,7 +127,7 @@ class Booking extends React.Component {
 
    
   render() {
-    const { restaurantName } = this.props
+    const {restaurantName} = this.props
     const {maxPeople, dateTime, noPeople} = this.state
     return (
       <>
@@ -174,7 +179,7 @@ class Booking extends React.Component {
             <div class="modal-dialog modal-dialog-scrollable">
               <div class="modal-content">
                 <div class="modal-header">
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  <button id="reservation-close-btn" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" style={{lineHeight: 2}}>
                   <p>You are making a reservation for <br/>

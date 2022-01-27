@@ -15,7 +15,7 @@ class Client extends Component {
     }
     
     render() {
-        const {userId, lat, lng, photo, description, restaurant, address, openHours} = this.props
+        const {clientRestaurantId, userId, lat, lng, photo, description, restaurant, address, openHours} = this.props
         const position = {lat, lng} 
         return (
             <div className="bg-light">
@@ -27,7 +27,7 @@ class Client extends Component {
                                 <p><i className="bi bi-star-fill" style={{color: "orange"}}></i> Restaurant with government license</p>
                                 
                                 <div className="card px-4 py-1 mb-5 shadow-sm">
-                                    <Booking openHours={openHours} userId={userId} restaurantName={restaurant}/>
+                                    <Booking clientRestaurantId={clientRestaurantId} openHours={openHours} userId={userId} restaurantName={restaurant}/>
                                 </div>
 
                                 <p>
