@@ -13,4 +13,12 @@ const eachFirst = (map) => {
     return arr
 }
 
-export { groupBy, eachFirst }
+const getTimeDate = (dateStr) => { // HK time
+    const dateObj = new Date(dateStr)
+    dateObj.setUTCHours(dateObj.getUTCHours() + 8);
+    const time = `${dateObj.getHours()}:${dateObj.getMinutes() < 10 ? `0${dateObj.getMinutes()}` : dateObj.getMinutes()}`
+    const date = `${dateObj.getFullYear()}/${dateObj.getMonth()+1}/${dateObj.getDate()}`
+    return [dateObj, time, date]
+}
+
+export { groupBy, eachFirst, getTimeDate}

@@ -138,9 +138,11 @@ class App extends Component {
                 <ClientOrder saveOrder={this.saveOrder} restaurantId={clientRestaurantId} restaurantName={restaurant}/>
               </Route>
               <Route path="/menu">
-              <MealMenu restaurantId={ownerRestaurantId}/>
-            </Route>
-            <Route path="/booking" component={BookingStatus} />
+                <MealMenu restaurantId={ownerRestaurantId}/>
+              </Route>
+              <Route path="/booking">
+                <BookingStatus restaurantId={ownerRestaurantId}/>
+              </Route>
             <Route path="/booksetting">
               <BookingSetting restaurantId={ownerRestaurantId}/>
             </Route>

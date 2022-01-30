@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid'; // 1. npm install @material-ui/core 2. npm install @material-ui/data-grid 3.npm install @material-ui/styles
 import { Helmet } from "react-helmet";
-import { groupBy, eachFirst } from "./helpers/data"
+import { groupBy, eachFirst, getTimeDate } from "./helpers/data"
 import axios from 'axios';
 
 const currencyFormatter = new Intl.NumberFormat('zh-HK', {
@@ -17,10 +17,14 @@ const columns = [
     sortable: false,
   },
   {
-    field: 'order_date',
+    field: 'date',
     headerName: 'Order date',
-    type: 'date',
-    width: 120
+    width: 120,
+  },
+  {
+    field: 'time',
+    headerName: 'Order time',
+    width: 120,
   },
   {
     field: 'restaurant',
@@ -43,6 +47,11 @@ const columns = [
     width: 120,
   },
   {
+    field: 'status',
+    headerName: 'status',
+    width: 120,
+  },
+  {
     field: 'detail',
     headerName: '',
     align: 'center',
@@ -54,18 +63,6 @@ const columns = [
         <small type="button" className="btn btn-link" style={{textDecoration: "none", fontSize: "1em"}} data-bs-toggle="modal" data-bs-target={`#detail${id}`}>&gt; View details</small>
       </strong>)
     }
-  },
-  {
-    field: 'cancel',
-    headerName: '',
-    align: 'center',
-    sortable: false,
-    filterable: false,
-    renderCell: (params) => (
-      <strong>
-        <small type="button" className="btn btn-sm text-danger" style={{textDecoration: "none", fontSize: "1em"}}>Cancel</small>
-      </strong>
-    )
   },
 ];
 
@@ -96,8 +93,18 @@ class RecentOrder extends React.Component {
 
   componentDidMount = async () => {
     const orders = groupBy(await this.getUserOrders(), "order_id")
-    const ordersSummary = eachFirst(orders).map((order) => {
-      return {"id": order["order_id"], ...order}
+    const ordersSummary = eachFirst(orders).map(({restaurant, order_id, order_date, type, total, status}) => {
+      const [dateObj, time, date] = getTimeDate(order_date)
+      // const dateObj = new Date(order_date)
+      // dateObj.setUTCHours(dateObj.getUTCHours() + 8);
+      // const time = `${dateObj.getHours()}:${dateObj.getMinutes()}`
+      // const date = `${dateObj.getFullYear()}/${dateObj.getMonth()+1}/${dateObj.getDate()}`
+      return {"id": order_id, order_id, restaurant, type, total, time, date, dateObj, status}
+    }).sort((a, b) => {
+      if (a.dateObj < b.dateObj) {
+        return 1
+      }
+      return -1
     })
     console.log({orders, ordersSummary})
     this.setState({orders, ordersSummary})
