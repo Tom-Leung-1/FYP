@@ -27,6 +27,7 @@ import ClientOption from './ClientOption';
 import UProfile from './UProfile';
 import RProfileSetting from './RProfileSetting';
 import UProfileSetting from './UProfileSetting';
+import UpdatePwd from './UpdatePwd';
 import UserType from './UserType';
 import axios from "axios"
 
@@ -168,6 +169,7 @@ class App extends Component {
             <Route path="/ClientOption" component={ClientOption}/>
             <Route path="/uprofile" component={UProfile}/>
             <Route path="/UprofileSetting" component={UProfileSetting}/>
+            <Route path="/UpdatePwd" component={UpdatePwd}/>
             <Route path="/UserType">
               <UserType owner={owner}/>
             </Route> 

@@ -42,6 +42,7 @@ tbody {
 }
 
 th {
+  width: 20em;
   text-align: center;
   font-size: 1em;
   color: #355b95;
