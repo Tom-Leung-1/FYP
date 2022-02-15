@@ -151,7 +151,7 @@ class App extends Component {
               <BRegister userId={userId}/>
             </Route>
             <Route path="/pay">
-              <PaymentChoice sendOrder={this.sendOrder}/>
+              <PaymentChoice userId={userId} sendOrder={this.sendOrder}/>
             </Route>
             <Route path="/doneOrder" component={DoneOrder}/>
             <Route path="/OwnerOption">

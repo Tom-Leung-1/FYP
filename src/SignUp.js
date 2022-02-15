@@ -13,9 +13,11 @@ class SignUp extends Component {
         super(props);
         this.state = { usernameValue: '',
                        emailValue: '',
+                       phoneValue: '',
                        password: '',
                        usernameError: '',
                        emailError: '',
+                       phoneError: '',
                        passwordError: '',
                        confirmPassError: '',
                        showPass: false 
@@ -46,6 +48,9 @@ class SignUp extends Component {
           break
         case "username":
           this.checkUsername(e)
+          break
+        case "phone":
+          this.checkPhone(e)
           break
         default:
           break
@@ -80,6 +85,20 @@ class SignUp extends Component {
         }
         this.setState({emailError: 'OK'});
     }
+
+    checkPhone (e) {
+      const value = e.target.value;
+      const validPhone = /^\d{8}$/;
+      if (value === "") {
+        this.setState({phoneError: 'Phone no. cannot be empty.'});
+        return
+      }
+      if (!(value.match(validPhone))) {
+        this.setState({phoneError: 'Please provide a valid phone number which contains only 8 digits.'});
+        return
+      }
+      this.setState({phoneError: 'OK'});
+  }
   
     checkPassword (e) {
         const value = e.target.value;
@@ -134,8 +153,8 @@ class SignUp extends Component {
     }
 
     checkForm() {
-      const {usernameError, emailError, passwordError, confirmPassError} = this.state
-      if (usernameError + passwordError + emailError + confirmPassError === "OKOKOKOK") {
+      const {usernameError, emailError, phoneError, passwordError, confirmPassError} = this.state
+      if (usernameError + passwordError + emailError + confirmPassError + phoneError === "OKOKOKOKOK") {
         alert('Successfully sign up!');
         return true;
       }
@@ -145,7 +164,7 @@ class SignUp extends Component {
   }
 
     render() {
-      const {usernameError, emailError, passwordError, confirmPassError} = this.state
+      const {usernameError, emailError, phoneError, passwordError, confirmPassError} = this.state
         return (
             <>
             <div className="signup">
@@ -163,6 +182,10 @@ class SignUp extends Component {
 
               <div className="form-floating mb-3">
                 <LargeTextInput type="email" id="email" placeholder="Email" onChange={this.handleOnChange} name="Email Address" errorMsg={emailError} />
+              </div>
+
+              <div className="form-floating mb-3">
+                <LargeTextInput type="text" id="phone" placeholder="Phone" onChange={this.handleOnChange} name="Phone Number" errorMsg={phoneError} />
               </div>
 
               <div className="form-floating mb-3">

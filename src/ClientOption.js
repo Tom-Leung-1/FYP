@@ -25,7 +25,7 @@ class ClientOption extends React.Component {
                             <Link to="/" className="list-group-item list-group-item-action border-0 bg-light"><i className="bi bi-arrow-right-circle"></i> Back to the home page and search restaurant</Link>
                             <Link to="/recentorder" className="list-group-item list-group-item-action border-0 bg-light fst-italic"><i className="bi bi-arrow-right-circle"></i> See recent orders</Link>
                             <Link to="/recentbooking" className="list-group-item list-group-item-action border-0 bg-light fst-italic"><i className="bi bi-arrow-right-circle"></i> Check recent reservations</Link>
-                            <Link to="/uprofile" className="list-group-item list-group-item-action border-0 bg-light fst-italic"><i className="bi bi-arrow-right-circle"></i> Edit profile</Link>
+                            <Link to="/uprofile" className="list-group-item list-group-item-action border-0 bg-light"><i className="bi bi-arrow-right-circle"></i> Edit profile</Link>
                         </div>  
                     </section>
                 </div>

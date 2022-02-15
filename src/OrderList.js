@@ -56,7 +56,7 @@ class OrderList extends React.Component {
           <>
             <div className={`card m-2 ${takeAway ? "border-success" : "border-primary"}`} style={{width: "20em"}}>
                 <div className={`card-header fw-bolder text-white ${takeAway ? "bg-success" : "bg-primary"}`}>
-                    #{orderId}<button type="button" title="delete" className="btn text-white" style={{float:"right"}}><i class="bi bi-check-square-fill"></i></button>
+                    #{orderId}<button type="button" title="finish" className="btn text-white" style={{float:"right"}}><i class="bi bi-check-square-fill"></i></button>
                     <br/>
                     <span>{takeAway ? "-Take Away-" : "-Delivery-"}</span>
                 </div>

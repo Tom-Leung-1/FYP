@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid'; // 1. npm install @material-ui/core 2. npm install @material-ui/data-grid 3.npm install @material-ui/styles
 import { Helmet } from "react-helmet";
+import { Link } from 'react-router-dom';
 import { groupBy, eachFirst, getTimeDate } from "./helpers/data"
 import axios from 'axios';
 
@@ -133,6 +134,14 @@ class RecentOrder extends React.Component {
           <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
         </Helmet>
         <div className="container p-2">
+
+              <nav aria-label="breadcrumb" className="mt-3">
+                <ol className="breadcrumb">
+                  <Link to="/ClientOption" className="breadcrumb-item text-decoration-none">Normal Customer</Link>
+                  <li className="breadcrumb-item active" aria-current="page">Recent Orders</li>
+                </ol>
+              </nav>
+
           <h2 className="fw-normal mt-3"><strong>Recent Orders</strong></h2>
           <hr/>
           <div className="container px-5">
