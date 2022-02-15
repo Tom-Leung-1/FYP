@@ -28,6 +28,9 @@ import UProfile from './UProfile';
 import RProfileSetting from './RProfileSetting';
 import UProfileSetting from './UProfileSetting';
 import UpdatePwd from './UpdatePwd';
+import ResetPwd from './ResetPwd';
+import ForgotPwd from './ForgotPwd';
+import ForgotMail from './ForgotMail';
 import UserType from './UserType';
 import axios from "axios"
 
@@ -124,6 +127,11 @@ class App extends Component {
               <Route path="/sign-in">
                 <Login signInSetting={this.signInSetting}/> 
               </Route>
+              <Route path="/forgot">
+                <ForgotPwd/> 
+              </Route>
+              <Route path="/send" component={ForgotMail} />
+              <Route path="/reset" component={ResetPwd} />
               <Route path="/sign-up">
                 <SignUp signInSetting={this.signInSetting}/>
               </Route>
