@@ -129,14 +129,19 @@ class BookingStatus extends React.Component {
               </div>
               <div className="col-sm-4">
                 <h5 className="fw-normal mt-3"><strong>Booking Status</strong></h5>
+                <label for="date">Date:</label>
                 <input type="date" class="form-control my-2"/>
-                <select className="form-select mt-2 mb-4" aria-label="time">
-                  <option value="17:00">17:00-18:00</option>
-                  <option value="18:00">18:00-19:00</option>
-                  <option value="19:00">19:00-20:00</option>
-                  <option value="20:00">20:00-21:00</option>
-                  <option value="21:00">21:00-22:00</option>
-                </select>
+                <div class="row">
+                <div class="col-6">
+                  <label for="startTime">From:</label>
+                  <input type="time" class="form-control my-2"/>
+                </div>
+                <div class="col-6">
+                  <label for="endTime">To:</label>
+                  <input type="time" class="form-control my-2" />
+                </div>
+                </div>
+                
                 <div className="fs-4">
                   Booking quota:
                   <br/>

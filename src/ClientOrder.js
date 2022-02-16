@@ -187,7 +187,10 @@ class ClientOrder extends React.Component {
           </div>
           <Tooltip title="Shopping Cart" followCursor>
           <Fab color="secondary" size="medium" style={{position: "fixed", bottom:10, right:10, backgroundColor:"#6E5EFE"}} data-bs-toggle="modal" data-bs-target={`#cart${restaurantId}`} aria-label="edit">
-            <i class="bi bi-cart-check-fill fa-lg"></i>
+            <i class="bi bi-cart-fill fa-lg"></i>
+            <span class="position-absolute translate-middle bg-danger rounded-circle" style={{left: 41, top:7, padding:6, display: this.state.Order.length > 0 ? "block" : "none"}}>
+              <span class="visually-hidden">New alerts</span>
+            </span>
           </Fab>
           </Tooltip>
 
@@ -209,6 +212,16 @@ class ClientOrder extends React.Component {
                     <div class="form-check">
                       <input class="form-check-input" type="radio" name="radioTakeAway" style={{borderColor: this.state.TakeAwayErr ? "#ff4136" : ""}} onChange={()=>this.TakeAway()} />
                       <label class="form-check-label" for="flexRadioDefault1">Take away</label>
+                    </div>
+                    
+                    <div style={{display: this.state.TakeAway === false ? "block" : "none"}}>
+                      <br/>
+                      <span className="fw-bold">Information for delivery</span>
+                      <br/>
+                      <label for="phone" class="col-form-label">Phone No.: </label>
+                      <input id="phone" className="form-control form-control-sm mb-1"/>
+                      <label for="address" class="col-form-label">Adress: </label>
+                      <textarea id="address" className="form-control form-control-sm mb-1"/>
                     </div>
                   </form>
                 </div>
@@ -248,7 +261,6 @@ class ClientOrder extends React.Component {
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                  <br/>
                   {this.showOrder()}
                 </div>
                 <div class="modal-footer">

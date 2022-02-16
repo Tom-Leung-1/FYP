@@ -40,12 +40,12 @@ class PaymentChoice extends Component {
                             <p className="mx-5">
                             <i class="bi bi-square-fill fa-xs"></i> Delivery
                             <br/>
-                            pay to cashier/waiter in restaurant
+                            pay to courier
                             <br/>
                             <br/>
                             <i class="bi bi-square-fill fa-xs"></i> Take away
                             <br/>
-                            pay to courier
+                            pay to cashier/waiter in restaurant
                             </p>
                         </div>
 
