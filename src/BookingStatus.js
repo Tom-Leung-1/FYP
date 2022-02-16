@@ -40,8 +40,8 @@ const columns = [
     filterable: false,
     renderCell: (params) => (
       <strong>
-        <button type="button" title="accept" className="btn p-1 mx-2"><i class="fas fa-check"></i></button>
-        <button type="button" title="reject" className="btn p-1 mx-2"><i class="fas fa-times"></i></button>
+        <button type="button" title="present" className="btn p-1 mx-2"><i class="fas fa-check"></i></button>
+        <button type="button" title="absent" className="btn p-1 mx-2"><i class="fas fa-times"></i></button>
       </strong>
     )
   },

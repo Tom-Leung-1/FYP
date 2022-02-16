@@ -2,7 +2,7 @@ import React from 'react';
 
 function MealCard({id, name, price, avalibleTime, imgSrc}) {
     return (
-        <div class="card mb-1 mx-3" id={`mealCard${name}`}>                  
+        <div class="card mb-1 mx-3 col-11" id={`mealCard${name}`}>                  
             <div class="card-body mt-1">
                 <img src={imgSrc} class="rounded img-fiuld mx-3" style={{float:"left", width:120, height:120}}/>		
                 <h3 class="card-title">{name}</h3>

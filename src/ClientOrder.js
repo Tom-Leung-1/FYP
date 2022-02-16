@@ -10,6 +10,8 @@ import axios from "axios"
 import SelectInput from '@mui/material/Select/SelectInput';
 import { Link } from 'react-router-dom';
 import { margin } from '@mui/system';
+import Fab from '@mui/material/Fab';
+import Tooltip from '@mui/material/Tooltip';
 
 class ClientOrder extends React.Component {
   constructor(props) {
@@ -179,9 +181,16 @@ class ClientOrder extends React.Component {
               </div>
             </div>
           </div>  
-          <div class="d-grid col-12" style={{position: "fixed", bottom:0}}>
+
+          <div class="d-grid col-12" style={{position: "fixed", bottom:2}}>
             <button type="button" className="btn btn-primary mb-2 border-0" style={{backgroundColor:"#6E5EFE", marginLeft:"20vw", marginRight:"20vw" }} data-bs-toggle="modal" data-bs-target="#takeAway" disabled={this.state.Order.length > 0 ? false : true}>Create Order</button>
           </div>
+          <Tooltip title="Shopping Cart" followCursor>
+          <Fab color="secondary" size="medium" style={{position: "fixed", bottom:10, right:10, backgroundColor:"#6E5EFE"}} data-bs-toggle="modal" data-bs-target={`#cart${restaurantId}`} aria-label="edit">
+            <i class="bi bi-cart-check-fill fa-lg"></i>
+          </Fab>
+          </Tooltip>
+
           <div class="modal fade" id="takeAway" tabindex="-1" aria-labelledby="takeAwayLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
               <div class="modal-content">
@@ -210,6 +219,7 @@ class ClientOrder extends React.Component {
               </div>
             </div>
           </div>
+
           <div class="modal fade" id={`createOrder${restaurantId}`} tabindex="-1" aria-labelledby={`createOrder${restaurantId}Label`} aria-hidden="true">
             <div class="modal-dialog modal-fullscreen">
               <div class="modal-content">
@@ -229,6 +239,25 @@ class ClientOrder extends React.Component {
               </div>
             </div>
           </div>
+
+          <div class="modal fade" id={`cart${restaurantId}`} tabindex="-1" aria-labelledby={`cart${restaurantId}Label`} aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h3 class="modal-title" id={`cart${restaurantId}Label`}>Shopping Cart</h3>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <br/>
+                  {this.showOrder()}
+                </div>
+                <div class="modal-footer">
+                  <h3 class="mr-auto"><b>Total: <span class="text-danger">${this.state.Total}</span></b></h3>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </>
       )
     }
