@@ -13,6 +13,7 @@ import normalize from 'validid/esm/utils/normalize.mjs';
 import { withRouter } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import OpenHours from "./components/OpenHours";
+import Alert from '@mui/material/Alert';
 
 /*@TODO
 add a "please provide a valid image file in the BR tab" -> bug (the file chosen does not reflect the state change -> need a better input css)
@@ -253,7 +254,10 @@ class RProfileSetting extends Component {
 
           <form id="RProfileSettingform" onSubmit={this.submitForm}>
             <h2 className="fw-normal"><strong>Update Restaurant Profile</strong></h2>
-            <hr className="mb-3" />
+            <hr className="mb-2" />
+            <Alert className="mb-3" severity="info">
+                      For setting the opening hours, please go to the page of <Link to="/bookSetting" className="breadcrumb-item text-decoration-none">Opening Time/Table Reservation Items Setting</Link>
+            </Alert>
             <div className="row mb-4">
                   <TextInput value={firstValue} sm_md_lg="6_-1_4" id="first" required={true} placeholder="" onChange={this.handleOnChange} name="First Name" errorMsg={this.state.firstCheck} />
                   <TextInput value={lastValue} sm_md_lg="6_-1_4" id="last" required={true} placeholder="" onChange={this.handleOnChange} name="Last Name" errorMsg={this.state.lastCheck} />
