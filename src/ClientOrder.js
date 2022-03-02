@@ -40,12 +40,13 @@ class ClientOrder extends React.Component {
     return [data, data?.filter(({withSet}) => withSet)]
   }
 
+  //Mealcard sold out test
   dataFilter = (data, t) => {
     const {withSetData} = this.state
     if (!data) return data
     return data.filter(({type, withSet}) => type === t && !withSet).map(({id, name, type, price, avalibleTime, maxOrder, photo}) =>  // {`images/meals/${photo}`}
     <>
-      <MealCard id={id} name={name} price={price} avalibleTime={avalibleTime} imgSrc={`images/meals/${photo}`}/>
+      <MealCard id={id} name={name} price={price} avalibleTime={avalibleTime} onSale={true} imgSrc={`images/meals/${photo}`}/> 
       <MealOverlay id={id} withSetData={withSetData} name={name} price={price} type={type}avalibleTime={avalibleTime} maxOrder={maxOrder} imgSrc={`/images/meals/${photo}`} addOnClick={()=>this.AddMeal(id, name, price)}/>
     </>)
   }
