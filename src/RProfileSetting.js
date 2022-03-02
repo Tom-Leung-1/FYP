@@ -115,27 +115,29 @@ class RProfileSetting extends Component {
     e.preventDefault()
     if (!this.state.OpenHoursCheck) {
       alert("Weekday/time range of the open hours is missing.")
-      this.setState({ recaptchaKey: this.state.recaptchaKey === 1 ? 2 : 1 })
+      //this.setState({ recaptchaKey: this.state.recaptchaKey === 1 ? 2 : 1 })
       return
     }
+    /*
     if (!await this.checkRecaptcha()) {
       alert("Please click on Recaptcha.")
       this.setState({ recaptchaKey: this.state.recaptchaKey === 1 ? 2 : 1 })
       return
     }
+    */
     if (!this.checkForm() || !addressValue.trim()) {
       alert("Please provide the necessary credentials.")
-      this.setState({ recaptchaKey: this.state.recaptchaKey === 1 ? 2 : 1 })
+      //this.setState({ recaptchaKey: this.state.recaptchaKey === 1 ? 2 : 1 })
       return
     }
     if (!brFile) {
       alert("Please upload registration file.")
-      this.setState({ recaptchaKey: this.state.recaptchaKey === 1 ? 2 : 1 })
+      //this.setState({ recaptchaKey: this.state.recaptchaKey === 1 ? 2 : 1 })
       return
     }
     if (lat === -1 || lng === -1) {
       alert("Please provide the restaurant location by clicking on the google map.")
-      this.setState({ recaptchaKey: this.state.recaptchaKey === 1 ? 2 : 1 })
+      //this.setState({ recaptchaKey: this.state.recaptchaKey === 1 ? 2 : 1 })
       return
     }
     const brFileName = await this.fileUploadHandler("brFile")
@@ -239,7 +241,16 @@ class RProfileSetting extends Component {
         <Helmet>
           <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous" />
         </Helmet>
-        <div id="RProfileSettingArea" className="justify-content-center px-5 py-3">
+        <div id="RProfileSettingArea" className="justify-content-center container p-3">
+
+              <nav aria-label="breadcrumb" className="mt-3">
+                <ol className="breadcrumb">
+                  <Link to="/OwnerOption" className="breadcrumb-item text-decoration-none">Restaurant Owner</Link>
+                  <Link to="/rprofile" className="breadcrumb-item text-decoration-none">Restaurant Profile</Link>
+                  <li className="breadcrumb-item active" aria-current="page">Update Restaurant Profile</li>
+                </ol>
+              </nav>
+
           <form id="RProfileSettingform" onSubmit={this.submitForm}>
             <h2 className="fw-normal"><strong>Update Restaurant Profile</strong></h2>
             <hr className="mb-3" />
@@ -261,18 +272,15 @@ class RProfileSetting extends Component {
                   <FileInput fileType="resPhoto" accept=".jpg,.png,.jpeg" id="uploadPhoto" required={true} onChange={this.fileSelectedHandler} name="Upload Photo of restaurant (with jpg, png or jpeg format)" />
                 </div>
                 <div className="row mb-2">
-                  <OpenHours name="Open Hours" id="openHours" sm_md_lg="-1_-1_8" value={this.state.OpenHours} saveOH={this.saveOH} weekday={this.state.OpenWeekdays} start={this.state.OpenStart} end={this.state.OpenEnd} required={true} />
-                </div>
-                <div className="row mb-2">
                   <AddressInput onChange={this.handleOnChange} sm_md_lg="-1_-1_8" id="address" address={this.state.addressValue} required={true} name="Address" onMarkerComplete={this.onMarkerComplete} />
                 </div>
                 <div className="row mb-4">
-                  <TextAreaInput sm_md_lg="-1_-1_8" id="description" name="Description (Optional)" height="100px" />
+                  <TextAreaInput sm_md_lg="-1_-1_8" id="description" name="Description" height="100px" />
                 </div>
-                <ReCAPTCHA key={recaptchaKey} sitekey={config["REACT_RECAPTCHA_SITE_KEY"]} onChange={this.handleRecaptcha} />
+                {/*<ReCAPTCHA key={recaptchaKey} sitekey={config["REACT_RECAPTCHA_SITE_KEY"]} onChange={this.handleRecaptcha} />*/}
                 <div className="row mb-4">
                   <div className="d-flex gap-5 justify-content-center">
-                    <Link to="/rprofile" type="button" id="back-btn" className="btn btn-secondary btn-sm boarder-2 shadow-sm mx-3 border border-1 float-right"><b>Back</b></Link>
+                    {/*<Link to="/rprofile" type="button" id="back-btn" className="btn btn-secondary btn-sm boarder-2 shadow-sm mx-3 border border-1 float-right"><b>Back</b></Link>*/}
                     <button type="button" id="reset-btn" className="btn btn-sm boarder-2 shadow-sm mx-3 border border-1 float-right" onClick={this.resetForm}><b>Reset</b></button>
                     <button type="submit" id="upload" onClick={this.updateForm} className="btn btn-sm shadow-sm float-right" style={{ backgroundColor: "#3F5BFF", color: "white" }}><b>Submit</b></button>
                   </div>
