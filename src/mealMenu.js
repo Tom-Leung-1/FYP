@@ -4,6 +4,7 @@ import { Helmet } from "react-helmet";
 import axios from "axios";
 import CreateMeal from './CreateMeal';
 import { Link } from 'react-router-dom';
+
 class MealMenu extends React.Component {
 
   constructor(props) {
@@ -12,6 +13,12 @@ class MealMenu extends React.Component {
       pageSize: 5, 
       data: [],
       columns: [
+        {
+          field: 'photo',
+          headerName: 'Photo',
+          flex: 1,
+          renderCell: (params) => <img src={`images/meals/${params.value}`} class="img-fiuld" style={{height: 100, width:100}}/>
+        },
         { field: 'name', 
           headerName: 'Name', 
           flex: 1,
@@ -34,20 +41,8 @@ class MealMenu extends React.Component {
           headerName: 'Avalible Time',
           flex: 1,
         },
-        {
-          field: 'remarks',
-          headerName: 'Remarks',
-          flex: 1,
-        },
-        {
-          field: 'photo',
-          headerName: 'Photo',
-          flex: 1,
-        },
-        {
-          field: 'withSet',
-          headerName: 'with Set?',
-          valueGetter: params => { return params.value === 0 ? "No" : "Yes" },
+        { field: 'status', 
+          headerName: 'Status', 
           flex: 1,
         },
         {
@@ -129,9 +124,10 @@ class MealMenu extends React.Component {
           </div>
           <CreateMeal reFetchData={this.reFetchData} restaurantId={restaurantId}/>
           {data?.map(({restaurantId, id, name, type, price, avalibleTime, remarks, withSet, photo}) => 
-            <CreateMeal reFetchData={this.reFetchData} restaurantId={restaurantId} id={id} photo={photo} name={name} type={type} price={price} avalibleTime={avalibleTime} remarks={remarks} onChange={this.handleValueOnChange} withSet={withSet}/>
+            <CreateMeal reFetchData={this.reFetchData} restaurantId={restaurantId} id={id} photo={photo} name={name} type={type} price={price} avalibleTime={avalibleTime} remarks={remarks} onChange={this.handleValueOnChange} withSet={withSet} onSale={true} />
           )}
           <DataGrid
+            rowHeight={120}
             rows={data}
             columns={columns}
             pageSize={pageSize}
@@ -139,7 +135,7 @@ class MealMenu extends React.Component {
             rowsPerPageOptions={[5, 10, 15, 20, 25, 30]}
             autoHeight
             disableSelectionOnClick
-            className="bg-light"
+            className="bg-light mb-5"
             components={{
               Toolbar: GridToolbar,
             }}
@@ -171,3 +167,17 @@ class MealMenu extends React.Component {
 }
 
 export default MealMenu
+
+/*
+{
+          field: 'remarks',
+          headerName: 'Remarks',
+          flex: 1,
+        },
+        {
+          field: 'withSet',
+          headerName: 'with Set?',
+          valueGetter: params => { return params.value === 0 ? "No" : "Yes" },
+          flex: 1,
+        },
+*/
