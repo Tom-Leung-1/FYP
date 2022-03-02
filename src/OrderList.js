@@ -81,7 +81,7 @@ class OrderList extends React.Component {
   render() {
       return (
           <>
-            <div className="px-5">
+            <div className="container p-3">
                 <nav aria-label="breadcrumb" className="mt-3">
                     <ol className="breadcrumb">
                         <Link to="/OwnerOption" className="breadcrumb-item text-decoration-none">Restaurant Owner</Link>
@@ -94,6 +94,16 @@ class OrderList extends React.Component {
                     <div className="d-flex flex-wrap justify-content-left">
                         {this.showOrderList()}
                     </div>     
+                </div>
+                <div className="container" style={{display: this.state.data !== {} ? 'block':'none'}}>
+                    <div className="d-flex flex-wrap justify-content-center">
+                      <h3 className='text-center'><i class="bi bi-hourglass fa-5x" style={{color: "lightgrey"}}></i>
+                      <br/>
+                      
+                      <small>No received order yet, waiting for the new order...</small>
+                      </h3>
+                    </div>     
+
                 </div>
             </div>
           </>

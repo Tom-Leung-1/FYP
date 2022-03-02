@@ -189,10 +189,10 @@ class BookingSetting extends Component {
                      <nav aria-label="breadcrumb" className="mt-3">
                        <ol className="breadcrumb">
                          <Link to="/OwnerOption" className="breadcrumb-item text-decoration-none">Restaurant Owner</Link>
-                         <li className="breadcrumb-item active" aria-current="page">Opening Time/Table Reservation Time Range Setting</li>
+                         <li className="breadcrumb-item active" aria-current="page">Opening Time/Table Reservation Items Setting</li>
                        </ol>
                     </nav>
-                    <h2 className="fw-normal mt-3"><strong>Opening Time/Table Reservation Time Range Setting</strong></h2>
+                    <h2 className="fw-normal mt-3"><strong>Opening Time/Table Reservation Items Setting</strong></h2>
                     <hr/>
                     <div className='my-2 fs-5'>
                         <strong>Opening Time</strong>
