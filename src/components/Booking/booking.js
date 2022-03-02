@@ -8,6 +8,7 @@ import AdapterDateFns from '@material-ui/lab/AdapterDateFns';
 import LocalizationProvider from '@material-ui/lab/LocalizationProvider';
 import MobileTimePicker from '@material-ui/lab/MobileTimePicker';
 import axios from "axios";
+import { Link } from 'react-router-dom';
 import { startOfDay } from 'date-fns';
 
 class Booking extends React.Component {
@@ -127,12 +128,15 @@ class Booking extends React.Component {
 
    
   render() {
-    const {restaurantName} = this.props
+    const {restaurantName, userId} = this.props
     const {maxPeople, dateTime, noPeople} = this.state
     return (
       <>
         <p className="fw-bold text-center pt-1">Make a reservation<hr className="mb-0"/></p>
-        <div className="mx-5">
+
+        <div className="text-center mb-2" style={{display: userId < 0 ? "block":"none"}}>You must be <Link to="/sign-in" className='text-decoration-none'>logged in</Link> to make a reservation</div>
+        
+        <div className="mx-5" style={{display: userId < 0 ? "none":"block"}}>
           <FormControl variant="standard" sx={{ mb: 1, minWidth: 160 }} className="col-2 mx-4">
             <InputLabel id="noPeople">No. of people</InputLabel>
             <Select
