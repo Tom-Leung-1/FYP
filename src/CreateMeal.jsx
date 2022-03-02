@@ -145,11 +145,11 @@ class CreateMeal extends Component {
                   <label for="name" class="col-form-label">Name:</label>
                   <input required type="text" class="form-control" id="name" value={name} onChange={this.handleChange}/>
                 </div>
-                <div class="col-md-4 mb-3">
+                <div class="col-md-3 mb-3">
                   <label for="type" class="col-form-label">Type:</label>
                   <input required type="text" class="form-control" id="type" value={type} onChange={this.handleChange}/>
                 </div>
-                <div class="col-md-3 mb-3">
+                <div class="col-md-2 mb-3">
                   <label for="price" class="col-form-label">Price:</label>
                   <input required id="price" value={price} type="number" class="form-control" required name="price" min="0" step=".1" onChange={this.handleChange}/>
                 </div>

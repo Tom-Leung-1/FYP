@@ -4,6 +4,7 @@ import { Helmet } from "react-helmet";
 import axios from "axios";
 import CreateMeal from './CreateMeal';
 import { Link } from 'react-router-dom';
+import './MealMenu.css';
 
 class MealMenu extends React.Component {
 
@@ -17,7 +18,8 @@ class MealMenu extends React.Component {
           field: 'photo',
           headerName: 'Photo',
           flex: 1,
-          renderCell: (params) => <img src={`images/meals/${params.value}`} class="img-fiuld" style={{height: 100, width:100}}/>
+          align : "center",
+          renderCell: (params) => <img src={`images/meals/${params.value}`} class="img-fiuld" style={{height: 100}}/>
         },
         { field: 'name', 
           headerName: 'Name', 
@@ -135,7 +137,7 @@ class MealMenu extends React.Component {
             rowsPerPageOptions={[5, 10, 15, 20, 25, 30]}
             autoHeight
             disableSelectionOnClick
-            className="bg-light mb-5"
+            className="bg-light mb-5 MenuData"
             components={{
               Toolbar: GridToolbar,
             }}

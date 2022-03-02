@@ -1,0 +1,18 @@
+.MenuData .MuiDataGrid-viewport,
+.MenuData .MuiDataGrid-row,
+.MenuData .MuiDataGrid-renderingZone {
+    max-height: 120 !important;
+}
+
+.MenuData .MuiDataGrid-cell {
+    max-height: 120 !important;
+    overflow: auto;
+    white-space: initial !important;
+    line-height: 16px !important;
+    display: flex !important;
+    align-items: center;
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+    border-right: 1px solid;
+    border-color: lightgrey;
+}
