@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid'; // 1. npm install @material-ui/core 2. npm install @material-ui/data-grid 3.npm install @material-ui/styles
 import { Helmet } from "react-helmet";
 import axios from "axios";
@@ -43,9 +43,14 @@ class MealMenu extends React.Component {
           headerName: 'Avalible Time',
           flex: 1,
         },
-        { field: 'status', 
-          headerName: 'Status', 
+        { field: 'remarks', 
+          headerName: 'Remarks', 
           flex: 1,
+        },
+        { field: 'in_stock', 
+          headerName: 'In Stock?', 
+          flex: 1,
+          renderCell: (params) => <span>{params.value === 1 ? "Yes" : "No"}</span>,
         },
         {
           field: 'action',
@@ -125,8 +130,8 @@ class MealMenu extends React.Component {
             <button type="button" className="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#newMeal">Create Meal</button>
           </div>
           <CreateMeal reFetchData={this.reFetchData} restaurantId={restaurantId}/>
-          {data?.map(({restaurantId, id, name, type, price, avalibleTime, remarks, withSet, photo}) => 
-            <CreateMeal reFetchData={this.reFetchData} restaurantId={restaurantId} id={id} photo={photo} name={name} type={type} price={price} avalibleTime={avalibleTime} remarks={remarks} onChange={this.handleValueOnChange} withSet={withSet} onSale={true} />
+          {data?.map(({restaurantId, id, name, type, price, avalibleTime, remarks, withSet, photo, in_stock}) => 
+            <CreateMeal reFetchData={this.reFetchData} restaurantId={restaurantId} id={id} photo={photo} name={name} type={type} price={price} avalibleTime={avalibleTime} remarks={remarks} onChange={this.handleValueOnChange} withSet={withSet} inStock={in_stock} />
           )}
           <DataGrid
             rowHeight={120}
@@ -169,17 +174,3 @@ class MealMenu extends React.Component {
 }
 
 export default MealMenu
-
-/*
-{
-          field: 'remarks',
-          headerName: 'Remarks',
-          flex: 1,
-        },
-        {
-          field: 'withSet',
-          headerName: 'with Set?',
-          valueGetter: params => { return params.value === 0 ? "No" : "Yes" },
-          flex: 1,
-        },
-*/

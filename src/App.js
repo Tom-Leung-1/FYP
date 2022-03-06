@@ -38,7 +38,7 @@ import axios from "axios"
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {
+    this.state = JSON.parse(sessionStorage.getItem('appState')) || {
       searchTag : "",
       lat : -1,
       lng : -1,
@@ -102,8 +102,13 @@ class App extends Component {
     this.setState({userId: -1})
   }
 
+  updateSession = () => {
+    sessionStorage.setItem('appState', JSON.stringify(this.state))
+  }
+
   render() {
     const {openHours, userId, ownerRestaurantId, clientRestaurantId, owner, searchTag, lat, lng, photo, description, restaurant, address} = this.state
+    this.updateSession()
     return (
       <Router>
         <div className="App">

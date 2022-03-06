@@ -5,7 +5,7 @@ import axios from 'axios';
 class CreateMeal extends Component {
   constructor(props) {
     super(props);
-    const {id, name, type, price, avalibleTime, remarks, withSet, photo, onSale} = this.props
+    const {id, name, type, price, avalibleTime, remarks, withSet, photo, inStock} = this.props
     this.state = {
       id: id,
       name: name || "",
@@ -17,7 +17,7 @@ class CreateMeal extends Component {
       newPhotoUrl: null,
       newPhotoFile: null,
       withSet: (withSet ? 1 : 0),
-      onSale: true,
+      inStock: (inStock ? 1 : 0),
     };
   }
 
@@ -37,8 +37,8 @@ class CreateMeal extends Component {
       return
     }
     //
-    if (field === "onSale") {
-      this.setState({onSale : e.currentTarget.checked ? 1 : 0})
+    if (field === "inStock") {
+      this.setState({inStock : e.currentTarget.checked ? 1 : 0})
       return
     }
     //
@@ -56,7 +56,7 @@ class CreateMeal extends Component {
         avalibleTime: "",
         remarks: "",
         withSet: 0,
-        onSale: true,
+        inStock: true,
         newPhotoUrl: null,
         newPhotoFile: null,
       })
@@ -84,9 +84,9 @@ class CreateMeal extends Component {
   }
 
   insertNewMeal = async (fileName) => {
-    const {name, type, price, avalibleTime, remarks, withSet} = this.state
+    const {name, type, price, avalibleTime, remarks, withSet, inStock} = this.state
     const {restaurantId} = this.props
-    await axios.post(`http://localhost:3001/insertMeal`, {restaurantId, name, type, price, avalibleTime, remarks, withSet, fileName})
+    await axios.post(`http://localhost:3001/insertMeal`, {restaurantId, name, type, price, avalibleTime, remarks, withSet, fileName, inStock})
       .then(response => {
         console.log(response)
       })
@@ -97,9 +97,9 @@ class CreateMeal extends Component {
   }
 
   modify = async (fileName) => {
-    const {id, name, type, price, avalibleTime, remarks, withSet} = this.state
+    const {id, name, type, price, avalibleTime, remarks, withSet, inStock} = this.state
     const {restaurantId} = this.props
-    await axios.post(`http://localhost:3001/updateMeal`, {id, restaurantId, name, type, price, avalibleTime, remarks, withSet, fileName})
+    await axios.post(`http://localhost:3001/updateMeal`, {id, restaurantId, name, type, price, avalibleTime, remarks, withSet, fileName, inStock})
       .then(response => {
         console.log(response)
       })
@@ -126,7 +126,7 @@ class CreateMeal extends Component {
   }
   
   render() {
-    const {id, name, type, price, avalibleTime, remarks, withSet, newPhotoUrl, dbPhotoUrl, onSale} = this.state
+    const {id, name, type, price, avalibleTime, remarks, withSet, newPhotoUrl, dbPhotoUrl, inStock} = this.state
     console.log(withSet)
     return (
       <div class="modal fade" id={id ? `meal${id}` : "newMeal"} tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -164,7 +164,7 @@ class CreateMeal extends Component {
                   <div class="d-flex my-1"> 
                     <strong class="text-danger fs-5">Sold out</strong>
                     <div class="form-switch mx-2">
-                      <input class="form-check-input" type="checkbox" id="onSale" checked={onSale ? true : false} onChange={this.handleChange} style={{width: 50, height: 25}}/>
+                      <input class="form-check-input" type="checkbox" id="inStock" checked={inStock ? true : false} onChange={this.handleChange} style={{width: 50, height: 25}}/>
                     </div>
                     <strong class="text-success fs-5">On sale</strong>
                   </div>
