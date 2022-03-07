@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { Helmet } from "react-helmet";
 import { Link } from 'react-router-dom';
 import LargeTextInput from "./components/Inputs/LargeTextInput"
+import emailjs from '@emailjs/browser';
 import {withRouter} from 'react-router';
+
 import axios from "axios"
 
 class ForgotPwd extends Component {
@@ -10,13 +12,12 @@ class ForgotPwd extends Component {
     constructor(props) {
         super(props);
         this.state = { 
-                       emailValue: '',
-                       emailError: '',
+          emailValue: '',
+          emailError: '',
         };
     }
 
     handleOnChange = (e) => {
-      const {id} = e.currentTarget;
       this.setState({ emailValue: e.currentTarget.value })
       this.checkEmail(e);
     }
@@ -34,10 +35,46 @@ class ForgotPwd extends Component {
         return;
       }
       this.setState({emailError: 'OK'});
-  }
+    }
 
     componentDidMount() {
         window.scrollTo(0, 0);
+    }
+
+    submitForm = async (e) => {
+      e.preventDefault()
+      // check email in db
+      const {emailValue} = this.state
+      await axios.get(`http://localhost:3001/checkEmail?email=${emailValue}`)
+      .then(async (response) => {
+        if (!response.data.length) {
+          alert("No relevant email addresses are found in the database!")
+          return
+        }
+        await axios.post(`http://localhost:3001/sendEmail`, {emailValue})
+        .then(async (response) => {
+          console.log(response.data.token)
+          const templateParams = {
+            to_email : emailValue,
+            token : response.data.token,
+          }
+          emailjs.init("3ElvtargFj-dF39Sz")
+          emailjs.send("service_7w75x0d", "contact_form", templateParams)
+          .then(response => {
+            console.log(response)
+          })
+        })
+        .catch(error => {
+          console.log(error)
+          alert("There is a server error. Please try again.")
+          return
+        })
+        document.querySelector("#toSendPage").click()
+      })
+      .catch(error => {
+        console.log(error)
+        return
+      })
     }
 
     render() {
@@ -53,7 +90,7 @@ class ForgotPwd extends Component {
                     <h2 className="text-center mb-4 fw-normal"><strong>Forgot your password?</strong></h2>
                     <p className='text-center'>
                     <small class="text-muted">
-                      Enter the email address associated with your account and we will send an email with link to reset your password.
+                      Enter the email address associated with your account and we will send a link to your email to reset your password.
                     </small>
                     </p>
                     
@@ -62,7 +99,8 @@ class ForgotPwd extends Component {
                     </div>
 
                     <div className="d-grid gap-2 mb-2">
-                      <Link to="/send" type="button" className="shadow-sm btn btn-outline-primary rounded-pill border-2" onClick={""}><b>SEND EMAIL</b></Link>
+                      <button className="shadow-sm btn btn-outline-primary rounded-pill border-2">SEND EMAIL</button>
+                      <Link type="button" id="toSendPage" to="/send" style={{"display" : "none"}}/>
                     </div>
                   </form>
                 </div>
