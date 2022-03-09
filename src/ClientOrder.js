@@ -44,9 +44,9 @@ class ClientOrder extends React.Component {
   dataFilter = (data, t) => {
     const {withSetData} = this.state
     if (!data) return data
-    return data.filter(({type, withSet}) => type === t && !withSet).map(({id, name, type, price, avalibleTime, maxOrder, photo}) =>  // {`images/meals/${photo}`}
+    return data.filter(({type, withSet}) => type === t && !withSet).map(({id, name, type, price, avalibleTime, maxOrder, photo, in_stock}) =>  // {`images/meals/${photo}`}
     <>
-      <MealCard id={id} name={name} price={price} avalibleTime={avalibleTime} onSale={true} imgSrc={`images/meals/${photo}`}/> 
+      <MealCard id={id} name={name} price={price} avalibleTime={avalibleTime} onSale={in_stock} imgSrc={`images/meals/${photo}`}/> 
       <MealOverlay id={id} withSetData={withSetData} name={name} price={price} type={type}avalibleTime={avalibleTime} maxOrder={maxOrder} imgSrc={`/images/meals/${photo}`} addOnClick={()=>this.AddMeal(id, name, price)}/>
     </>)
   }
@@ -187,7 +187,7 @@ class ClientOrder extends React.Component {
             <button type="button" className="btn btn-primary mb-2 border-0" style={{backgroundColor:"#6E5EFE", marginLeft:"20vw", marginRight:"20vw" }} data-bs-toggle="modal" data-bs-target="#takeAway" disabled={this.state.Order.length > 0 ? false : true}>Create Order</button>
           </div>
           <Tooltip title="Shopping Cart" followCursor>
-          <Fab color="secondary" size="medium" style={{position: "fixed", bottom:10, right:10, backgroundColor:"#6E5EFE"}} data-bs-toggle="modal" data-bs-target={`#cart${restaurantId}`} aria-label="edit">
+          <Fab color="secondary" size="medium" style={{position: "fixed", bottom:10, right:10, backgroundColor:"#6E5EFE"}} data-backdrop="false" data-bs-backdrop="false" data-bs-toggle="modal" data-bs-target={`#cart${restaurantId}`} aria-label="edit">
             <i class="bi bi-cart-fill fa-lg"></i>
             <span class="position-absolute translate-middle bg-danger rounded-circle" style={{left: 41, top:7, padding:6, display: this.state.Order.length > 0 ? "block" : "none"}}>
               <span class="visually-hidden">New alerts</span>
@@ -254,8 +254,8 @@ class ClientOrder extends React.Component {
             </div>
           </div>
 
-          <div class="modal fade" id={`cart${restaurantId}`} tabindex="-1" aria-labelledby={`cart${restaurantId}Label`} aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+          <div class="modal topRight fade" id={`cart${restaurantId}`} tabindex="-1" aria-labelledby={`cart${restaurantId}Label`} aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable modal-side modal-top-right">
               <div class="modal-content">
                 <div class="modal-header">
                   <h3 class="modal-title" id={`cart${restaurantId}Label`}>Shopping Cart</h3>
