@@ -4,6 +4,7 @@ import { Helmet } from "react-helmet";
 import axios from "axios";
 import CreateMeal from './CreateMeal';
 import { Link } from 'react-router-dom';
+import Alert from '@mui/material/Alert';
 import './MealMenu.css';
 
 class MealMenu extends React.Component {
@@ -43,14 +44,16 @@ class MealMenu extends React.Component {
           headerName: 'Avalible Time',
           flex: 1,
         },
+        /* This part may not need to show in the data grid
         { field: 'remarks', 
           headerName: 'Remarks', 
           flex: 1,
         },
+        */
         { field: 'in_stock', 
-          headerName: 'In Stock?', 
+          headerName: 'Status', 
           flex: 1,
-          renderCell: (params) => <span>{params.value === 1 ? "Yes" : "No"}</span>,
+          renderCell: (params) => <Alert variant="filled" severity={`${params.value === 1 ? "success" : "error"}`} style={{padding: "0px 10px 0px 10px"}} className='rounded-pill'>{params.value === 1 ? "In stock" : "Sold out"}</Alert>,
         },
         {
           field: 'action',
@@ -126,8 +129,8 @@ class MealMenu extends React.Component {
           </nav>
           <h2 className="fw-normal mt-3"><strong>Design Menu</strong></h2>
           <hr/>
-          <div class="d-grid col-10 mx-auto">
-            <button type="button" className="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#newMeal">Create Meal</button>
+          <div class="d-grid col-10 mx-auto createMealBtn">
+            <button type="button" className="btn btn-outline-primary rounded-pill shadow-sm border-2 mb-3" data-bs-toggle="modal" data-bs-target="#newMeal"><strong>Create Meal</strong></button>
           </div>
           <CreateMeal reFetchData={this.reFetchData} restaurantId={restaurantId}/>
           {data?.map(({restaurantId, id, name, type, price, avalibleTime, remarks, withSet, photo, in_stock}) => 
@@ -142,6 +145,7 @@ class MealMenu extends React.Component {
             rowsPerPageOptions={[5, 10, 15, 20, 25, 30]}
             autoHeight
             disableSelectionOnClick
+            getRowClassName={(params) => `theme--${params.row.in_stock}`}
             className="bg-light mb-5 MenuData"
             components={{
               Toolbar: GridToolbar,

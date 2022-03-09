@@ -130,33 +130,33 @@ class CreateMeal extends Component {
     console.log(withSet)
     return (
       <div class="modal fade" id={id ? `meal${id}` : "newMeal"} tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-          <div class="modal-content">
-            <div class="modal-header">
+        <div class="modal-dialog modal-lg rounded-lg">
+          <div class="modal-content bg-light" style={{borderColor: "#6E5EFE" ,border: 8}}>
+            <div class="modal-header" style={{background: "linear-gradient(90deg, rgb(110, 94, 254) 0%, rgba(73, 63, 252, 1) 100%)", color: "#FFF", height: 50}}>
               <h5 class="modal-title" id="exampleModalLabel"><strong>{`${id ? "Modify" : "Create"} Meal`}</strong></h5>
               <button style={{display: "none"}} id={`hidden-btn${id ? id : ""}`} type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              <button id={`close-modal-btn${id ? id : ""}`} type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={this.resetField}></button>
+              <button id={`close-modal-btn${id ? id : ""}`} type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" onClick={this.resetField}></button>
             </div>
 
             <form onSubmit={this.handleSubmit}>
-              <div class="modal-body row">
+              <div class="modal-body row mealForm">
 
                 <div class="col-md-5 mb-3">
                   <label for="name" class="col-form-label">Name:</label>
-                  <input required type="text" class="form-control" id="name" value={name} onChange={this.handleChange}/>
+                  <input required type="text" class="form-control shadow-sm" id="name" value={name} onChange={this.handleChange}/>
                 </div>
                 <div class="col-md-3 mb-3">
                   <label for="type" class="col-form-label">Type:</label>
-                  <input required type="text" class="form-control" id="type" value={type} onChange={this.handleChange}/>
+                  <input required type="text" class="form-control shadow-sm" id="type" value={type} onChange={this.handleChange}/>
                 </div>
                 <div class="col-md-2 mb-3">
                   <label for="price" class="col-form-label">Price:</label>
-                  <input required id="price" value={price} type="number" class="form-control" required name="price" min="0" step=".1" onChange={this.handleChange}/>
+                  <input required id="price" value={price} type="number" class="form-control shadow-sm" name="price" min="0" step=".1" onChange={this.handleChange}/>
                 </div>
 
                 <div class="col-md-4 mb-3">
                   <label for="avalibleTime" class="col-form-label">Avalible Time:</label>
-                  <input required type="text" class="form-control" id="avalibleTime" value={avalibleTime} onChange={this.handleChange}/>
+                  <input required type="text" class="form-control shadow-sm" id="avalibleTime" value={avalibleTime} onChange={this.handleChange}/>
                 </div>
                 
                 <div class="col-md-4 mb-3">
@@ -166,7 +166,7 @@ class CreateMeal extends Component {
                     <div class="form-switch mx-2">
                       <input class="form-check-input" type="checkbox" id="inStock" checked={inStock ? true : false} onChange={this.handleChange} style={{width: 50, height: 25}}/>
                     </div>
-                    <strong class="text-success fs-5">On sale</strong>
+                    <strong class="text-success fs-5">In stock</strong>
                   </div>
                 </div>
 
@@ -191,11 +191,11 @@ class CreateMeal extends Component {
                 </div>
                 <div class="mb-3">
                   <label for="remarks" class="col-form-label">Remarks:</label>
-                  <textarea class="form-control" id="remarks" value={remarks} onChange={this.handleChange}></textarea>
+                  <textarea class="form-control shadow-sm" id="remarks" value={remarks} onChange={this.handleChange}></textarea>
                 </div>
               </div>
               <div class="modal-footer">
-                <button type="sumbit" class="btn btn-primary">{`${id ? "Modify" : "Create"}`}</button>
+                <button type="sumbit" class="btn btn-primary rounded-pill shadow" style={{backgroundColor: "#6E5EFE", border: 0}}>{`${id ? "Modify" : "Create"}`}</button>
               </div>
             </form>
 

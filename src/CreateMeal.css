@@ -1,0 +1,28 @@
+.mealForm .form-control {
+  background:#eaebee;
+  border:1px solid;
+  border-color: #dbdde0;
+  border-radius:6px;
+  outline:none;
+}
+
+.mealForm .form-control:hover, .mealForm .form-control:focus, .mealForm .form-control:active:hover{
+    border-color: #6E5EFE;
+  }
+
+  .form-check-input {
+    color: #6E5EFE !important;
+    background-color: #fff;
+  }
+  .form-check-input:checked,
+  .form-check-input:checked:hover, .form-check-input.checked:hover{
+    color: #fff;
+    background-color: #6E5EFE !important;
+    border-color: #a59cff !important;
+  }
+  .form-check-input.checked,
+  .form-check-input.checked.focus {
+    border-color: brown;
+    color: white;
+    background-color:brown;
+  }

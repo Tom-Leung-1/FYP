@@ -16,3 +16,23 @@
     border-right: 1px solid;
     border-color: lightgrey;
 }
+
+.createMealBtn .btn-outline-primary {
+    color:#6E5EFE;
+    background-color: #fff;
+    border-color: #6E5EFE;
+  }
+.createMealBtn .btn-outline-primary:hover, .btn-outline-primary:focus, .btn-outline-primary:active:hover{
+    color: #fff;
+    background-color: #6E5EFE;
+    border-color: #6E5EFE;
+  }
+
+.theme--0 {
+    background-color: rgb(255, 87, 87);
+    color: #fff;
+}
+
+.theme--0:hover {
+    background-color: rgb(255, 67, 67) !important;
+}
