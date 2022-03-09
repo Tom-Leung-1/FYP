@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from "react-helmet";
+import LocalDiningOutlinedIcon from '@mui/icons-material/LocalDiningOutlined';
+import DesignServicesOutlinedIcon from '@mui/icons-material/DesignServicesOutlined';
+import TableRestaurantOutlinedIcon from '@mui/icons-material/TableRestaurantOutlined';
+import AccessTimeOutlinedIcon from '@mui/icons-material/AccessTimeOutlined';
+import StorefrontOutlinedIcon from '@mui/icons-material/StorefrontOutlined';
 
 
 class OwnerOption extends React.Component {
@@ -21,13 +26,66 @@ class OwnerOption extends React.Component {
                         <h2>Hello! <span id="name"></span></h2>
                         <br/>
                         <h5>Here is the panel for restaurant owner, What do you want to do?</h5>
-                        <div className="list-group">
-                            <Link to="/menu" className="list-group-item list-group-item-action border-0 bg-light"><i className="bi bi-arrow-right-circle"></i> Design menu</Link>
-                            <Link to="/orderlist" className="list-group-item list-group-item-action border-0 bg-light"><i className="bi bi-arrow-right-circle"></i> See received orders</Link>
-                            <Link to="/booking" className="list-group-item list-group-item-action border-0 bg-light fst-italic"><i className="bi bi-arrow-right-circle"></i> Manage table reservation</Link>
-                            <Link to="/bookSetting" className="list-group-item list-group-item-action border-0 bg-light"><i className="bi bi-arrow-right-circle"></i> Set opening time/table reservation items</Link>
-                            <Link to="/rprofile" className="list-group-item list-group-item-action border-0 bg-light"><i className="bi bi-arrow-right-circle"></i> Check restaurant's profile</Link>
-                        </div>  
+                        <div className='row justify-content-left py-2'>
+
+                            <Link to="/menu" className='text-dark text-decoration-none col-md-4 col-lg-4 mb-3'>
+                            <div class="d-flex align-items-center p-1 panelOption">
+                                <div class="flex-shrink">
+                                    <DesignServicesOutlinedIcon sx={{ fontSize: 60, color: "#6E5EFE" }} />
+                                </div>
+                                <div class="ms-2">
+                                    Design menu
+                                </div>
+                            </div>
+                            </Link>
+
+                            <Link to="/orderlist" className='text-dark text-decoration-none col-md-4 col-lg-4 mb-3'>
+                            <div class="d-flex align-items-center p-1 panelOption">
+                                <div class="flex-shrink">
+                                    <LocalDiningOutlinedIcon sx={{ fontSize: 60, color: "#6E5EFE" }} />
+                                </div>
+                                <div class="ms-2">
+                                    See received orders
+                                </div>
+                            </div>
+                            </Link>
+
+                            <Link to="/booking" className='text-dark text-decoration-none col-md-4 col-lg-4 mb-3'>
+                            <div class="d-flex align-items-center p-1 panelOption">
+                                <div class="flex-shrink">
+                                    <TableRestaurantOutlinedIcon sx={{ fontSize: 60, color: "#6E5EFE" }} />
+                                </div>
+                                <div class="ms-2">
+                                    Manage table reservation
+                                </div>
+                            </div>
+                            </Link>
+
+                            <Link to="/bookSetting" className='text-dark text-decoration-none col-md-4 col-lg-4 mb-3'>
+                            <div class="d-flex align-items-center p-1 panelOption">
+                                <div class="flex-shrink">
+                                    <AccessTimeOutlinedIcon sx={{ fontSize: 60, color: "#6E5EFE" }} />
+                                </div>
+                                <div class="ms-2">
+                                    Set opening time/table reservation items
+                                </div>
+                            </div>
+                            </Link>
+
+                            <Link to="/rprofile" className='text-dark text-decoration-none col-md-4 col-lg-4 mb-3'>
+                            <div class="d-flex align-items-center p-1 panelOption">
+                                <div class="flex-shrink">
+                                    <StorefrontOutlinedIcon sx={{ fontSize: 60, color: "#6E5EFE" }} />
+                                </div>
+                                <div class="ms-2">
+                                    Check restaurant's profile
+                                </div>
+                            </div>
+                            </Link>
+
+                            
+
+                        </div>
                     </section>
                 </div>
             </div>
@@ -38,3 +96,17 @@ class OwnerOption extends React.Component {
 
 
 export default OwnerOption
+
+/*
+                        <div class="d-flex justify-content-center">
+                            <Link to="/orderlist" className="list-group-item list-group-item-action border-0 bg-light"><i className="bi bi-arrow-right-circle"></i> See received orders</Link>
+                            <Link to="/orderlist" className="list-group-item list-group-item-action border-0 bg-light"><i className="bi bi-arrow-right-circle"></i> See received orders</Link>
+                            <Link to="/booking" className="list-group-item list-group-item-action border-0 bg-light fst-italic"><i className="bi bi-arrow-right-circle"></i> Manage table reservation</Link>
+                            <Link to="/bookSetting" className="list-group-item list-group-item-action border-0 bg-light"><i className="bi bi-arrow-right-circle"></i> Set opening time/table reservation items</Link>
+                            <Link to="/rprofile" className="list-group-item list-group-item-action border-0 bg-light"><i className="bi bi-arrow-right-circle"></i> Check restaurant's profile</Link>
+
+                        </div>
+                        <div className="list-group">
+                    
+                        </div>  
+*/

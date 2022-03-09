@@ -9,7 +9,7 @@ import Login from "./Login";
 import SignUp from "./SignUp";
 import BRegister from "./BRegister";
 import Searching from "./Searching";
-import MealMenu from "./MealMenu";
+import MealMenu from "./mealMenu";
 import BookingStatus from "./BookingStatus";
 import BookingSetting from "./BookingSetting";
 import Order from "./Order";
@@ -127,7 +127,7 @@ class App extends Component {
                 <Home selectRestaurant={this.selectRestaurant} searchUpdate={this.searchUpdate}/>
               </Route>
               <Route path="/search">
-                <Searching selectRestaurant={this.selectRestaurant} searchTag={searchTag} searchUpdate={this.searchUpdate} searchTag={searchTag}/>
+                <Searching selectRestaurant={this.selectRestaurant} searchTag={searchTag} searchUpdate={this.searchUpdate} />
               </Route>
               <Route path="/sign-in">
                 <Login signInSetting={this.signInSetting}/> 
