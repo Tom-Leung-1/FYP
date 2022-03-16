@@ -20,7 +20,7 @@ class UserType extends Component {
                 <div className="d-flex flex-wrap justify-content-center">
                     <div className="card border-0 bg-light my-3">
                         <Link to="/ClientOption">
-                            <button type="button" className="btn btn-primary btn-lg fs-4 shadow border-0 mx-5" style={{height: "18vh", width:"22vw", background: "#6E5EFE"}}>
+                            <button type="button" className="enlargeBtn btn btn-primary btn-lg fs-4 shadow border-0 mx-5" style={{height: "18vh", width:"22vw", background: "#6E5EFE"}}>
                             <i className="bi bi-person d-flex flex-wrap justify-content-center"></i>
                             Normal Customer
                             </button>
@@ -33,7 +33,7 @@ class UserType extends Component {
                     </div>
                     <div className="card border-0 bg-light my-3" style={{width:"50vh"}}>
                         <Link to={owner ? "/OwnerOption" : "/register"}>
-                            <button type="button" className="btn btn-primary btn-lg fs-4 shadow border-0" style={{height: "18vh", width:"22vw", background: "#6E5EFE"}}>
+                            <button type="button" className="enlargeBtn btn btn-primary btn-lg fs-4 shadow border-0" style={{height: "18vh", width:"22vw", background: "#6E5EFE"}}>
                             <i className="bi bi-shop d-flex flex-wrap justify-content-center"></i>
                             Restaurant Owner
                             </button>
