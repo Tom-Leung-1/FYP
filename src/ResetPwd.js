@@ -12,6 +12,7 @@ class ResetPwd extends Component {
   constructor(props) {
       super(props);
       this.state = {
+        id : -1,
         valid : false,
         token : "",
         password: '',
@@ -37,7 +38,7 @@ class ResetPwd extends Component {
       return
     }
     if (!(value.match(validPass))) {
-      this.setState({passwordError: 'Your new password should be between 8 to 16 characters, which contain at least one uppercase letter.'});
+      this.setState({passwordError: 'Your new password should be between 8 to 16 characters and contains at least one uppercase letter.'});
       return
     }
     this.setState({passwordError: 'OK'});
@@ -52,14 +53,34 @@ class ResetPwd extends Component {
       return
     }
     if (value != document.getElementById("newPass").value) {
-      this.setState({confirmPassError: 'The Confirm Password confirmation does not match.'});
+      this.setState({confirmPassError: 'Your password does not match.'});
       return
     }
     else if (!(value.match(validPass))) {
-      this.setState({confirmPassError: 'Your password is not available.'});
+      this.setState({confirmPassError: 'Your new password should be between 8 to 16 characters and contains at least one uppercase letter.'});
       return
     }
     this.setState({confirmPassError: 'OK'});
+  }
+
+  submitPassword = async (e) => {
+    e.preventDefault()
+    const {id, password, passwordError, confirmPassError} = this.state
+    if (passwordError + confirmPassError !== "OKOK") {
+      alert("Please make sure that your password meet the conditions stated in the information box.")
+      return 
+    }
+    await axios.post(`http://localhost:3001/submitPassword`, {id, password})
+    .then(response => {
+      console.log(response.data)
+      alert("Your password has been changed successfully!")
+      document.querySelector("#toSignInPage").click()
+      return
+    })
+    .catch(error => {
+      alert(error)
+      return
+    })
   }
 
   showPass = () => {
@@ -72,7 +93,12 @@ class ResetPwd extends Component {
       .then(response => {
         console.log(response)
         if (response.data.length) {
-          this.setState({valid : true, token})
+          const {expire, id} = response.data[0]
+          const dateTime = new Date(expire);
+          const now = new Date(Date.now() - 8 * 3600000) // for some reasons, the time is shown in HKT time zone, unlike the time in server side code
+          console.log({dateTime, now})
+          if (dateTime < now) return
+          this.setState({valid : true, token, id})
         }
       })
       .catch(error => {
@@ -95,7 +121,7 @@ class ResetPwd extends Component {
         </Helmet>
         {valid ? 
         <div id="test" className="d-flex justify-content-center p-5">
-          <form onSubmit={this.submitForm} className="shadow-sm" style={{ fontFamily: 'Ubuntu', width: '100%', maxWidth: '500px', padding: '40px', borderRadius: '20px', backgroundColor: 'rgba(255, 255, 255, 0.5)' }}>
+          <form onSubmit={this.submitPassword} className="shadow-sm" style={{ fontFamily: 'Ubuntu', width: '100%', maxWidth: '500px', padding: '40px', borderRadius: '20px', backgroundColor: 'rgba(255, 255, 255, 0.5)' }}>
             <h2 className="text-center mb-4 fw-normal"><strong>Reset Password</strong></h2>
             <Alert severity="info">
               In order to protect your account, please make sure your new password:
@@ -103,7 +129,7 @@ class ResetPwd extends Component {
               <li>Contains at least one uppercase letter</li>
               <li>Is different to previous used passwords</li>
             </Alert>
-              <div className='mb-5'>
+              <div className='mb-4'>
                 <label for="password" class="col-form-label"><strong><small>New Password</small></strong></label>
                 <input type="password" id="newPass" className={`${passwordError === "OK" ? "is-valid" : passwordError ? "is-invalid" : ""} form-control form-control-sm mb-1`} onChange={this.handleOnChange} required />
                 {passwordError && <div className="invalid-feedback">{passwordError}</div>}
@@ -112,7 +138,8 @@ class ResetPwd extends Component {
                 {confirmPassError && <div className="invalid-feedback">{confirmPassError}</div>}
               </div>
             <div className="d-grid gap-2 mt-2">
-              <Link to="/sign-in" type="button" className="shadow-sm btn btn-outline-primary rounded-pill border-2" onClick={""}><b>Reset Password</b></Link>
+              <button className="shadow-sm btn btn-outline-primary rounded-pill border-2"><b>Reset Password</b></button>
+              <Link to="/sign-in" type="button" id="toSignInPage" style={{"display" : "none"}}/>
             </div>
           </form>
         </div>
