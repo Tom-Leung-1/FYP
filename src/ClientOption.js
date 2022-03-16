@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from "react-helmet";
+import { ReactComponent as OrderIcon } from './images/orderlist.svg';
+import { ReactComponent as TableClientIcon } from './images/client_table.svg';
+import { ReactComponent as UserIcon } from './images/user_pro.svg';
+import { ReactComponent as SearchIcon } from './images/search.svg';
+
 import LocalDiningOutlinedIcon from '@mui/icons-material/LocalDiningOutlined';
 import DinnerDiningOutlinedIcon from '@mui/icons-material/DinnerDiningOutlined';
 import TableBarOutlinedIcon from '@mui/icons-material/TableBarOutlined';
@@ -30,9 +35,9 @@ class ClientOption extends React.Component {
                         <div className='row justify-content-left py-2'>
 
                             <Link to="/recentorder" className='text-dark text-decoration-none col-md-4 col-lg-4 mb-3'>
-                            <div class="d-flex align-items-center p-1 panelOption">
+                            <div class="d-flex align-items-center p-2 panelOption">
                                 <div class="flex-shrink">
-                                    <DinnerDiningOutlinedIcon sx={{ fontSize: 60, color: "#6E5EFE" }} />
+                                    <OrderIcon style={{height:"60px", width:"60px"}} />
                                 </div>
                                 <div class="ms-2">
                                     See recent orders
@@ -41,9 +46,9 @@ class ClientOption extends React.Component {
                             </Link>
 
                             <Link to="/recentbooking" className='text-dark text-decoration-none col-md-4 col-lg-4 mb-3'>
-                            <div class="d-flex align-items-center p-1 panelOption">
+                            <div class="d-flex align-items-center p-2 panelOption">
                                 <div class="flex-shrink">
-                                    <TableBarOutlinedIcon sx={{ fontSize: 60, color: "#6E5EFE" }} />
+                                    <TableClientIcon style={{height:"60px", width:"60px"}} />
                                 </div>
                                 <div class="ms-2">
                                     Check recent reservations
@@ -52,9 +57,9 @@ class ClientOption extends React.Component {
                             </Link>
 
                             <Link to="/uprofile" className='text-dark text-decoration-none col-md-4 col-lg-4 mb-3'>
-                            <div class="d-flex align-items-center p-1 panelOption">
+                            <div class="d-flex align-items-center p-2 panelOption">
                                 <div class="flex-shrink">
-                                    <ManageAccountsOutlinedIcon sx={{ fontSize: 60, color: "#6E5EFE" }} />
+                                    <UserIcon style={{height:"60px", width:"60px"}} />
                                 </div>
                                 <div class="ms-2">
                                     Edit user profile
@@ -63,9 +68,9 @@ class ClientOption extends React.Component {
                             </Link>
 
                             <Link to="/" className='text-dark text-decoration-none col-md-4 col-lg-4 mb-3'>
-                            <div class="d-flex align-items-center p-1 panelOption">
+                            <div class="d-flex align-items-center p-2 panelOption">
                                 <div class="flex-shrink">
-                                    <SearchOutlinedIcon sx={{ fontSize: 60, color: "#6E5EFE" }} />
+                                    <SearchIcon style={{height:"60px", width:"60px"}} />
                                 </div>
                                 <div class="ms-2">
                                     Back to the home page and search restaurant

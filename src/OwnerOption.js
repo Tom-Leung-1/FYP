@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from "react-helmet";
-import LocalDiningOutlinedIcon from '@mui/icons-material/LocalDiningOutlined';
-import DesignServicesOutlinedIcon from '@mui/icons-material/DesignServicesOutlined';
-import TableRestaurantOutlinedIcon from '@mui/icons-material/TableRestaurantOutlined';
-import AccessTimeOutlinedIcon from '@mui/icons-material/AccessTimeOutlined';
-import StorefrontOutlinedIcon from '@mui/icons-material/StorefrontOutlined';
+import { ReactComponent as DesignMenuIcon } from './images/menu.svg';
+import { ReactComponent as ReceivedOrderIcon } from './images/received.svg';
+import { ReactComponent as TableRestaurantIcon } from './images/owner_table.svg';
+import { ReactComponent as OpenIcon } from './images/open.svg';
+import { ReactComponent as RestaurantIcon } from './images/restaurant_pro.svg';
 
 
 class OwnerOption extends React.Component {
@@ -29,9 +29,9 @@ class OwnerOption extends React.Component {
                         <div className='row justify-content-left py-2'>
 
                             <Link to="/menu" className='text-dark text-decoration-none col-md-4 col-lg-4 mb-3'>
-                            <div class="d-flex align-items-center p-1 panelOption">
+                            <div class="d-flex align-items-center p-2 panelOption">
                                 <div class="flex-shrink">
-                                    <DesignServicesOutlinedIcon sx={{ fontSize: 60, color: "#6E5EFE" }} />
+                                    <DesignMenuIcon style={{height:"60px", width:"60px"}} />
                                 </div>
                                 <div class="ms-2">
                                     Design menu
@@ -40,9 +40,9 @@ class OwnerOption extends React.Component {
                             </Link>
 
                             <Link to="/orderlist" className='text-dark text-decoration-none col-md-4 col-lg-4 mb-3'>
-                            <div class="d-flex align-items-center p-1 panelOption">
+                            <div class="d-flex align-items-center p-2 panelOption">
                                 <div class="flex-shrink">
-                                    <LocalDiningOutlinedIcon sx={{ fontSize: 60, color: "#6E5EFE" }} />
+                                    <ReceivedOrderIcon style={{height:"60px", width:"60px"}}/>
                                 </div>
                                 <div class="ms-2">
                                     See received orders
@@ -51,9 +51,9 @@ class OwnerOption extends React.Component {
                             </Link>
 
                             <Link to="/booking" className='text-dark text-decoration-none col-md-4 col-lg-4 mb-3'>
-                            <div class="d-flex align-items-center p-1 panelOption">
+                            <div class="d-flex align-items-center p-2 panelOption">
                                 <div class="flex-shrink">
-                                    <TableRestaurantOutlinedIcon sx={{ fontSize: 60, color: "#6E5EFE" }} />
+                                    <TableRestaurantIcon style={{height:"60px", width:"60px"}} />
                                 </div>
                                 <div class="ms-2">
                                     Manage table reservation
@@ -62,9 +62,9 @@ class OwnerOption extends React.Component {
                             </Link>
 
                             <Link to="/bookSetting" className='text-dark text-decoration-none col-md-4 col-lg-4 mb-3'>
-                            <div class="d-flex align-items-center p-1 panelOption">
+                            <div class="d-flex align-items-center p-2 panelOption">
                                 <div class="flex-shrink">
-                                    <AccessTimeOutlinedIcon sx={{ fontSize: 60, color: "#6E5EFE" }} />
+                                    <OpenIcon style={{height:"60px", width:"60px"}}/>
                                 </div>
                                 <div class="ms-2">
                                     Set opening time/table reservation items
@@ -73,17 +73,15 @@ class OwnerOption extends React.Component {
                             </Link>
 
                             <Link to="/rprofile" className='text-dark text-decoration-none col-md-4 col-lg-4 mb-3'>
-                            <div class="d-flex align-items-center p-1 panelOption">
+                            <div class="d-flex align-items-center p-2 panelOption">
                                 <div class="flex-shrink">
-                                    <StorefrontOutlinedIcon sx={{ fontSize: 60, color: "#6E5EFE" }} />
+                                    <RestaurantIcon style={{height:"60px", width:"60px"}} />
                                 </div>
                                 <div class="ms-2">
                                     Check restaurant's profile
                                 </div>
                             </div>
-                            </Link>
-
-                            
+                            </Link>                           
 
                         </div>
                     </section>
