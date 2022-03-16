@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {MenuItems} from "./LNavItems";
 import { Link } from 'react-router-dom';
 import './NewNavbar.css';
+import SetMealRoundedIcon from '@mui/icons-material/SetMealRounded';
 
 class LoginNavbar extends Component {
     
@@ -26,7 +27,7 @@ class LoginNavbar extends Component {
             <header className="sticky-top">
             <nav className="navbar navbar-expand-lg navbar-dark HomeNav" id="LoginNav">
               <div className="container-fluid">
-                <div className="navbar-brand mx-1"><i className="fas fa-utensils"></i> Foodcreek</div>
+                <Link to = "/" className='text-decoration-none'><div className="navbar-brand mx-1"><SetMealRoundedIcon style={{fontSize: 40}}/> Foodcreek</div></Link>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#LoginNavMenu" aria-controls="LoginNavMenu" aria-expanded="false" aria-label="Toggle navigation">
                   <span className="navbar-toggler-icon"></span>
                 </button>

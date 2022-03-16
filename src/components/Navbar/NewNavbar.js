@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {MenuItems} from "./MenuItems";
 import { Link } from 'react-router-dom';
+import SetMealRoundedIcon from '@mui/icons-material/SetMealRounded';
 import './NewNavbar.css';
 
 class Navbar extends Component {
@@ -26,7 +27,7 @@ class Navbar extends Component {
             <header className="sticky-top">
             <nav className="navbar navbar-expand-lg navbar-dark HomeNav" id="HomeNav">
               <div className="container-fluid">
-                <div className="navbar-brand mx-1"><i className="fas fa-utensils"></i> Foodcreek</div>
+                <Link to = "/" className='text-decoration-none'><div className="navbar-brand mx-1"><SetMealRoundedIcon style={{fontSize: 40}}/> Foodcreek</div></Link>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#HomeNavMenu" aria-controls="HomeNavMenu" aria-expanded="false" aria-label="Toggle navigation">
                   <span className="navbar-toggler-icon"></span>
                 </button>

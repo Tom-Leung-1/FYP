@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 //import 'bootstrap/dist/css/bootstrap.min.css';
 import "./SearchBox.css";
 import { Link } from 'react-router-dom';
+import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 
 class SearchBox extends Component {
 
@@ -42,7 +43,7 @@ class SearchBox extends Component {
             <input onKeyUp={this.handleOnKeyUp} onChange={this.handleOnChange} value={searchInput} type="search" placeholder="Find Restaurant by name here!" aria-describedby="button-addon1" className="form-control rounded rounded-pill border-0 bg-light m-2"/>
             <div className="input-group-append">
               <button id="button-addon1" type="submit" className="btn btn-link rounded rounded-pill m-2" onClick={this.handleOnClick}>
-                <Link to="/search"><i className="fa fa-search"></i></Link>
+                <Link to="/search"><SearchRoundedIcon sx={{ fontSize: 30, color: "#6E5EFE" }}/></Link>
               </button>
             </div>
           </div>

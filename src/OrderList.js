@@ -97,7 +97,7 @@ class OrderList extends React.Component {
                 </div>
                 <div className="container" style={{display: this.state.data !== {} ? 'block':'none'}}>
                     <div className="d-flex flex-wrap justify-content-center">
-                      <h3 className='text-center'><i class="bi bi-hourglass fa-5x" style={{color: "lightgrey"}}></i>
+                      <h3 className='text-center'><i class="bi bi-hourglass" style={{color: "lightgrey", fontSize: 100}}></i>
                       <br/>
                       
                       <small>No received order yet, waiting for the new order...</small>
