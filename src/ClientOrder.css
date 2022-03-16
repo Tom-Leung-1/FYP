@@ -44,13 +44,24 @@
   background-color: #FFF;
 }
 
-.topRight .modal-dialog {
-  position: absolute;
-  top: 0;
-  right: 2px;
-  bottom: 0;
-  width: 2000px;
-  overflow: hidden;
-  overflow-y: auto;
+.modal.fade:not(.in).right .modal-dialog {
+	-webkit-transform: translate3d(25%, 0, 0);
+	transform: translate3d(25%, 0, 0);
 }
 
+.modal.right .modal-dialog {
+	position:absolute;
+	top:0;
+	right:6em;
+	margin:0;
+}
+
+.modal.right .modal-content {
+	min-height:100vh;
+  min-width: 24em;
+	border:0;
+}
+
+.modal-open {
+  overflow-y: auto;
+}

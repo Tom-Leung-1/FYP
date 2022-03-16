@@ -13,6 +13,7 @@ import { margin } from '@mui/system';
 import Fab from '@mui/material/Fab';
 import Tooltip from '@mui/material/Tooltip';
 
+
 class ClientOrder extends React.Component {
   constructor(props) {
     super(props);
@@ -127,17 +128,50 @@ class ClientOrder extends React.Component {
 
   }
 
+  DeleteMeal = (name, price, drink, special) => {
+    
+    let orderDetail = [...this.state.Order];
+
+    let index = orderDetail.findIndex(meal => meal.name == name && meal.drink == drink && meal.special == special);
+
+    orderDetail.splice(index, 1)
+
+    this.setState({Order: orderDetail, Total: this.state.Total - price});
+
+  }
+
   showOrder = () => {
     const {Order} = this.state
     return (Order.map(item => {
       return (
         <>
-        <h5>{item.name} <span style={{float:"right"}}>${item.price}</span></h5>
+        <h5>
+          <b>{item.name} <span style={{float:"right"}}>${item.price}</span></b>
+        </h5>
         {item.drink ? <><small class="text-muted">+ {item.drink}</small><br/></> : null}
         {item.special ? <><small class="text-muted">+ {item.special}</small><br/></> : null}
         </>
       )
     }))
+  }
+
+  showCart = () => {
+    const {Order} = this.state
+    if (Order.length > 0)
+    return (Order.map(item => {
+      return (
+        <div className='p-1'>
+        <h5>
+          <i class="bi bi-trash-fill text-muted" title="delete" type="button" style={{float:"right"}} onClick={() => this.DeleteMeal(item.name, item.price, item.drink, item.special)} ></i>
+          <b>{item.name} <span style={{float:"right"}}>${item.price}&nbsp;&nbsp;</span></b>
+        </h5>
+        {item.drink ? <><small class="text-muted">+ {item.drink}</small><br/></> : null}
+        {item.special ? <><small class="text-muted">+ {item.special}</small><br/></> : null}
+        </div>
+      )
+    }))
+    else
+    return (<h5 className='text-center text-muted'>The Shopping Cart is empty.</h5>)
   }
 
   toPayment = (Order, Total, TakeAway) => {
@@ -184,11 +218,11 @@ class ClientOrder extends React.Component {
           </div>  
 
           <div class="d-grid col-12" style={{position: "fixed", bottom:2}}>
-            <button type="button" className="btn btn-primary mb-2 border-0" style={{backgroundColor:"#6E5EFE", marginLeft:"20vw", marginRight:"20vw" }} data-bs-toggle="modal" data-bs-target="#takeAway" disabled={this.state.Order.length > 0 ? false : true}>Create Order</button>
+            <button type="button" className="btn btn-primary mb-2 border-0 shadow enlargeBtn" style={{backgroundColor:"#6E5EFE", marginLeft:"20vw", marginRight:"20vw" }} data-bs-toggle="modal" data-bs-target="#takeAway" disabled={this.state.Order.length > 0 ? false : true}>Create Order</button>
           </div>
           <Tooltip title="Shopping Cart" followCursor>
-          <Fab color="secondary" size="medium" style={{position: "fixed", bottom:10, right:10, backgroundColor:"#6E5EFE"}} data-backdrop="false" data-bs-backdrop="false" data-bs-toggle="modal" data-bs-target={`#cart${restaurantId}`} aria-label="edit">
-            <i class="bi bi-cart-fill fa-lg"></i>
+          <Fab color="secondary" size="medium" style={{position: "fixed", bottom:10, right:10, backgroundColor:"#6E5EFE"}} data-bs-toggle="modal" data-bs-target={`#cart${restaurantId}`} aria-label="edit">
+            <i class="bi bi-cart-fill fs-5"></i>
             <span class="position-absolute translate-middle bg-danger rounded-circle" style={{left: 41, top:7, padding:6, display: this.state.Order.length > 0 ? "block" : "none"}}>
               <span class="visually-hidden">New alerts</span>
             </span>
@@ -237,9 +271,9 @@ class ClientOrder extends React.Component {
           <div class="modal fade" id={`createOrder${restaurantId}`} tabindex="-1" aria-labelledby={`createOrder${restaurantId}Label`} aria-hidden="true">
             <div class="modal-dialog modal-fullscreen">
               <div class="modal-content">
-                <div class="modal-header">
-                  <h3 class="modal-title" id={`createOrder${restaurantId}Label`}>Create Order</h3>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="modal-header" style={{background: "linear-gradient(90deg, rgb(110, 94, 254) 0%, rgba(73, 63, 252, 1) 100%)", color: "#FFF"}}>
+                  <h3 class="modal-title" id={`createOrder${restaurantId}Label`}><strong>Create Order</strong></h3>
+                  <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                   <h5>{this.state.TakeAway ? "-Take Away-": "-Delivery-"}</h5>
@@ -254,15 +288,15 @@ class ClientOrder extends React.Component {
             </div>
           </div>
 
-          <div class="modal topRight fade" id={`cart${restaurantId}`} tabindex="-1" aria-labelledby={`cart${restaurantId}Label`} aria-hidden="true">
+          <div class="modal fade right" id={`cart${restaurantId}`} tabindex="-1" aria-labelledby={`cart${restaurantId}Label`} aria-hidden="true">
             <div class="modal-dialog modal-dialog-scrollable modal-side modal-top-right">
               <div class="modal-content">
-                <div class="modal-header">
-                  <h3 class="modal-title" id={`cart${restaurantId}Label`}>Shopping Cart</h3>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="modal-header" style={{background: "linear-gradient(90deg, rgb(110, 94, 254) 0%, rgba(73, 63, 252, 1) 100%)", color: "#FFF", height: 50}}>
+                  <h5 class="modal-title" id={`cart${restaurantId}Label`}><strong>Shopping Cart</strong></h5>
+                  <button type="button" class="btn-close btn-close-white btn-sm" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                  {this.showOrder()}
+                  {this.showCart()}
                 </div>
                 <div class="modal-footer">
                   <h3 class="mr-auto"><b>Total: <span class="text-danger">${this.state.Total}</span></b></h3>
