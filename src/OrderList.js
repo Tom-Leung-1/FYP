@@ -79,6 +79,8 @@ class OrderList extends React.Component {
   }
 
   render() {
+    const {data} = this.state
+    console.log()
       return (
           <>
             <div className="container p-3">
@@ -95,7 +97,7 @@ class OrderList extends React.Component {
                         {this.showOrderList()}
                     </div>     
                 </div>
-                <div className="container" style={{display: this.state.data !== {} ? 'block':'none'}}>
+                <div className="container" style={{display: Object.keys(data).length ? 'none':'block'}}>
                     <div className="d-flex flex-wrap justify-content-center">
                       <h3 className='text-center'><i class="bi bi-hourglass" style={{color: "lightgrey", fontSize: 100}}></i>
                       <br/>

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Helmet } from "react-helmet";
 import { Link } from 'react-router-dom';
 import Alert from '@mui/material/Alert';
+import axios from 'axios';
 
 var CryptoJS = require("crypto-js");
 
@@ -46,8 +47,8 @@ class UpdatePwd extends Component {
       this.setState({confirmPassError: 'Please enter your password again for confirmation.'});
       return
     }
-    if (value != document.getElementById("newPass").value) {
-      this.setState({confirmPassError: 'The Confirm Password confirmation does not match.'});
+    if (value !== document.getElementById("newPass").value) {
+      this.setState({confirmPassError: 'The Confirmed Password does not match.'});
       return
     }
     this.setState({confirmPassError: 'OK'});
@@ -56,6 +57,33 @@ class UpdatePwd extends Component {
   showPass = () => {
     const {showPass} = this.state
     this.setState({showPass: !showPass});
+  }
+
+  updatePassword = async () => {
+    const {password} = this.state
+    const {userId} = this.props
+    let reply
+    await axios.post(`http://localhost:3001/updatePassword`, {password, userId})
+    .then(response => {
+      console.log(response)
+      reply = "credentials have been updated successfully!"
+    })
+    .catch(error => {
+      console.log(error)
+      reply = "There is a server error, please try again later."
+    })
+    return reply
+  }
+
+  submitForm = async (e) => {
+    e.preventDefault()
+    const {passwordError, confirmPassError} = this.state
+    if (passwordError + confirmPassError !== "OKOK") {
+      alert("Please provide valid inputs.")
+      return
+    }
+    const reply = await this.updatePassword()
+    alert(reply)
   }
 
   render() {
@@ -81,16 +109,16 @@ class UpdatePwd extends Component {
               <li>Contains at least one uppercase letter</li>
           </Alert>
           <br/>
-          <form id="newform">
+          <form id="passwordForm" onSubmit={this.submitForm}>
             <div class="mb-3 row">
-              <label for="username" class="col-lg-3 col-sm-4 col-form-label">New Password: </label>
+              <label for="newPass" class="col-lg-3 col-sm-4 col-form-label">New Password: </label>
               <div class="col-lg-3 col-sm-4">
                 <input type="password" id="newPass" className={`${passwordError === "OK" ? "is-valid" : passwordError ? "is-invalid" : ""} form-control form-control-sm mb-1 `} onChange={this.handleOnChange} required />
                 {passwordError && <div className="invalid-feedback">{passwordError}</div>}
               </div>
             </div>
             <div class="mb-3 row">
-              <label for="email" class="col-lg-3 col-sm-4 col-form-label">Confirm New Password: </label>
+              <label for="confirmPass" class="col-lg-3 col-sm-4 col-form-label">Confirm New Password: </label>
               <div class="col-lg-3 col-sm-4">
                 <input type="password" id="confirmPass" className={`${confirmPassError === "OK" ? "is-valid" : confirmPassError ? "is-invalid" : ""} form-control form-control-sm mb-1 `} onChange={this.handleOnChange} required />
                 {confirmPassError && <div className="invalid-feedback">{confirmPassError}</div>}
