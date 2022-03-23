@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { Helmet } from "react-helmet";
 import { Link } from 'react-router-dom';
 import LargeTextInput from "./components/Inputs/LargeTextInput"
+import Snackbar from '@mui/material/Snackbar';
+import Fade from '@mui/material/Fade';
+import Alert from '@mui/material/Alert';
 import {withRouter} from 'react-router';
 import axios from "axios"
 
@@ -16,7 +19,9 @@ class Login extends Component {
           password: '',
           usernameError: '',
           passwordError: '',
-          showPass: false 
+          showPass: false,
+          failOpen: false,
+          succOpen: false,
         };
     }
 
@@ -27,13 +32,17 @@ class Login extends Component {
         axios.post(`http://localhost:3001/signin`, {username, password})
           .then(response => {
             console.log(response)
-            alert("done!")
+            //alert("done!")
+            this.setState({succOpen: true});
             this.props.signInSetting(response.data[0])
-            this.props.history.push('/UserType')
+            setTimeout(() => { this.setState({succOpen: false}); }, 700);
+            setTimeout(() => { this.props.history.push('/UserType') }, 1000);
           })
           .catch(error => {
             if (error.response.status === 401) {
-              alert("user not found! Please check credentials again.")
+              //alert("user not found! Please check credentials again.")
+              this.setState({failOpen: true});
+              setTimeout(() => { this.setState({failOpen: false}); }, 1000);
             }
             console.log(error)
           })
@@ -88,6 +97,10 @@ class Login extends Component {
       return (usernameError + passwordError === "OKOK")
     }
 
+    closeMessage = () => {
+      this.setState({failOpen: false});
+    }
+
     render() {
       const {username, showPass, usernameError, passwordError} = this.state
         return (
@@ -128,6 +141,30 @@ class Login extends Component {
                   </form>
                 </div>
               </div>
+
+              <Snackbar
+                  sx={{ height: "100%", alignItems: 'center' }}
+                  open={this.state.failOpen}
+                  anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                  onClose={() => this.closeMessage()}
+                  TransitionComponent={Fade}
+              >
+              <Alert severity="error" variant="filled" sx={{ width: "100%"}}>
+                  User not found! Please check credentials again
+              </Alert>
+              </Snackbar>
+
+              <Snackbar
+                  sx={{ height: "100%", alignItems: 'center' }}
+                  open={this.state.succOpen}
+                  anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                  onClose={() => this.closeMessage()}
+                  TransitionComponent={Fade}
+              >
+              <Alert severity="success" variant="filled" sx={{ width: "100%"}}>
+                  Log in Successfully
+              </Alert>
+              </Snackbar>
             </>
         );
     }
