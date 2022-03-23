@@ -90,7 +90,7 @@ class SignUp extends Component {
       const value = e.target.value;
       const validPhone = /^\d{8}$/;
       if (value === "") {
-        this.setState({phoneError: 'Phone no. cannot be empty.'});
+        this.setState({phoneError: 'Phone number cannot be empty.'});
         return
       }
       if (!(value.match(validPhone))) {
@@ -136,8 +136,8 @@ class SignUp extends Component {
     submitForm = (e) => {
       e.preventDefault()
       if (this.checkForm()) {
-        const { usernameValue, emailValue, password} = this.state
-        axios.post(`http://localhost:3001/signup`, {usernameValue, emailValue, password})
+        const { usernameValue, emailValue, password, phoneValue} = this.state
+        axios.post(`http://localhost:3001/signup`, {usernameValue, emailValue, phoneValue, password})
           .then(response => {
             console.log(response)
             alert("done!")
