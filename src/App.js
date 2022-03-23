@@ -157,41 +157,35 @@ class App extends Component {
               <Route path="/booking">
                 <BookingStatus restaurantId={ownerRestaurantId}/>
               </Route>
-              <Route path="/booksetting">
-                <BookingSetting restaurantId={ownerRestaurantId}/>
-              </Route>
-              <Route path="/register">
-                <BRegister userId={userId}/>
-              </Route>
-              <Route path="/pay">
-                <PaymentChoice userId={userId} sendOrder={this.sendOrder}/>
-              </Route>
-              <Route path="/doneOrder" component={DoneOrder}/>
-              <Route path="/OwnerOption">
-                <OwnerOption/>
-              </Route>
-              <Route path="/rprofile">
-                <RProfile ownerRestaurantId={ownerRestaurantId}/>
-              </Route>
-              <Route path="/RProfileSetting">
-              <RProfileSetting restaurantId={ownerRestaurantId}/>
-              </Route> 
-              <Route path="/orderlist">
-                <OrderList restaurantId={ownerRestaurantId}/>
-              </Route>
-              <Route path="/ClientOption" component={ClientOption}/>
-              <Route path="/uprofile">
-                <UProfile userId={userId}/>
-              </Route>
-              <Route path="/UprofileSetting">
-                <UProfileSetting userId={userId}/>
-              </Route>
-              <Route path="/UpdatePwd">
-                <UpdatePwd userId={userId}/>
-              </Route>
-              <Route path="/UserType">
-                <UserType owner={owner}/>
-              </Route>
+            <Route path="/booksetting">
+              <BookingSetting restaurantId={ownerRestaurantId}/>
+            </Route>
+            <Route path="/register">
+              <BRegister userId={userId}/>
+            </Route>
+            <Route path="/pay">
+              <PaymentChoice userId={userId} sendOrder={this.sendOrder}/>
+            </Route>
+            <Route path="/doneOrder" component={DoneOrder}/>
+            <Route path="/OwnerOption">
+              <OwnerOption/>
+            </Route>
+            <Route path="/rprofile">
+              <RProfile ownerRestaurantId={ownerRestaurantId}/>
+            </Route>
+            <Route path="/RProfileSetting">
+            <RProfileSetting restaurantId={ownerRestaurantId}/>
+            </Route> 
+            <Route path="/orderlist">
+              <OrderList restaurantId={ownerRestaurantId}/>
+            </Route>
+            <Route path="/ClientOption" component={ClientOption}/>
+            <Route path="/uprofile" component={UProfile}/>
+            <Route path="/UprofileSetting" component={UProfileSetting}/>
+            <Route path="/UpdatePwd" component={UpdatePwd}/>
+            <Route path="/UserType">
+              <UserType owner={owner}/>
+            </Route>
             </div>
           </Switch>
         </div>
