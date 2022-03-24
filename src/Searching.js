@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import SearchBox from "./components/SearchBox";
-import Map from './components/GoogleMap/GoogleMap';
 import { Link } from 'react-router-dom';
 //import CustomCarousel from "./Carousel";
 import "./Home.css"

@@ -5,11 +5,6 @@ import "./GoogleMap.css"
 import test from "../../images/public_black_24dp.svg"
 const key = config["REACT_APP_GOOGLE_KEY"]
 
-const center = {
-    lat: 22.311680,
-    lng: 114.168762,
-}
-
 const containerStyle = {
     width: '100%',
     height: '100%',
@@ -21,7 +16,11 @@ class Map extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            markerIdx: -1
+            markerIdx: -1,
+            center: {
+                lat: 22.311680,
+                lng: 114.168762,
+            }
         }
     }
 
@@ -41,8 +40,9 @@ class Map extends Component {
 
 
     render() {
-        const {selectRestaurant, setMarker, setMap, position, markersInfo, toRestaurantPage} = this.props
-        const {markerIdx} = this.state
+        const {selectRestaurant, setMarker, setMap, position, markersInfo, toRestaurantPage, firstCenter} = this.props
+        const {markerIdx, center} = this.state
+        console.log({center})
         console.log({ markersInfo })
         console.log("location", position)
         const markers = markersInfo?.map((datum, idx) => {
@@ -81,7 +81,11 @@ class Map extends Component {
                         onLoad={setMap}
                         id="test"
                         mapContainerStyle={containerStyle}
-                        center={position ? position : center}
+                        center={
+                            firstCenter ? firstCenter
+                            :
+                            position ? position : center
+                        }
                         zoom={14}
                     >
                         {setMarker && 

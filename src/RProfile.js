@@ -31,8 +31,7 @@ class RProfile extends Component {
     componentDidMount = async () => {
       const {ownerRestaurantId} = this.props
       const data = await this.getRegData(ownerRestaurantId)
-      console.log(data)
-      this.setState({data})
+      this.setState({data : data[0]})
       try
       {
         this.setState({lat: data[0].lat})
@@ -66,12 +65,12 @@ class RProfile extends Component {
               <div className="col-sm-5 col-lg-3 mb-2">
                 <label htmlFor="first" className="form-label"><b><small>First Name</small></b></label>
                 <br/>
-                {data ? data[0].first_name : "-"}
+                {data ? data.first_name : "-"}
               </div>
               <div className="col-sm-5 col-lg-2">
               <label htmlFor="last" className="form-label"><b><small>Last Name</small></b></label>
               <br/>
-              {data ? data[0].last_name : "-"}
+              {data ? data.last_name : "-"}
               </div>
             </div>
 
@@ -79,12 +78,12 @@ class RProfile extends Component {
               <div className="col-sm-5 col-lg-3 mb-2">
                 <label htmlFor="phone" className="form-label"><b><small>Business Phone Number</small></b></label>
                 <br/>
-                {data ? data[0].phone : "-"}
+                {data ? data.phone : "-"}
               </div>
               <div className="col-sm-5 col-lg-2">
                 <label htmlFor="id" className="form-label"><b><small>HKID Card Number</small></b></label>
                 <br/>
-                {data ? data[0].hkid : "-"}
+                {data ? data.hkid : "-"}
               </div>
             </div>
             <h5 className="fw-normal"><strong>Restaurant's Information:</strong></h5>
@@ -92,12 +91,12 @@ class RProfile extends Component {
               <div className="col-sm-5 col-lg-3 mb-2">
                 <label htmlFor="rname" className="form-label"><b><small>Restaurant's Name</small></b></label>
                 <br/>
-                {data ? data[0].restaurant : "-"}
+                {data ? data.restaurant : "-"}
               </div>
               <div className="col-sm-5 col-lg-9">
               <label htmlFor="address" className="form-label"><b><small>Address</small></b></label>
               <br/>
-              {data ? data[0].address : "-"}
+              {data ? data.address : "-"}
               </div>
             </div>
 
@@ -111,12 +110,12 @@ class RProfile extends Component {
               <div className="col-sm-5 col-lg-3 mb-4">
                 <label htmlFor="hour" className="form-label"><b><small>Open Hours</small></b></label>
                 <br/>
-                {data ? data[0].open_hours : "-"}
+                {data ? data.open_hours : "-"}
               </div>
               <div className="col-sm-10 col-lg-10">
                 <label htmlFor="description" className="form-label"><b><small>Description</small></b></label>
                 <br/>
-                {data ? data[0].description.length > 0 ? data[0].description : "No description" : "-"}
+                {data ? data.description.length > 0 ? data.description : "No description" : "-"}
               </div>
             </div>
           </div>

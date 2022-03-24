@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Helmet } from "react-helmet";
 import './BRegister.css';
-import ReCAPTCHA from "react-google-recaptcha";
 import axios from "axios"
 import config from "./config/config.json"
 import TextInput from "./components/Inputs/TextInput"
@@ -12,7 +11,6 @@ import hkid from 'validid/esm/hkid.mjs';
 import normalize from 'validid/esm/utils/normalize.mjs';
 import { withRouter } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import OpenHours from "./components/OpenHours";
 import Alert from '@mui/material/Alert';
 
 /*@TODO
@@ -26,7 +24,6 @@ class RProfileSetting extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: [],
       lat : -1,
       lng : -1,
       firstCheck: '',
@@ -44,13 +41,8 @@ class RProfileSetting extends Component {
       addressValue: '',
       marker: null,
       map: null,
-      token: "",
-      recaptchaKey: 1,
-      OpenHours: "",
-      OpenWeekdays: "",
-      OpenStart: "",
-      OpenEnd: "",
-      OpenHoursCheck: "",
+      firstMarker : true,
+      firstCenter: null,
     };
   }
 
@@ -92,13 +84,7 @@ class RProfileSetting extends Component {
       phoneCheck: '',
       idCheck: '',
       restaurantCheck: '',
-      districtError: '',
       brFile: null,
-      OpenHours: "",
-      OpenWeekdays: "",
-      OpenStart: "",
-      OpenEnd: "",
-      OpenHoursCheck: "",
     });
     //reset checkbox
     document.querySelectorAll('input[type=checkbox]').forEach( el => el.checked = false );
@@ -114,31 +100,16 @@ class RProfileSetting extends Component {
   updateForm = async (e) => {
     const {resPhoto, brFile, addressValue, lat, lng } = this.state
     e.preventDefault()
-    if (!this.state.OpenHoursCheck) {
-      alert("Weekday/time range of the open hours is missing.")
-      //this.setState({ recaptchaKey: this.state.recaptchaKey === 1 ? 2 : 1 })
-      return
-    }
-    /*
-    if (!await this.checkRecaptcha()) {
-      alert("Please click on Recaptcha.")
-      this.setState({ recaptchaKey: this.state.recaptchaKey === 1 ? 2 : 1 })
-      return
-    }
-    */
     if (!this.checkForm() || !addressValue.trim()) {
       alert("Please provide the necessary credentials.")
-      //this.setState({ recaptchaKey: this.state.recaptchaKey === 1 ? 2 : 1 })
       return
     }
     if (!brFile) {
       alert("Please upload registration file.")
-      //this.setState({ recaptchaKey: this.state.recaptchaKey === 1 ? 2 : 1 })
       return
     }
     if (lat === -1 || lng === -1) {
       alert("Please provide the restaurant location by clicking on the google map.")
-      //this.setState({ recaptchaKey: this.state.recaptchaKey === 1 ? 2 : 1 })
       return
     }
     const brFileName = await this.fileUploadHandler("brFile")
@@ -163,10 +134,6 @@ class RProfileSetting extends Component {
     this.setState({ address: event.target.value })
   }
 
-  handleRecaptcha = (token) => {
-    this.setState({ token })
-  }
-
   onMarkerComplete = marker => {
     this.state.marker?.setMap(null);
     const lat = marker.position.lat()
@@ -174,7 +141,7 @@ class RProfileSetting extends Component {
     console.log(marker, {lat, lng})
     fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${key}`)
       .then(response => response.json())
-      .then(data => this.setState({ marker: marker, addressValue: data.results[0].formatted_address, lat, lng }));
+      .then(data => this.setState({ firstMarker: false, marker: marker, addressValue: data.results[0].formatted_address, lat, lng }));
   }
 
   fileSelectedHandler = event => {
@@ -201,94 +168,59 @@ class RProfileSetting extends Component {
     return filename
   }
 
-  checkRecaptcha = async () => {
-    //have to do this in backend, frontend dont allow cors
-    try {
-      const data = { secret: config["REACT_RECAPTCHA_SECRET_KEY"], response: this.state.token }
-      const res = await axios.post(`http://localhost:3001/checkRecaptcha`, data)
-      console.log(res.data)
-      return res.data
-    }
-    catch (error) {
-      console.log(error)
-      return false
-    }
-  }
-
-  saveOH = (data, weekday, start, end) => {
-    this.setState({ OpenHours: data, OpenWeekdays: weekday, OpenStart: start, OpenEnd: end}); 
-
-    if (weekday.length === 0)
-    {
-        this.setState({ OpenHoursCheck: false}); 
-    }
-    else if (start.length === 0)
-    {
-        this.setState({ OpenHoursCheck: false}); 
-    }
-    else if (end.length === 0)
-    {
-        this.setState({ OpenHoursCheck: false}); 
-    }
-    else
-        this.setState({ OpenHoursCheck: true}); 
-  }
-
   render() {
-    console.log("testing", process.env.REACT_RECAPTCHA_SITE_KEY)
-    const { firstValue, lastValue, phoneValue, idValue, restaurantValue, recaptchaKey } = this.state
+    const {firstValue, lastValue, phoneValue, idValue, restaurantValue, lat, lng, firstMarker, firstCenter} = this.state
+    const position = firstMarker ? {lat, lng} : null
+    console.log({position})
     return (
       <div>
         <Helmet>
           <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous" />
         </Helmet>
         <div id="RProfileSettingArea" className="justify-content-center container p-3">
-
-              <nav aria-label="breadcrumb" className="mt-3">
-                <ol className="breadcrumb">
-                  <Link to="/OwnerOption" className="breadcrumb-item text-decoration-none">Restaurant Owner</Link>
-                  <Link to="/rprofile" className="breadcrumb-item text-decoration-none">Restaurant Profile</Link>
-                  <li className="breadcrumb-item active" aria-current="page">Update Restaurant Profile</li>
-                </ol>
-              </nav>
-
+          <nav aria-label="breadcrumb" className="mt-3">
+            <ol className="breadcrumb">
+              <Link to="/OwnerOption" className="breadcrumb-item text-decoration-none">Restaurant Owner</Link>
+              <Link to="/rprofile" className="breadcrumb-item text-decoration-none">Restaurant Profile</Link>
+              <li className="breadcrumb-item active" aria-current="page">Update Restaurant Profile</li>
+            </ol>
+          </nav>
           <form id="RProfileSettingform" onSubmit={this.submitForm}>
             <h2 className="fw-normal"><strong>Update Restaurant Profile</strong></h2>
             <hr className="mb-2" />
             <Alert className="mb-3" severity="info">
-                      For setting the opening hours, please go to the page of <Link to="/bookSetting" className="breadcrumb-item text-decoration-none">Opening Time/Table Reservation Items Setting</Link>
+              To set the opening hours, please go to <Link to="/bookSetting" className="breadcrumb-item text-decoration-none">Opening Time/Table Reservation Items Setting</Link>
             </Alert>
             <div className="row mb-4">
-                  <TextInput value={firstValue} sm_md_lg="6_-1_4" id="first" required={true} placeholder="" onChange={this.handleOnChange} name="First Name" errorMsg={this.state.firstCheck} />
-                  <TextInput value={lastValue} sm_md_lg="6_-1_4" id="last" required={true} placeholder="" onChange={this.handleOnChange} name="Last Name" errorMsg={this.state.lastCheck} />
-                </div>
-                <div className="row mb-4">
-                  <TextInput value={phoneValue} sm_md_lg="5_-1_3" id="phone" required={true} placeholder="" onChange={this.handleOnChange} name="Business Phone Number" errorMsg={this.state.phoneCheck} />
-                  <TextInput value={idValue} sm_md_lg="4_-1_2" id="id" required={true} placeholder="" onChange={this.handleOnChange} name="HKID Card Number" errorMsg={this.state.idCheck} />
-                </div>
-                <div className="row mb-4">
-                  <FileInput fileType="brFile" accept=".jpg,.png,.jpeg" id="upload" required={true} onChange={this.fileSelectedHandler} name="Upload Business Registration (with jpg, png or jpeg format)" />
-                </div>
-                <div className="row mb-2">
-                  <TextInput value={restaurantValue} sm_md_lg="-1_-1_8" id="restaurant" required={true} onChange={this.handleOnChange} name="Restaurant Name" errorMsg={this.state.restaurantCheck} />
-                </div>
-                <div className="row">
-                  <FileInput fileType="resPhoto" accept=".jpg,.png,.jpeg" id="uploadPhoto" required={true} onChange={this.fileSelectedHandler} name="Upload Photo of restaurant (with jpg, png or jpeg format)" />
-                </div>
-                <div className="row mb-2">
-                  <AddressInput onChange={this.handleOnChange} sm_md_lg="-1_-1_8" id="address" address={this.state.addressValue} required={true} name="Address" onMarkerComplete={this.onMarkerComplete} />
-                </div>
-                <div className="row mb-4">
-                  <TextAreaInput sm_md_lg="-1_-1_8" id="description" name="Description" height="100px" />
-                </div>
-                {/*<ReCAPTCHA key={recaptchaKey} sitekey={config["REACT_RECAPTCHA_SITE_KEY"]} onChange={this.handleRecaptcha} />*/}
-                <div className="row mb-4">
-                  <div className="d-flex gap-5 justify-content-center">
-                    {/*<Link to="/rprofile" type="button" id="back-btn" className="btn btn-secondary btn-sm boarder-2 shadow-sm mx-3 border border-1 float-right"><b>Back</b></Link>*/}
-                    <button type="button" id="reset-btn" className="btn btn-sm boarder-2 shadow-sm mx-3 border border-1 float-right" onClick={this.resetForm}><b>Reset</b></button>
-                    <button type="submit" id="upload" onClick={this.updateForm} className="btn btn-sm shadow-sm float-right" style={{ backgroundColor: "#3F5BFF", color: "white" }}><b>Submit</b></button>
-                  </div>
-                </div>
+              <TextInput value={firstValue} sm_md_lg="6_-1_4" id="first" required={true} placeholder="" onChange={this.handleOnChange} name="First Name" errorMsg={this.state.firstCheck} />
+              <TextInput value={lastValue} sm_md_lg="6_-1_4" id="last" required={true} placeholder="" onChange={this.handleOnChange} name="Last Name" errorMsg={this.state.lastCheck} />
+            </div>
+            <div className="row mb-4">
+              <TextInput value={phoneValue} sm_md_lg="5_-1_3" id="phone" required={true} placeholder="" onChange={this.handleOnChange} name="Business Phone Number" errorMsg={this.state.phoneCheck} />
+              <TextInput value={idValue} sm_md_lg="4_-1_2" id="id" required={true} placeholder="" onChange={this.handleOnChange} name="HKID Card Number" errorMsg={this.state.idCheck} />
+            </div>
+            <div className="row mb-4">
+              <FileInput fileType="brFile" accept=".jpg,.png,.jpeg" id="upload" required={true} onChange={this.fileSelectedHandler} name="Upload Business Registration (with jpg, png or jpeg format)" />
+            </div>
+            <div className="row mb-2">
+              <TextInput value={restaurantValue} sm_md_lg="-1_-1_8" id="restaurant" required={true} onChange={this.handleOnChange} name="Restaurant Name" errorMsg={this.state.restaurantCheck} />
+            </div>
+            <div className="row">
+              <FileInput fileType="resPhoto" accept=".jpg,.png,.jpeg" id="uploadPhoto" required={true} onChange={this.fileSelectedHandler} name="Upload Photo of restaurant (with jpg, png or jpeg format)" />
+            </div>
+            <div className="row mb-2">
+              <AddressInput firstCenter={firstCenter} position={position} onChange={this.handleOnChange} sm_md_lg="-1_-1_8" id="address" address={this.state.addressValue} required={true} name="Address" onMarkerComplete={this.onMarkerComplete} />
+            </div>
+            <div className="row mb-4">
+              <TextAreaInput sm_md_lg="-1_-1_8" id="description" name="Description" height="100px" />
+            </div>
+            <div className="row mb-4">
+              <div className="d-flex gap-5 justify-content-center">
+                {/*<Link to="/rprofile" type="button" id="back-btn" className="btn btn-secondary btn-sm boarder-2 shadow-sm mx-3 border border-1 float-right"><b>Back</b></Link>*/}
+                <button type="button" id="reset-btn" className="btn btn-sm boarder-2 shadow-sm mx-3 border border-1 float-right" onClick={this.resetForm}><b>Reset</b></button>
+                <button type="submit" id="upload" onClick={this.updateForm} className="btn btn-sm shadow-sm float-right" style={{ backgroundColor: "#3F5BFF", color: "white" }}><b>Submit</b></button>
+              </div>
+            </div>
           </form>
         </div>
       </div>
@@ -298,50 +230,37 @@ class RProfileSetting extends Component {
   componentDidMount = async () => {
     const {restaurantId} = this.props
     const data = await this.loadData(restaurantId)
-    this.setState({data})
-    try{
-      this.setState({
-        firstValue: data[0].first_name,
-        lastValue: data[0].last_name,
-        phoneValue: data[0].phone,
-        idValue: data[0].hkid,
-        restaurantValue: data[0].restaurant,
-        firstCheck: 'OK',
-        lastCheck: 'OK',
-        phoneCheck: 'OK',
-        idCheck: 'OK',
-        restaurantCheck: 'OK',
-        addressValue: data[0].address,
-        lat: data[0].lat,
-        lng: data[0].lng,
-        districtError: '',
-        brFile: null,
-        OpenHours: data[0].open_hours,
-        OpenWeekdays: "",
-        OpenStart: "",
-        OpenEnd: "",
-        OpenHoursCheck: true,
-      });
-
-    }
-    catch (error) {
-      console.log(error);
-    }
+    console.log(data)
+    const {lat, lng} = data
+    this.setState({
+      firstValue: data.first_name,
+      lastValue: data.last_name,
+      phoneValue: data.phone,
+      idValue: data.hkid,
+      restaurantValue: data.restaurant,
+      firstCheck: 'OK',
+      lastCheck: 'OK',
+      phoneCheck: 'OK',
+      idCheck: 'OK',
+      restaurantCheck: 'OK',
+      addressValue: data.address,
+      lat,
+      lng,
+      firstCenter : {lat, lng},
+      brFile: null,
+    });
   }
 
   loadData = async (id) => {
     let data
     await axios.get(`http://localhost:3001/getRegData?id=${id}`)
       .then(response => {
-        data = response.data
+        data = response.data[0]
       })
       .catch(error => {
         console.log(error)
     })
-    console.log(data)
-    return data || []
+    return data
   }
-
-
 }
 export default withRouter(RProfileSetting);

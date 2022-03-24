@@ -47,7 +47,7 @@ class RecentBooking extends React.Component {
         {
           field: 'progress',
           headerName: 'progress',
-          width: 120
+          width: 160
         },
         {
           field: 'cancel',
@@ -57,13 +57,14 @@ class RecentBooking extends React.Component {
           filterable: false,
           renderCell: (params) => {
             const id = params?.row.id
-            const cancelled = params?.row.progress === "cancelled"
+            const progress = params?.row.progress.split(" ")[0]
+            const done = progress === "cancelled" || progress === "finished"
             return (
-              cancelled ? 
+              done ? 
               <span></span>
               :
               <strong>
-                <small onClick={() => this.cancel(id)} type="button" className="btn btn-sm text-danger" style={{textDecoration: "none", fontSize: "1em"}}>Cancel</small>
+                <small onClick={() => this.updateReservation(id, "cancel", "cancelled by client")} type="button" className="btn btn-sm text-danger" style={{textDecoration: "none", fontSize: "1em"}}>Cancel</small>
               </strong>
             )
           }
@@ -73,20 +74,20 @@ class RecentBooking extends React.Component {
     };
   }
 
-  cancel = async (reservationId) => {
-    const ok = window.confirm(`Are your sure you would like to cancel reservation number ${reservationId}?`)
+  updateReservation = async (reservationId, confirmString, updateString) => {
+    const ok = window.confirm(`Are your sure you would like to ${confirmString} id ${reservationId}?`)
     if (ok) {
       // front end update
       const data = this.state.data.map(datum => {
         const newDatum = {...datum}
         if (newDatum.id === reservationId) {
-          newDatum.progress = "cancelled"
+          newDatum.progress = updateString
         }
         return newDatum
       })
       this.setState({data})
       // back end update
-      await axios.post(`http://localhost:3001/cancelUserReservation`, {reservationId})
+      await axios.post(`http://localhost:3001/updateReservation`, {reservationId, updateString})
       .then(response => {
         console.log(response)
       })

@@ -50,7 +50,7 @@ const columns = [
   {
     field: 'status',
     headerName: 'status',
-    width: 120,
+    width: 200,
   },
   {
     field: 'detail',

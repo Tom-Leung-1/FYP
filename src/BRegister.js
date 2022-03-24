@@ -89,7 +89,6 @@ class BRegister extends Component {
       phoneCheck: '',
       idCheck: '',
       restaurantCheck: '',
-      districtError: '',
       brFile: null,
       OpenHours: "",
       OpenWeekdays: "",

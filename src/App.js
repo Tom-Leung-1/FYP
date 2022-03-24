@@ -15,7 +15,6 @@ import BookingSetting from "./BookingSetting";
 import Order from "./Order";
 import OrderList from "./OrderList";
 import Client from './Client';
-import Detail from "./components/Detail/Detail";
 import ClientOrder from './ClientOrder';
 import PaymentChoice from './PaymentChoice';
 import DoneOrder from './DoneOrder';
@@ -140,7 +139,6 @@ class App extends Component {
               <Route path="/sign-up">
                 <SignUp signInSetting={this.signInSetting}/>
               </Route>
-              <Route path="/detail" component={Detail} />
               <Route path="/RecentOrder">
                  <RecentOrder userId={userId}/>
               </Route>
@@ -185,7 +183,9 @@ class App extends Component {
             <Route path="/uprofile">
               <UProfile userId={userId}/>
             </Route>
-            <Route path="/UprofileSetting" component={UProfileSetting}/>
+            <Route path="/UprofileSetting">
+              <UProfileSetting userId={userId}/>
+            </Route>
             <Route path="/UpdatePwd" component={UpdatePwd}/>
             <Route path="/UserType">
               <UserType owner={owner}/>
