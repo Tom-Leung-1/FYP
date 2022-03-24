@@ -2,110 +2,160 @@ import * as React from 'react';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid'; // 1. npm install @material-ui/core 2. npm install @material-ui/data-grid 3.npm install @material-ui/styles
 import { Helmet } from "react-helmet";
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
-const columns = [
-  {
-    field: 'BookingNo',
-    headerName: 'Reservation no.',
-    width: 160,
-    sortable: false,
-  },
-  {
-    field: 'name',
-    headerName: 'Restaurant Name',
-    width: 160,
-    sortable: false,
-  },
-  {
-    field: 'date',
-    headerName: 'Reservation date',
-    type: 'date',
-    width: 160
-  },
-  {
-    field: 'time',
-    headerName: 'Reservation time',
-    type: 'time',
-    width: 160
-  },
-  {
-    field: 'nop',
-    headerName: 'No. of people',
-    type: 'number',
-    headerAlign: 'left',
-    align: 'center',
-    width: 120
-  },
-  {
-    field: 'cancel',
-    headerName: '',
-    align: 'center',
-    sortable: false,
-    filterable: false,
-    renderCell: (params) => (
-      <strong>
-        <small type="button" className="btn btn-sm text-danger" style={{textDecoration: "none", fontSize: "1em"}}>Cancel</small>
-      </strong>
-    )
-  },
-];
-
-const rows = [
-  { id: 1, BookingNo: '10000', date: "2021/11/11", name: 'Eliza Pride', time:"5:00 pm", nop: 4},
-  { id: 2, BookingNo: '15545', date: "2021/11/1", name: 'Golden City',  time:"9:00 pm", nop: 3},
-  { id: 3, BookingNo: '13452', date: "2021/10/1", name: 'May My Baby', time:"6:30 pm", nop: 6},
-  { id: 4, BookingNo: '36754', date: "2021/9/1", name: 'Tony Bin', time:"3:15 pm", nop: 3},
-  { id: 5, BookingNo: '67856', date: "2021/8/18", name: 'Yes My Lord', time:"7:45 pm", nop: 1},
-  { id: 6, BookingNo: '34222', date: "2021/4/1", name: 'Moon Madness', time:"9:10 pm", nop: 2},
-  { id: 7, BookingNo: '00001', date: "2021/1/1", name: 'My Big Boy', time:"11:00 am", nop: 5},
-];
 class RecentBooking extends React.Component {
   
-    constructor(props) {
-      super(props);
-      this.state = { 
-                      pageSize: 10
-                   };
+  constructor(props) {
+    super(props);
+    this.state = { 
+      pageSize: 10,
+      data : [],
+      columns: [
+        {
+          field: 'id',
+          headerName: 'Reservation no.',
+          width: 160,
+          sortable: false,
+        },
+        {
+          field: 'restaurant',
+          headerName: 'Restaurant Name',
+          width: 160,
+          sortable: false,
+        },
+        {
+          field: 'date',
+          headerName: 'Reservation date',
+          type: 'date',
+          width: 160
+        },
+        {
+          field: 'time',
+          headerName: 'Reservation time',
+          type: 'time',
+          width: 160
+        },
+        {
+          field: 'ppl',
+          headerName: 'No. of people',
+          type: 'number',
+          headerAlign: 'left',
+          align: 'center',
+          width: 120
+        },
+        {
+          field: 'progress',
+          headerName: 'progress',
+          width: 120
+        },
+        {
+          field: 'cancel',
+          headerName: '',
+          align: 'center',
+          sortable: false,
+          filterable: false,
+          renderCell: (params) => {
+            const id = params?.row.id
+            const cancelled = params?.row.progress === "cancelled"
+            return (
+              cancelled ? 
+              <span></span>
+              :
+              <strong>
+                <small onClick={() => this.cancel(id)} type="button" className="btn btn-sm text-danger" style={{textDecoration: "none", fontSize: "1em"}}>Cancel</small>
+              </strong>
+            )
+          }
+        },
+      ],
+
+    };
+  }
+
+  cancel = async (reservationId) => {
+    const ok = window.confirm(`Are your sure you would like to cancel reservation number ${reservationId}?`)
+    if (ok) {
+      // front end update
+      const data = this.state.data.map(datum => {
+        const newDatum = {...datum}
+        if (newDatum.id === reservationId) {
+          newDatum.progress = "cancelled"
+        }
+        return newDatum
+      })
+      this.setState({data})
+      // back end update
+      await axios.post(`http://localhost:3001/cancelUserReservation`, {reservationId})
+      .then(response => {
+        console.log(response)
+      })
+      .catch(error => {
+        console.log(error)
+        return
+      }) 
     }
+  }
+
+  componentDidMount = async () => {
+    const {userId} = this.props
+    let data
+    await axios.get(`http://localhost:3001/getUserReservation?id=${userId}`)
+    .then(response => {
+      data = response.data
+    })
+    .catch(error => {
+      console.log(error)
+      return
+    })
+    const newData = data.map(datum => {
+      const dateObj = new Date(datum.date_time)
+      dateObj.setHours(dateObj.getHours()+16); //date_time : UTC format -> -8 hrs HKT
+      const date = dateObj.toISOString().substring(0,10) // toISOString: to UTC -> -8 hrs again
+      const time = dateObj.toISOString().substring(11,19)
+      const newDatum = {...datum, date, time}
+      return newDatum
+    })
+    this.setState({data: newData})
+  }
+  
+
 
   render() {
+    const {data, columns} = this.state
     return (
       <>
-      <Helmet>
-        <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
-      </Helmet>
+        <Helmet>
+          <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+        </Helmet>
         <div className="container p-2">
-
-              <nav aria-label="breadcrumb" className="mt-3">
-                <ol className="breadcrumb">
-                  <Link to="/ClientOption" className="breadcrumb-item text-decoration-none">Normal Customer</Link>
-                  <li className="breadcrumb-item active" aria-current="page">Recent Reservations</li>
-                </ol>
-              </nav>
-
+          <nav aria-label="breadcrumb" className="mt-3">
+            <ol className="breadcrumb">
+              <Link to="/ClientOption" className="breadcrumb-item text-decoration-none">Normal Customer</Link>
+              <li className="breadcrumb-item active" aria-current="page">Recent Reservations</li>
+            </ol>
+          </nav>
         <h2 className="fw-normal mt-3"><strong>Recent Reservations</strong></h2>
         <hr/>
-
-        <div className="container px-5">
-        <div className="row">
-        <DataGrid
-          rows={rows}
-          columns={columns}
-          pageSize={this.state.pageSize}
-          onPageSizeChange={this.handlePageSizeChange}
-          rowsPerPageOptions={[10, 20, 50]}
-          autoHeight
-          disableSelectionOnClick
-          className="bg-light position-sticky"
-          components={{
-            Toolbar: GridToolbar,
-          }}
-          disableColumnSelector
-        />
+          <div className="container px-5">
+            <div className="row">
+              <DataGrid
+                rows={data}
+                columns={columns}
+                pageSize={this.state.pageSize}
+                onPageSizeChange={this.handlePageSizeChange}
+                rowsPerPageOptions={[10, 20, 50]}
+                autoHeight
+                disableSelectionOnClick
+                className="bg-light position-sticky"
+                components={{
+                  Toolbar: GridToolbar,
+                }}
+                disableColumnSelector
+              />
+            </div>
+          </div>
         </div>
-        </div>
-        </div>
-
       </>
     );
   }

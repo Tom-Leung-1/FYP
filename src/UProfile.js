@@ -16,6 +16,7 @@ class UProfile extends Component {
 
   getUserProfile = async () => {
     const {userId} = this.props
+    console.log(userId)
     let data
     await axios.get(`http://localhost:3001/getUserProfile?id=${userId}`)
     .then(response => {
@@ -25,6 +26,7 @@ class UProfile extends Component {
     .catch(error => {
       console.log(error)
     })
+    console.log(data)
     return data
   }
 

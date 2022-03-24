@@ -144,7 +144,9 @@ class App extends Component {
               <Route path="/RecentOrder">
                  <RecentOrder userId={userId}/>
               </Route>
-              <Route path="/RecentBooking" component={RecentBooking} />
+              <Route path="/RecentBooking">
+                <RecentBooking userId={userId}/>
+              </Route>
               <Route path="/client">
                 <Client clientRestaurantId={clientRestaurantId} userId={userId} lat={lat} lng={lng} photo={photo} description={description} restaurant={restaurant} address={address} openHours={openHours}/>
               </Route>
@@ -180,7 +182,9 @@ class App extends Component {
               <OrderList restaurantId={ownerRestaurantId}/>
             </Route>
             <Route path="/ClientOption" component={ClientOption}/>
-            <Route path="/uprofile" component={UProfile}/>
+            <Route path="/uprofile">
+              <UProfile userId={userId}/>
+            </Route>
             <Route path="/UprofileSetting" component={UProfileSetting}/>
             <Route path="/UpdatePwd" component={UpdatePwd}/>
             <Route path="/UserType">
