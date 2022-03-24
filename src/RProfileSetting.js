@@ -36,6 +36,9 @@ class RProfileSetting extends Component {
       phoneValue: '',
       idValue: '',
       restaurantValue: '',
+      descriptionValue: '',
+      brSrc: "",
+      resSrc: "",
       brFile: null,
       resPhoto: null,
       addressValue: '',
@@ -79,6 +82,7 @@ class RProfileSetting extends Component {
       phoneValue: '',
       idValue: '',
       restaurantValue: '',
+      descriptionValue: '',
       firstCheck: '',
       lastCheck: '',
       phoneCheck: '',
@@ -169,7 +173,7 @@ class RProfileSetting extends Component {
   }
 
   render() {
-    const {firstValue, lastValue, phoneValue, idValue, restaurantValue, lat, lng, firstMarker, firstCenter} = this.state
+    const {descriptionValue, brSrc, resSrc, firstValue, lastValue, phoneValue, idValue, restaurantValue, lat, lng, firstMarker, firstCenter} = this.state
     const position = firstMarker ? {lat, lng} : null
     console.log({position})
     return (
@@ -200,19 +204,19 @@ class RProfileSetting extends Component {
               <TextInput value={idValue} sm_md_lg="4_-1_2" id="id" required={true} placeholder="" onChange={this.handleOnChange} name="HKID Card Number" errorMsg={this.state.idCheck} />
             </div>
             <div className="row mb-4">
-              <FileInput fileType="brFile" accept=".jpg,.png,.jpeg" id="upload" required={true} onChange={this.fileSelectedHandler} name="Upload Business Registration (with jpg, png or jpeg format)" />
+              <FileInput imgSrc={brSrc} fileType="brFile" accept=".jpg,.png,.jpeg" id="upload" required={true} onChange={this.fileSelectedHandler} name="Upload Business Registration (with jpg, png or jpeg format)" />
             </div>
             <div className="row mb-2">
               <TextInput value={restaurantValue} sm_md_lg="-1_-1_8" id="restaurant" required={true} onChange={this.handleOnChange} name="Restaurant Name" errorMsg={this.state.restaurantCheck} />
             </div>
             <div className="row">
-              <FileInput fileType="resPhoto" accept=".jpg,.png,.jpeg" id="uploadPhoto" required={true} onChange={this.fileSelectedHandler} name="Upload Photo of restaurant (with jpg, png or jpeg format)" />
+              <FileInput imgSrc={resSrc} fileType="resPhoto" accept=".jpg,.png,.jpeg" id="uploadPhoto" required={true} onChange={this.fileSelectedHandler} name="Upload Photo of restaurant (with jpg, png or jpeg format)" />
             </div>
             <div className="row mb-2">
               <AddressInput firstCenter={firstCenter} position={position} onChange={this.handleOnChange} sm_md_lg="-1_-1_8" id="address" address={this.state.addressValue} required={true} name="Address" onMarkerComplete={this.onMarkerComplete} />
             </div>
             <div className="row mb-4">
-              <TextAreaInput sm_md_lg="-1_-1_8" id="description" name="Description" height="100px" />
+              <TextAreaInput value={descriptionValue} onChange={this.handleOnChange} sm_md_lg="-1_-1_8" id="description" name="Description" height="100px" />
             </div>
             <div className="row mb-4">
               <div className="d-flex gap-5 justify-content-center">
@@ -244,10 +248,13 @@ class RProfileSetting extends Component {
       idCheck: 'OK',
       restaurantCheck: 'OK',
       addressValue: data.address,
+      descriptionValue: data.description,
       lat,
       lng,
       firstCenter : {lat, lng},
       brFile: null,
+      brSrc: "images/registration/" + data.br_name,
+      resSrc: "images/restaurants/" + data.photo,
     });
   }
 

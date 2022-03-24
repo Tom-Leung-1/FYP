@@ -36,6 +36,7 @@ class BRegister extends Component {
       phoneValue: '',
       idValue: '',
       restaurantValue: '',
+      descriptionValue: '',
       brFile: null,
       resPhoto: null,
       addressValue: '',
@@ -84,6 +85,7 @@ class BRegister extends Component {
       phoneValue: '',
       idValue: '',
       restaurantValue: '',
+      descriptionValue: '',
       firstCheck: '',
       lastCheck: '',
       phoneCheck: '',
@@ -144,8 +146,8 @@ class BRegister extends Component {
 
   uploadCredentials = (brFileName, photoFilename) => {
     const { userId } = this.props
-    const { firstValue, lastValue, phoneValue, idValue, restaurantValue, addressValue, lat, lng, OpenHours} = this.state
-    axios.post(`http://localhost:3001/uploadRegistration`, { firstValue, lastValue, phoneValue, idValue, restaurantValue, addressValue, brFileName, photoFilename, lat, lng, userId, OpenHours})
+    const { firstValue, lastValue, phoneValue, idValue, restaurantValue, addressValue, lat, lng, OpenHours, descriptionValue} = this.state
+    axios.post(`http://localhost:3001/uploadRegistration`, { firstValue, lastValue, phoneValue, idValue, restaurantValue, addressValue, brFileName, photoFilename, lat, lng, userId, OpenHours, descriptionValue})
       .then(response => {
         console.log(response)
       })
@@ -231,7 +233,7 @@ class BRegister extends Component {
 
   render() {
     console.log("testing", process.env.REACT_RECAPTCHA_SITE_KEY)
-    const { firstValue, lastValue, phoneValue, idValue, restaurantValue, recaptchaKey } = this.state
+    const { descriptionValue, firstValue, lastValue, phoneValue, idValue, restaurantValue, recaptchaKey } = this.state
     return (
       <div>
         <Helmet>
@@ -269,7 +271,7 @@ class BRegister extends Component {
                   <AddressInput onChange={this.handleOnChange} sm_md_lg="-1_-1_8" id="address" address={this.state.addressValue} required={true} name="Address" onMarkerComplete={this.onMarkerComplete} />
                 </div>
                 <div className="row mb-4">
-                  <TextAreaInput sm_md_lg="-1_-1_8" id="description" name="Description (Optional)" height="100px" />
+                  <TextAreaInput value={descriptionValue} onChange={this.handleOnChange} sm_md_lg="-1_-1_8" id="description" name="Description (Optional)" height="100px" />
                 </div>
                 <ReCAPTCHA key={recaptchaKey} sitekey={config["REACT_RECAPTCHA_SITE_KEY"]} onChange={this.handleRecaptcha} />
                 <div className="row mb-4">

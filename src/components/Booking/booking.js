@@ -134,7 +134,7 @@ class Booking extends React.Component {
       <>
         <p className="fw-bold text-center pt-1">Make a reservation<hr className="mb-0"/></p>
 
-        <div className="text-center mb-2" style={{display: userId < 0 ? "block":"none"}}>You must be <Link to="/sign-in" className='text-decoration-none'>logged in</Link> to make a reservation</div>
+        <div className="text-center mb-2" style={{display: userId < 0 ? "block":"none"}}>You must <Link to="/sign-in" className='text-decoration-none'>log in</Link> to make a reservation</div>
         
         <div className="mx-5" style={{display: userId < 0 ? "none":"block"}}>
           <FormControl variant="standard" sx={{ mb: 1, minWidth: 160 }} className="col-2 mx-4">
