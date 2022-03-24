@@ -38,7 +38,7 @@ const columns = [
     headerName: 'Order Type',
     width: 120,
     filterable: false,
-    valueFormatter: ({ value }) => (value ? "Take Away" : "Delivery"),
+    valueFormatter: ({ value }) => (value === "1" ? "Take Away" : "Delivery"),
   },
   {
     field: 'total',

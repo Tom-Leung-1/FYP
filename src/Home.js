@@ -50,7 +50,7 @@ class Home extends React.Component {
                         <h1>Find your favourite restaurant through map!</h1>
                         <Map selectRestaurant={selectRestaurant} toRestaurantPage={this.toRestaurantPage} setNameAdress={null} position={null} markersInfo={data} lat={null} lng ={null} className="boarder"/>
                     </div>
-                    <div className="container p-3">
+                    <div className="container p-3 mb-5">
                         <h1>Selected Restaurant</h1>
                         <div className="d-flex flex-wrap justify-content-center">
                             {data?.map((datum, index) => {

@@ -28,6 +28,14 @@
   background-size: cover;
 }
 
+.forgot { 
+  background: url(./images/password_forgot.svg);
+  background-position: right 5% bottom;
+  padding-bottom: 100px;
+  background-repeat: no-repeat;
+  background-size: 20em 20em;
+}
+
 .panelOption:hover {
   border-radius: 7px;
   box-shadow: 0 5px 5px 0 #5353537c;

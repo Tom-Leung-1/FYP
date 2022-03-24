@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import LargeTextInput from "./components/Inputs/LargeTextInput"
 import emailjs from '@emailjs/browser';
 import {withRouter} from 'react-router';
+import { ReactComponent as forgotIcon } from './images/password_forgot.svg';
 
 import axios from "axios"
 
@@ -81,12 +82,12 @@ class ForgotPwd extends Component {
       const {email, emailError} = this.state
         return (
             <>
-              <div className="">
+              <div className="forgot">
                 <Helmet>
                   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous" />
                 </Helmet>
                 <div id="test" className="d-flex justify-content-center p-5">
-                  <form onSubmit={this.submitForm} className="shadow-sm" style={{ fontFamily: 'Ubuntu', width: '100%', maxWidth: '500px', padding: '40px', borderRadius: '20px', backgroundColor: 'rgba(255, 255, 255, 0.5)' }}>
+                  <form onSubmit={this.submitForm} className="shadow-sm" style={{ fontFamily: 'Ubuntu', width: '100%', maxWidth: '500px', padding: '40px', borderRadius: '20px', backgroundColor: 'rgba(255, 255, 255, 0.9)' }}>
                     <h2 className="text-center mb-4 fw-normal"><strong>Forgot your password?</strong></h2>
                     <p className='text-center'>
                     <small class="text-muted">
@@ -99,7 +100,7 @@ class ForgotPwd extends Component {
                     </div>
 
                     <div className="d-grid gap-2 mb-2">
-                      <button className="shadow-sm btn btn-outline-primary rounded-pill border-2">SEND EMAIL</button>
+                      <button className="shadow-sm btn btn-outline-primary rounded-pill border-2"><b>SEND EMAIL</b></button>
                       <Link type="button" id="toSendPage" to="/send" style={{"display" : "none"}}/>
                     </div>
                   </form>

@@ -4,6 +4,7 @@ import { Helmet } from "react-helmet";
 import './BookingStatus.css';
 import axios from 'axios';
 import { getTimeDate } from "./helpers/data"
+import { Link } from 'react-router-dom';
 
 const columns = [
   { field: 'date', 
@@ -109,10 +110,17 @@ class BookingStatus extends React.Component {
           <title>Table Reservation</title>
         </Helmet>
           <div className="container p-2">
+                    <nav aria-label="breadcrumb" className="mt-3">
+                       <ol className="breadcrumb">
+                         <Link to="/OwnerOption" className="breadcrumb-item text-decoration-none">Restaurant Owner</Link>
+                         <li className="breadcrumb-item active" aria-current="page">Table Reservation</li>
+                       </ol>
+                    </nav>
             <h2 className="fw-normal mt-3"><strong>Table Reservation</strong></h2>
             <hr/>
             <div className="row">
               <div className="col-sm-8">
+                <h5 className="fw-normal mt-3"><strong>Reservation List</strong></h5>
                 <DataGrid
                   rows={data}
                   columns={columns}
@@ -122,13 +130,10 @@ class BookingStatus extends React.Component {
                   autoHeight
                   disableSelectionOnClick
                   className="bg-light position-sticky"
-                  components={{
-                    Toolbar: GridToolbar,
-                  }}
                 />
               </div>
               <div className="col-sm-4">
-                <h5 className="fw-normal mt-3"><strong>Booking Status</strong></h5>
+                <h5 className="fw-normal mt-3"><strong>Filter by date &#38; time range</strong></h5>
                 <label for="date">Date:</label>
                 <input type="date" class="form-control my-2"/>
                 <div class="row">
@@ -140,11 +145,14 @@ class BookingStatus extends React.Component {
                   <label for="endTime">To:</label>
                   <input type="time" class="form-control my-2" />
                 </div>
+                <div>
+                  <button className="btn btn-primary col-12 text-uppercase" style={{float: "center"}}>filter</button>
+                </div>
+
                 </div>
                 
-                <div className="fs-4">
-                  Booking quota:
-                  <br/>
+                <div className="fs-4 mt-5">
+                  <h5 className="fw-normal"><strong>Booking Quota</strong></h5>
                   {now}/{limit}
                 </div>
               </div>
