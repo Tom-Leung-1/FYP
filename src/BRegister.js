@@ -92,6 +92,7 @@ class BRegister extends Component {
       idCheck: '',
       restaurantCheck: '',
       brFile: null,
+      resPhoto: null,
       OpenHours: "",
       OpenWeekdays: "",
       OpenStart: "",
@@ -100,6 +101,8 @@ class BRegister extends Component {
     });
     //reset checkbox
     document.querySelectorAll('input[type=checkbox]').forEach( el => el.checked = false );
+    document.querySelector("#uploadPhoto").value = "";
+    document.querySelector("#upload").value = "";
     window.scrollTo(0, 0)
   }
 

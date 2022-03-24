@@ -39,6 +39,8 @@ class RProfileSetting extends Component {
       descriptionValue: '',
       brSrc: "",
       resSrc: "",
+      brName: "",
+      resName: "",
       brFile: null,
       resPhoto: null,
       addressValue: '',
@@ -89,9 +91,12 @@ class RProfileSetting extends Component {
       idCheck: '',
       restaurantCheck: '',
       brFile: null,
+      resPhoto: null,
     });
     //reset checkbox
     document.querySelectorAll('input[type=checkbox]').forEach( el => el.checked = false );
+    document.querySelector("#uploadPhoto").value = "";
+    document.querySelector("#upload").value = "";
     window.scrollTo(0, 0)
   }
 
@@ -102,30 +107,33 @@ class RProfileSetting extends Component {
   }
 
   updateForm = async (e) => {
-    const {resPhoto, brFile, addressValue, lat, lng } = this.state
+    const {brName, resName, resPhoto, brFile, addressValue, lat, lng } = this.state
     e.preventDefault()
     if (!this.checkForm() || !addressValue.trim()) {
       alert("Please provide the necessary credentials.")
       return
     }
-    if (!brFile) {
-      alert("Please upload registration file.")
-      return
-    }
+    // if (!brFile) {
+    //   alert("Please upload registration file.")
+    //   return
+    // }
     if (lat === -1 || lng === -1) {
       alert("Please provide the restaurant location by clicking on the google map.")
       return
     }
-    const brFileName = await this.fileUploadHandler("brFile")
-    const photoFilename = resPhoto ? await this.fileUploadHandler("resPhoto") : ""
-    this.uploadCredentials(brFileName, photoFilename)
-    alert("done")
+    // 1 optional upload -> 2 updateCredentials
+    const brFileName = brFile ? await this.fileUploadHandler("brFile") : brName
+    const photoFilename = resPhoto ? await this.fileUploadHandler("resPhoto") : resName
+    await this.updateCredentials(brFileName, photoFilename)
+    alert("donessss")
     this.props.history.push("/rprofile");
   }
 
-  uploadCredentials = (brFileName, photoFilename) => {
-    const { firstValue, lastValue, phoneValue, idValue, restaurantValue, addressValue, lat, lng} = this.state
-    axios.post(`http://localhost:3001/uploadRegistration`, { firstValue, lastValue, phoneValue, idValue, restaurantValue, addressValue, brFileName, photoFilename, lat, lng})
+  updateCredentials = async (brFileName, photoFilename) => {
+    const { restaurantId } = this.props
+    const { firstValue, lastValue, phoneValue, idValue, restaurantValue, addressValue, lat, lng, descriptionValue} = this.state
+    console.log("tttttt")
+    axios.post(`http://localhost:3001/updateRegistration`, { firstValue, lastValue, phoneValue, idValue, restaurantValue, addressValue, brFileName, photoFilename, lat, lng, descriptionValue, restaurantId})
       .then(response => {
         console.log(response)
       })
@@ -255,6 +263,8 @@ class RProfileSetting extends Component {
       brFile: null,
       brSrc: "images/registration/" + data.br_name,
       resSrc: "images/restaurants/" + data.photo,
+      brName: data.br_name,
+      resName:data.photo,
     });
   }
 
