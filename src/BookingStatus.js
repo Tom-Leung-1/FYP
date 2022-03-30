@@ -216,8 +216,12 @@ class BookingStatus extends React.Component {
                 onPageSizeChange={this.handlePageSizeChange}
                 rowsPerPageOptions={[10, 20, 50]}
                 autoHeight
+                getRowClassName={(params) => `theme--${params.row.progress[0]}`}
                 disableSelectionOnClick
                 className="bg-light position-sticky"
+                components={{
+                  Toolbar: GridToolbar,
+                }}
               />
             </div>
             <div className="col-sm-3">
@@ -233,14 +237,15 @@ class BookingStatus extends React.Component {
                   <label for="timeEnd">To:</label>
                   <input id="timeEnd" type="time" class="form-control my-2" />
                 </div>
-                <div className='col-6'>
+                <div className='col-12'>
                   <button onClick={this.filter} className="btn btn-primary col-12 text-uppercase fw-bold boarder-2 shadow-sm border border-1" style={{float: "center", backgroundColor:"#6E5EFE"}}>Filter</button>
                 </div>
-                <div className='col-6'>
+                <div className='col-12 mt-2'>
                 <button onClick={this.reset} className="btn btn-light col-12 text-uppercase boarder-2 shadow-sm border border-1" style={{float: "center"}}>Reset</button>
                 </div>
-                <div style={{"display":"flex", "flex-direction":"row"}}> {/*beauitfy TODO*/}
-                  <div className='col-6'>
+
+                 {/*beauitfy TODO*/}
+                <div className='col-6'>
                     <input id="serveHours" class="form-control my-2"/>
                     <label for="serveHours">hr</label>
                   </div>
@@ -248,7 +253,6 @@ class BookingStatus extends React.Component {
                     <input id="serveMinutes" class="form-control my-2"/>
                     <label for="serveMinutes">min</label>
                   </div>
-                </div>
               </div>
               <div className="fs-4 mt-5">
                 <h5 className="fw-normal"><strong>Booking Quota</strong></h5>

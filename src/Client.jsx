@@ -4,6 +4,7 @@ import "./Client.css"
 import Map from './components/GoogleMap/GoogleMap';
 import axios from 'axios';
 import Booking from './components/Booking/booking';
+import { Helmet } from "react-helmet";
 
 class Client extends Component {
     constructor(props) {
@@ -19,6 +20,10 @@ class Client extends Component {
         const position = {lat, lng} 
         return (
             <div className="bg-light">
+                <Helmet>
+                <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+                <title>{restaurant}</title>
+                </Helmet>
                 <div className="container px-5 py-5">    
                     <div className="card">
                         <img src={`images/restaurants/${photo || "default.png"}`} class="card-img-top" style={{width:"100%", height:"50vh", objectFit:"cover"}}/>

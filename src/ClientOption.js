@@ -6,13 +6,6 @@ import { ReactComponent as TableClientIcon } from './images/client_table.svg';
 import { ReactComponent as UserIcon } from './images/user_pro.svg';
 import { ReactComponent as SearchIcon } from './images/search.svg';
 
-import LocalDiningOutlinedIcon from '@mui/icons-material/LocalDiningOutlined';
-import DinnerDiningOutlinedIcon from '@mui/icons-material/DinnerDiningOutlined';
-import TableBarOutlinedIcon from '@mui/icons-material/TableBarOutlined';
-import ManageAccountsOutlinedIcon from '@mui/icons-material/ManageAccountsOutlined';
-import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
-
-
 class ClientOption extends React.Component {
 
     constructor(props) {
@@ -23,6 +16,10 @@ class ClientOption extends React.Component {
     render() {
         return (
             <>
+            <Helmet>
+                <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+                <title>Normal Customer Panel</title>
+            </Helmet>
             <div className="">
                 <div className="container p-2" style={{width: '100%'}}>
                     <h2 className="fw-normal mt-3"><strong>Normal Customer Panel</strong></h2>
