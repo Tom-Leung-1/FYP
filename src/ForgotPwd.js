@@ -85,6 +85,7 @@ class ForgotPwd extends Component {
               <div className="forgot">
                 <Helmet>
                   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous" />
+                  <title>Forgot Password</title>
                 </Helmet>
                 <div id="test" className="d-flex justify-content-center p-5">
                   <form onSubmit={this.submitForm} className="shadow-sm" style={{ fontFamily: 'Ubuntu', width: '100%', maxWidth: '500px', padding: '40px', borderRadius: '20px', backgroundColor: 'rgba(255, 255, 255, 0.9)' }}>

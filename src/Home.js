@@ -39,6 +39,10 @@ class Home extends React.Component {
         const {data} = this.state
         return (
             <>
+            <Helmet>
+                  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous" />
+                  <title>Foodcreek</title>
+            </Helmet>
                 <div className="home">
                     <div className="boxBG d-flex justify-content-center">
                         <div className="homeSearch p-2">

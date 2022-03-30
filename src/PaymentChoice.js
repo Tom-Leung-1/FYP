@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Alert from '@mui/material/Alert';
+import { Helmet } from "react-helmet";
 
 class PaymentChoice extends Component {
 
@@ -9,6 +10,10 @@ class PaymentChoice extends Component {
         
         return (
             <>
+            <Helmet>
+              <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous" />
+              <title>Payment method</title>
+            </Helmet>
                 <div className="container p-3">
                     <div className="d-flex flex-wrap justify-content-center fs-2">
                         Please choose the method of payment:
