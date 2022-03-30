@@ -8,7 +8,7 @@ function FileInput({imgSrc, fileType, accept, name, required, onChange, id }) {
             <br />
             
             <button type="button" class="btn btn-primary btn-sm border-0" style={{backgroundColor:"#6E5EFE", marginRight:10}} data-bs-toggle="modal" data-bs-target={`#fileModal${fileType}`}>Upload new image</button>
-            {imgSrc ? <span className='text-success fw-bold'>Image received <i class="bi bi-check-lg"></i></span> : <span></span>}
+            {imgSrc ? <span className='text-success fw-bold'>Image saved <i class="bi bi-check-lg"></i></span> : <span></span>}
 
             <div class="modal fade" id={`fileModal${fileType}`} tabindex="-1" aria-labelledby="fileModal" aria-hidden="true">
               <div class="modal-dialog modal-lg modal-dialog-centered">

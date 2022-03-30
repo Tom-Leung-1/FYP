@@ -233,16 +233,18 @@ class BookingStatus extends React.Component {
                   <label for="timeEnd">To:</label>
                   <input id="timeEnd" type="time" class="form-control my-2" />
                 </div>
-                <div>
-                  <button onClick={this.filter} className="btn btn-primary col-12 text-uppercase" style={{float: "center"}}>Filter</button>
-                  <button onClick={this.reset} className="mt-2 btn btn-primary col-12 text-uppercase" style={{float: "center"}}>Reset</button>
+                <div className='col-6'>
+                  <button onClick={this.filter} className="btn btn-primary col-12 text-uppercase fw-bold boarder-2 shadow-sm border border-1" style={{float: "center", backgroundColor:"#6E5EFE"}}>Filter</button>
+                </div>
+                <div className='col-6'>
+                <button onClick={this.reset} className="btn btn-light col-12 text-uppercase boarder-2 shadow-sm border border-1" style={{float: "center"}}>Reset</button>
                 </div>
                 <div style={{"display":"flex", "flex-direction":"row"}}> {/*beauitfy TODO*/}
-                  <div>
+                  <div className='col-6'>
                     <input id="serveHours" class="form-control my-2"/>
                     <label for="serveHours">hr</label>
                   </div>
-                  <div>
+                  <div className='col-6'>
                     <input id="serveMinutes" class="form-control my-2"/>
                     <label for="serveMinutes">min</label>
                   </div>

@@ -207,7 +207,17 @@ class BookingSetting extends Component {
                         <span class="input-group-text">to</span>
                         <input type="time" value={this.state.end} className="form-control" id="end" onChange={()=>this.TimeChange()}/>
                     </div>
-                    <button type="submit" className="btn btn-primary border-0" style={{float: "right", backgroundColor:"#6E5EFE"}} onClick={()=>this.checkInput()}>Save</button>
+
+                    <div>
+                    <h5 className="fw-normal mt-4"><strong>Maximum number of people of a reservation</strong></h5>
+                    <input type="number" class="form-control" id="maxPpl" min="1" style={{width: 100}}></input>
+                    </div>
+
+                    <div>
+                    <h5 className="fw-normal mt-4"><strong>Reservation limit (No. of people per hour)</strong></h5>
+                    <input type="number" class="form-control" id="quota" min="1" style={{width: 100}}></input>
+                    </div>
+                    <button type="submit" className="btn btn-primary border-0 mt-1" style={{float: "right", backgroundColor:"#6E5EFE"}} onClick={()=>this.checkInput()}>Save</button>
                 </div>      
             </>
         );
