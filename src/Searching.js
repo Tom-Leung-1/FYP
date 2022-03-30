@@ -28,6 +28,9 @@ class Searching extends React.Component {
         const {data} = this.state
         return (
             <>
+            <Helmet>
+              <title>Searching restaurant</title>
+            </Helmet>
                 <div className="searching">
                     <div className="container p-3">
                         <SearchBox searchUpdate={searchUpdate}/>

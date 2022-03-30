@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { Helmet } from "react-helmet";
 
 class UserType extends Component {
     constructor(props) {
@@ -13,6 +14,9 @@ class UserType extends Component {
         const {owner} = this.props
         return (
             <>
+            <Helmet>
+              <title>User type</title>
+            </Helmet>
             <div className="container mt-5">
                 <div className="d-flex flex-wrap justify-content-center fs-2">
                     Which kind of users are you?

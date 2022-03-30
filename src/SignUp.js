@@ -170,6 +170,7 @@ class SignUp extends Component {
         <div className="signup">
           <Helmet>
             <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous" />
+            <title>Sign Up</title>
           </Helmet>
           <div id="signUpBox" className="d-flex justify-content-center p-5">
             <form onSubmit={this.submitForm} className="shadow-lg" style={{ fontFamily: 'Ubuntu', width: '100%', maxWidth: '500px', padding: '40px', borderRadius: '20px', backgroundColor: 'rgba(255, 255, 255, 0.8)' }}>

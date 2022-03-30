@@ -188,6 +188,7 @@ class RProfileSetting extends Component {
       <div>
         <Helmet>
           <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous" />
+          <title>Update Restaurant Profile</title>
         </Helmet>
         <div id="RProfileSettingArea" className="justify-content-center container p-3">
           <nav aria-label="breadcrumb" className="mt-3">
