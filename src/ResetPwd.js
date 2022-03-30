@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Helmet } from "react-helmet";
 import { Link } from 'react-router-dom';
 import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
 import TextInput from "./components/Inputs/TextInput"
 import axios from 'axios';
 
@@ -118,6 +119,7 @@ class ResetPwd extends Component {
       <>
         <Helmet>
           <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous" />
+          <title>Reset Password</title>
         </Helmet>
         {valid ? 
         <div id="test" className="d-flex justify-content-center p-5">
@@ -144,7 +146,12 @@ class ResetPwd extends Component {
           </form>
         </div>
         :
-        <div>No</div>
+        <div className='container p-5'>
+          <Alert severity="error" className='mt-5'>
+            <AlertTitle><b>Error</b></AlertTitle>
+            The account recovery session has expired or the token is invalid. Please select '<Link to="/forgot" className='text-decoration-none'>Forgot password?</Link>' and start again.
+          </Alert>
+        </div>
         }
       </>
     );
