@@ -92,7 +92,7 @@ class OrderList extends React.Component {
                   <br/>
                   <span>{takeAway ? "-Take Away-" : "-Delivery-"}</span>
                   <br/>
-                  <span>Status: <span class="badge rounded-pill bg-warning text-dark">{status}</span></span>
+                  <span>Status: <span class={`badge rounded-pill text-dark ${status === "Finished" ? "bg-light" : "bg-warning"}`}>{status}</span></span>
               </div>
               <div className="card-body">
                   {order.map(({name, price, drink, special}) => 

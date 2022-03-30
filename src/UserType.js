@@ -31,7 +31,7 @@ class UserType extends Component {
                         </Link>
                         <br/>
                         <p className="mx-3 d-flex fw-bold" style={{width: "290px"}}>
-                            You can serach for your favourite restaurants,
+                            You can search for your favourite restaurants,
                             make orders or reservations on our website!
                         </p>
                     </div>
