@@ -5,6 +5,12 @@ import './BookingStatus.css';
 import axios from 'axios';
 import { getTimeDate } from "./helpers/data"
 import { Link } from 'react-router-dom';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 
 const limit = 100;
 let now = 30;
@@ -18,20 +24,24 @@ class BookingStatus extends React.Component {
       data : [],
       dateStart : null,
       dateEnd : null,
+      dialogOpen: false,
+      action: "",
+      select: [],
       columns : [
+        
         {
           field: 'id',
-          headerName: 'id',
-          width: 100,
+          headerName: 'ID',
+          width: 30,
         },
 
         { field: 'date', 
           headerName: 'Date', 
-          width: 120,
+          width: 100,
         },
         { field: 'time', 
           headerName: 'Time', 
-          width: 120,
+          width: 70,
         },
         {
           field: 'username',
@@ -50,7 +60,7 @@ class BookingStatus extends React.Component {
         {
           field: 'phone',
           headerName: 'phone',
-          width: 120,
+          width: 90,
         },
         {
           field: 'progress',
@@ -62,17 +72,19 @@ class BookingStatus extends React.Component {
           headerName: 'Action',
           sortable: false,
           filterable: false,
+          width: 90,
           renderCell: (params) => {
             const progress = params?.row.progress.split(" ")[0]
             const done = progress === "cancelled" || progress === "finished"
             const id = params.row.id
+            //<button onClick={() => this.updateReservation(id, "finish", "finished")} type="button" title="present" className="btn p-1 mx-2"><i class="fas fa-check"></i></button>
             return (
               done ?
               <span></span>
               :
               <strong>
-                <button onClick={() => this.updateReservation(id, "finish", "finished")} type="button" title="present" className="btn p-1 mx-2"><i class="fas fa-check"></i></button>
-                <button onClick={() => this.updateReservation(id, "cancel", "cancelled by owner")}  type="button" title="absent" className="btn p-1 mx-2"><i class="fas fa-times"></i></button>
+                <button onClick={() => this.dialogOpen("finish", params.row)} type="button" title="present" className="btn p-1 mx-2"><i class="fas fa-check"></i></button>
+                <button onClick={() => this.dialogOpen("cancel", params.row)}  type="button" title="absent" className="btn p-1 mx-2"><i class="fas fa-times"></i></button>
               </strong>
             )
           },
@@ -81,8 +93,9 @@ class BookingStatus extends React.Component {
     };
   }
 
-  updateReservation = async (reservationId, confirmString, updateString) => {
-    const ok = window.confirm(`Are your sure you would like to ${confirmString} id ${reservationId}?`)
+  updateReservation = async (reservationId, updateString) => {
+    //const ok = window.confirm(`Are your sure you would like to ${confirmString} id ${reservationId}?`)
+    const ok = true
     if (ok) {
       // front end update
       const data = this.state.data.map(datum => {
@@ -103,6 +116,7 @@ class BookingStatus extends React.Component {
         return
       }) 
     }
+    this.dialogClose()
   } 
 
   handlePageSizeChange = (params) => {
@@ -165,6 +179,15 @@ class BookingStatus extends React.Component {
     this.setState({dateStart : null, dateEnd : null})
   }
 
+  dialogOpen = (actionString, params) => {
+    this.setState({dialogOpen: true, action: actionString, select: params})
+  }
+
+  dialogClose = () => {
+    this.setState({dialogOpen: false, action: "", select: []})
+  }
+
+
   render() {
     const {data, columns, dateStart, dateEnd} = this.state
     const filteredData = dateStart ? data.filter(({dateObj}) => dateStart <= dateObj && dateObj <= dateEnd) : data
@@ -174,7 +197,7 @@ class BookingStatus extends React.Component {
           <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
           <title>Table Reservation</title>
         </Helmet>
-        <div style = {{"padding-left": "10%", "padding-right": "10%"}}>
+        <div style = {{"padding-bottom": "10%", "padding-left": "7%", "padding-right": "7%"}}>
           <nav aria-label="breadcrumb" className="mt-3">
             <ol className="breadcrumb">
               <Link to="/OwnerOption" className="breadcrumb-item text-decoration-none">Restaurant Owner</Link>
@@ -184,7 +207,7 @@ class BookingStatus extends React.Component {
           <h2 className="fw-normal mt-3"><strong>Table Reservation</strong></h2>
           <hr/>
           <div className="row">
-            <div className="col-sm-8">
+            <div className="col-sm-9">
               <h5 className="fw-normal mt-3"><strong>Reservation List</strong></h5>
               <DataGrid
                 rows={filteredData}
@@ -197,7 +220,7 @@ class BookingStatus extends React.Component {
                 className="bg-light position-sticky"
               />
             </div>
-            <div className="col-sm-4">
+            <div className="col-sm-3">
               <h5 className="fw-normal mt-3"><strong>Filter by date &#38; time range</strong></h5>
               <label for="date">Date:</label>
               <input id="dateInput" type="date" class="form-control my-2"/>
@@ -232,6 +255,36 @@ class BookingStatus extends React.Component {
             </div>
           </div>
         </div>
+
+        <Dialog fullWidth='true' maxWidth='sm' open={this.state.dialogOpen} onClose={() => this.dialogClose()}>
+                <DialogTitle className="text-capitalize">{this.state.action} reservation</DialogTitle>
+                <DialogContent>
+                <DialogContentText className='text-dark'>
+                You are going to <span className='text-uppercase fw-bold'>{this.state.action}</span> the reservation below:
+                <br/>
+                <div className='my-3 text-secondary'>
+                ID: {this.state.select.id}
+                <br/>
+                Date: {this.state.select.date}
+                <br/>
+                Time: {this.state.select.time}
+                <br/>
+                Username: {this.state.select.username}
+                <br/>
+                No. of people: {this.state.select.ppl}
+                <br/>
+                Phone no.: {this.state.select.phone}
+                <br/>
+                </div>
+                Are your sure to <span className='text-uppercase fw-bold'>{this.state.action}</span> this rereservation?
+                </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={() => this.dialogClose()} className="text-secondary">no</Button>
+                  <Button onClick={() => this.updateReservation(this.state.select.id, this.state.action === "finish" ? "finished" : "cancelled by restaurant")} style={{color:"#6E5EFE", fontWeight:"bolder"}}>yes</Button>
+                </DialogActions>
+            </Dialog>
+
       </>
     );
   }
