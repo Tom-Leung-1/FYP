@@ -3,6 +3,7 @@ import { Helmet } from "react-helmet";
 import { Link } from 'react-router-dom';
 import {withRouter} from 'react-router';
 import Alert from '@mui/material/Alert';
+import { ReactComponent as MailIcon } from './images/email.svg';
 import axios from "axios"
 
 class ForgotMail extends Component {
@@ -29,8 +30,10 @@ class ForgotMail extends Component {
                   We have sent an email with password recover link to your mail box.
                 </Alert>
 
-                <div id="test" className="d-flex justify-content-center p-4">
-                <h2 className="text-center mb-4 fw-normal"><i class="bi bi-envelope-fill fa-5x" style={{color:"#6E5EFE"}}></i><br/><strong>Check your mail</strong></h2>
+                <div id="test" className="d-flex justify-content-center p-4 mt-5">
+                  <div class="flex-shrink">
+                  </div>
+                <h2 className="text-center mb-4 fw-normal"><MailIcon style={{height:"200px", width:"200px"}}/><br/><strong>Check your mail</strong></h2>
                 </div>
 
                 <div className="d-flex flex-wrap justify-content-center">
