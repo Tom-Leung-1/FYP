@@ -5,3 +5,21 @@
     float: left;
     margin: 6px 3px 0px 2px;
   }
+
+.theme--c {
+    background-color: rgb(255, 87, 87);
+    color: #fff;
+}
+
+.theme--c:hover {
+    background-color: rgb(255, 67, 67) !important;
+}
+
+.theme--f {
+  background-color: rgb(49, 161, 49);
+  color: #fff;
+}
+
+.theme--f:hover {
+  background-color: rgb(49, 141, 49) !important;
+}

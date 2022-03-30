@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import {withRouter} from 'react-router';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { Helmet } from "react-helmet";
 
 class BookingSetting extends Component {
 
@@ -185,6 +186,10 @@ class BookingSetting extends Component {
     render() {
         return (
             <>
+            <Helmet>
+                <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+                <title>Table Reservation Setting</title>
+            </Helmet>
                 <div className="container p-2">
                      <nav aria-label="breadcrumb" className="mt-3">
                        <ol className="breadcrumb">
@@ -217,7 +222,7 @@ class BookingSetting extends Component {
                     <h5 className="fw-normal mt-4"><strong>Reservation limit (No. of people per hour)</strong></h5>
                     <input type="number" class="form-control" id="quota" min="1" style={{width: 100}}></input>
                     </div>
-                    <button type="submit" className="btn btn-primary border-0 mt-1" style={{float: "right", backgroundColor:"#6E5EFE"}} onClick={()=>this.checkInput()}>Save</button>
+                    <button type="submit" className="btn btn-primary border-0 mt-1 mb-5" style={{float: "right", backgroundColor:"#6E5EFE"}} onClick={()=>this.checkInput()}>Save</button>
                 </div>      
             </>
         );
