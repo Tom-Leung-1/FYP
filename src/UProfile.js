@@ -65,8 +65,8 @@ class UProfile extends Component {
               <td id="uphone">{phone}</td>
             </tr>
           </table>
-          <Link to="./UProfileSetting" type="button" className="btn btn-sm btn-primary mr-2" style={{backgroundColor:"#6E5EFE"}}>Update Profile</Link>
-          <Link to="./UpdatePwd" type="button" className="btn btn-sm btn-primary m-2" style={{backgroundColor:"#6E5EFE"}}>Change Password</Link>
+          <Link to="./UProfileSetting" type="button" className="btn btn-sm btn-primary mr-2 border-0" style={{backgroundColor:"#6E5EFE"}}>Update Profile</Link>
+          <Link to="./UpdatePwd" type="button" className="btn btn-sm btn-primary m-2 border-0" style={{backgroundColor:"#6E5EFE"}}>Change Password</Link>
         </div>
       </>
     );

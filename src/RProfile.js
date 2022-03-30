@@ -59,7 +59,7 @@ class RProfile extends Component {
           </nav>
             <h2 className="fw-normal"><strong>Restaurant Profile</strong></h2>
             <hr className="mb-4" />
-            <Link to="./RProfileSetting" type="button" className="btn btn-primary mb-2">Update Profile</Link>
+            <Link to="./RProfileSetting" type="button" className="btn btn-primary mb-2 border-0" style={{backgroundColor:"#6E5EFE"}}>Update Profile</Link>
             <h5 className="fw-normal"><strong>Owner's Information:</strong></h5>
             <div className="row mb-2">
               <div className="col-sm-5 col-lg-3 mb-2">

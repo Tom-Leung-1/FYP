@@ -195,7 +195,7 @@ class UProfileSetting extends Component {
               </div>
             </div>
             <div class="d-grid gap-2 col-2 mx-auto">
-              <button type="submit" class="btn btn-sm btn-primary" style={{backgroundColor:"#6E5EFE"}}>Save</button>
+              <button type="submit" class="btn btn-sm btn-primary border-0" style={{backgroundColor:"#6E5EFE"}}>Save</button>
             </div>
           </form>
         </div>

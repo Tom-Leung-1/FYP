@@ -212,13 +212,13 @@ class RProfileSetting extends Component {
               <TextInput value={idValue} sm_md_lg="4_-1_2" id="id" required={true} placeholder="" onChange={this.handleOnChange} name="HKID Card Number" errorMsg={this.state.idCheck} />
             </div>
             <div className="row mb-4">
-              <FileInput imgSrc={brSrc} fileType="brFile" accept=".jpg,.png,.jpeg" id="upload" required={true} onChange={this.fileSelectedHandler} name="Upload Business Registration (with jpg, png or jpeg format)" />
+              <FileInput imgSrc={brSrc} fileType="brFile" accept=".jpg,.png,.jpeg" id="upload" required={true} onChange={this.fileSelectedHandler} name="Business Registration (with jpg, png or jpeg format)" />
             </div>
             <div className="row mb-2">
               <TextInput value={restaurantValue} sm_md_lg="-1_-1_8" id="restaurant" required={true} onChange={this.handleOnChange} name="Restaurant Name" errorMsg={this.state.restaurantCheck} />
             </div>
             <div className="row">
-              <FileInput imgSrc={resSrc} fileType="resPhoto" accept=".jpg,.png,.jpeg" id="uploadPhoto" required={true} onChange={this.fileSelectedHandler} name="Upload Photo of restaurant (with jpg, png or jpeg format)" />
+              <FileInput imgSrc={resSrc} fileType="resPhoto" accept=".jpg,.png,.jpeg" id="uploadPhoto" required={true} onChange={this.fileSelectedHandler} name="Photo of restaurant (with jpg, png or jpeg format)" />
             </div>
             <div className="row mb-2">
               <AddressInput firstCenter={firstCenter} position={position} onChange={this.handleOnChange} sm_md_lg="-1_-1_8" id="address" address={this.state.addressValue} required={true} name="Address" onMarkerComplete={this.onMarkerComplete} />
@@ -230,7 +230,7 @@ class RProfileSetting extends Component {
               <div className="d-flex gap-5 justify-content-center">
                 {/*<Link to="/rprofile" type="button" id="back-btn" className="btn btn-secondary btn-sm boarder-2 shadow-sm mx-3 border border-1 float-right"><b>Back</b></Link>*/}
                 <button type="button" id="reset-btn" className="btn btn-sm boarder-2 shadow-sm mx-3 border border-1 float-right" onClick={this.resetForm}><b>Reset</b></button>
-                <button type="submit" id="upload" onClick={this.updateForm} className="btn btn-sm shadow-sm float-right" style={{ backgroundColor: "#3F5BFF", color: "white" }}><b>Submit</b></button>
+                <button type="submit" id="upload" onClick={this.updateForm} className="btn btn-sm shadow-sm float-right" style={{ backgroundColor: "#6E5EFE", color: "white" }}><b>Submit</b></button>
               </div>
             </div>
           </form>

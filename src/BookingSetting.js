@@ -207,7 +207,7 @@ class BookingSetting extends Component {
                         <span class="input-group-text">to</span>
                         <input type="time" value={this.state.end} className="form-control" id="end" onChange={()=>this.TimeChange()}/>
                     </div>
-                    <button type="submit" className="btn btn-primary" style={{float: "right"}} onClick={()=>this.checkInput()}>Save</button>
+                    <button type="submit" className="btn btn-primary border-0" style={{float: "right", backgroundColor:"#6E5EFE"}} onClick={()=>this.checkInput()}>Save</button>
                 </div>      
             </>
         );

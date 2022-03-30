@@ -14,7 +14,7 @@ const columns = [
   {
     field: 'order_id',
     headerName: 'Order no.',
-    width: 120,
+    width: 100,
     sortable: false,
   },
   {
@@ -50,7 +50,7 @@ const columns = [
   {
     field: 'status',
     headerName: 'status',
-    width: 200,
+    width: 160,
   },
   {
     field: 'detail',
