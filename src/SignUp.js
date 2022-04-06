@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import LargeTextInput from "./components/Inputs/LargeTextInput"
 import axios from "axios"
 import {withRouter} from 'react-router';
+import emailjs from '@emailjs/browser';
 
 var CryptoJS = require("crypto-js");
 
@@ -137,13 +138,25 @@ class SignUp extends Component {
   submitForm = (e) => {
     e.preventDefault()
     if (this.checkForm()) {
-      const { usernameValue, emailValue, password, phoneValue} = this.state
+      const {usernameValue, emailValue, password, phoneValue} = this.state
       axios.post(`http://localhost:3001/signup`, {usernameValue, emailValue, phoneValue, password})
-        .then(response => {
-          console.log(response)
-          alert("done!")
-          this.props.signInSetting(response.data)
-          this.props.history.push('/UserType')
+        .then(async (response) => {
+          await axios.post(`http://localhost:3001/sendValidEmail`, {emailValue})
+          .then(async (response) => {
+            console.log(response.data.token)
+            const templateParams = {
+              to_email : emailValue,
+              token : response.data.token,
+            }
+            emailjs.init("3ElvtargFj-dF39Sz")
+            await emailjs.send("service_7w75x0d", "validate_form", templateParams)
+            .then(response => {
+              console.log(response)
+            })
+            alert("We have sent an email. Please validate the email address to activate the account.")
+          })
+          // this.props.signInSetting(response.data)
+          this.props.history.push('/sign-in')
         })
         .catch(error => {
           if (error.response.status === 401) {

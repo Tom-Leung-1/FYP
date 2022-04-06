@@ -12,9 +12,6 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-const limit = 100;
-let now = 30;
-
 class BookingStatus extends React.Component {
   
   constructor(props) {
@@ -243,21 +240,11 @@ class BookingStatus extends React.Component {
                 <div className='col-12 mt-2'>
                 <button onClick={this.reset} className="btn btn-light col-12 text-uppercase boarder-2 shadow-sm border border-1" style={{float: "center"}}>Reset</button>
                 </div>
-
-                 {/*beauitfy TODO*/}
-                <div className='col-6'>
-                    <input id="serveHours" class="form-control my-2"/>
-                    <label for="serveHours">hr</label>
-                  </div>
-                  <div className='col-6'>
-                    <input id="serveMinutes" class="form-control my-2"/>
-                    <label for="serveMinutes">min</label>
-                  </div>
               </div>
-              <div className="fs-4 mt-5">
+              {/* <div className="fs-4 mt-5">
                 <h5 className="fw-normal"><strong>Booking Quota</strong></h5>
                 {now}/{limit}
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

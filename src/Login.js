@@ -22,6 +22,7 @@ class Login extends Component {
           showPass: false,
           failOpen: false,
           succOpen: false,
+          notValidated: false,
         };
     }
 
@@ -39,10 +40,15 @@ class Login extends Component {
             setTimeout(() => { this.props.history.push('/UserType') }, 1000);
           })
           .catch(error => {
-            if (error.response.status === 401) {
+            if (error.response.status === 400) {
               //alert("user not found! Please check credentials again.")
               this.setState({failOpen: true});
               setTimeout(() => { this.setState({failOpen: false}); }, 1000);
+            }
+            if (error.response.status === 401) {
+              //alert("user not found! Please check credentials again.")
+              this.setState({notValidated: true});
+              setTimeout(() => { this.setState({notValidated: false}); }, 1000);
             }
             console.log(error)
           })
@@ -97,8 +103,8 @@ class Login extends Component {
       return (usernameError + passwordError === "OKOK")
     }
 
-    closeMessage = () => {
-      this.setState({failOpen: false});
+    closeMessage = (msg) => {
+      this.setState({[msg]: false});
     }
 
     render() {
@@ -147,14 +153,24 @@ class Login extends Component {
                   sx={{ height: "100%", alignItems: 'center' }}
                   open={this.state.failOpen}
                   anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-                  onClose={() => this.closeMessage()}
+                  onClose={() => this.closeMessage("failOpen")}
                   TransitionComponent={Fade}
               >
-              <Alert severity="error" variant="filled" sx={{ width: "100%"}}>
-                  User not found! Please check credentials again
-              </Alert>
+                <Alert severity="error" variant="filled" sx={{ width: "100%"}}>
+                    User not found! Please check credentials again
+                </Alert>
               </Snackbar>
-
+              <Snackbar
+                  sx={{ height: "100%", alignItems: 'center' }}
+                  open={this.state.notValidated}
+                  anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                  onClose={() => this.closeMessage("notValidated")}
+                  TransitionComponent={Fade}
+              >
+                <Alert severity="error" variant="filled" sx={{ width: "100%"}}>
+                  The account is not validated. Please activate the account via email.
+                </Alert>
+              </Snackbar>
               <Snackbar
                   sx={{ height: "100%", alignItems: 'center' }}
                   open={this.state.succOpen}
@@ -162,9 +178,9 @@ class Login extends Component {
                   onClose={() => this.closeMessage()}
                   TransitionComponent={Fade}
               >
-              <Alert severity="success" variant="filled" sx={{ width: "100%"}}>
-                  Log in Successfully
-              </Alert>
+                <Alert severity="success" variant="filled" sx={{ width: "100%"}}>
+                    Log in Successfully
+                </Alert>
               </Snackbar>
             </>
         );

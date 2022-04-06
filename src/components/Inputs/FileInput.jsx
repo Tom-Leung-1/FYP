@@ -23,8 +23,7 @@ function FileInput({imgSrc, fileType, accept, name, required, onChange, id }) {
                     </div>
                     {imgSrc && <img src={imgSrc} class="img-fiuld" style={{width: "75%"}}/>}
                   </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" style={{backgroundColor:"#6E5EFE"}}>Save</button>
+                  <div class="modal-footer">          
                   </div>
                 </div>
               </div>

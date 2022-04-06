@@ -37,12 +37,14 @@ class RProfileSetting extends Component {
       idValue: '',
       restaurantValue: '',
       descriptionValue: '',
-      brSrc: "",
-      resSrc: "",
+      oldBrSrc: "",
+      oldResSrc: "",
+      brSrc: "", // image to be showed
+      resSrc: "", // image to be showed
       brName: "",
       resName: "",
-      brFile: null,
-      resPhoto: null,
+      brFile: null, // to be uploaded
+      resPhoto: null, // to be uploaded
       addressValue: '',
       marker: null,
       map: null,
@@ -125,7 +127,7 @@ class RProfileSetting extends Component {
     const brFileName = brFile ? await this.fileUploadHandler("brFile") : brName
     const photoFilename = resPhoto ? await this.fileUploadHandler("resPhoto") : resName
     await this.updateCredentials(brFileName, photoFilename)
-    alert("donessss")
+    alert("done")
     this.props.history.push("/rprofile");
   }
 
@@ -158,11 +160,22 @@ class RProfileSetting extends Component {
 
   fileSelectedHandler = event => {
     const fileType = event.target.dataset.type
+    const {oldBrSrc, oldResSrc,} = this.state
     if (event.target.files.length === 0) {
       this.setState({ [fileType]: null })
+      if (fileType === "brFile") {
+        this.setState({brSrc : oldBrSrc})
+        return 
+      }
+      this.setState({resSrc : oldResSrc})
       return
     }
     this.setState({ [fileType]: event.target.files[0] })
+    if (fileType === "brFile") {
+      this.setState({brSrc : URL.createObjectURL(event.target.files[0])})
+      return 
+    }
+    this.setState({resSrc : URL.createObjectURL(event.target.files[0])})
   }
 
   fileUploadHandler = async (fileType) => {
@@ -262,6 +275,8 @@ class RProfileSetting extends Component {
       lng,
       firstCenter : {lat, lng},
       brFile: null,
+      oldBrSrc: "images/registration/" + data.br_name,
+      oldResSrc: "images/restaurants/" + data.photo,
       brSrc: "images/registration/" + data.br_name,
       resSrc: "images/restaurants/" + data.photo,
       brName: data.br_name,

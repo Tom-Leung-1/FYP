@@ -31,6 +31,7 @@ import ResetPwd from './ResetPwd';
 import ForgotPwd from './ForgotPwd';
 import ForgotMail from './ForgotMail';
 import UserType from './UserType';
+import Activate from "./Activate"
 import axios from "axios"
 
 
@@ -189,6 +190,9 @@ class App extends Component {
             <Route path="/UpdatePwd" component={UpdatePwd}/>
             <Route path="/UserType">
               <UserType owner={owner}/>
+            </Route>
+            <Route path="/activate">
+              <Activate/>
             </Route>
             </div>
           </Switch>
