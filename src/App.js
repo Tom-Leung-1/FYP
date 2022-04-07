@@ -31,7 +31,8 @@ import ResetPwd from './ResetPwd';
 import ForgotPwd from './ForgotPwd';
 import ForgotMail from './ForgotMail';
 import UserType from './UserType';
-import Activate from "./Activate"
+import Paypal from "./Paypal";
+import Activate from "./Activate";
 import axios from "axios"
 
 
@@ -57,6 +58,13 @@ class App extends Component {
     };
   } 
 
+  orderReset = () => {
+    this.setState({
+      clientOrder: [],
+      clientTotal: 0,
+      clientTakeaway: false,
+    })
+  }
   
   
   searchUpdate = (searchTag) => {
@@ -96,6 +104,7 @@ class App extends Component {
     .catch(error => {
       console.log(error)
     })
+    console.log("order sent!!!")
   }
 
   signOut = (num) => {
@@ -107,7 +116,7 @@ class App extends Component {
   }
 
   render() {
-    const {openHours, userId, ownerRestaurantId, clientRestaurantId, owner, searchTag, lat, lng, photo, description, restaurant, address} = this.state
+    const {clientOrder, clientTotal, openHours, userId, ownerRestaurantId, clientRestaurantId, owner, searchTag, lat, lng, photo, description, restaurant, address} = this.state
     this.updateSession()
     return (
       <Router>
@@ -158,42 +167,45 @@ class App extends Component {
               <Route path="/booking">
                 <BookingStatus restaurantId={ownerRestaurantId}/>
               </Route>
-            <Route path="/booksetting">
-              <BookingSetting restaurantId={ownerRestaurantId}/>
-            </Route>
-            <Route path="/register">
-              <BRegister userId={userId}/>
-            </Route>
-            <Route path="/pay">
-              <PaymentChoice userId={userId} sendOrder={this.sendOrder}/>
-            </Route>
-            <Route path="/doneOrder" component={DoneOrder}/>
-            <Route path="/OwnerOption">
-              <OwnerOption/>
-            </Route>
-            <Route path="/rprofile">
-              <RProfile ownerRestaurantId={ownerRestaurantId}/>
-            </Route>
-            <Route path="/RProfileSetting">
-            <RProfileSetting restaurantId={ownerRestaurantId}/>
-            </Route> 
-            <Route path="/orderlist">
-              <OrderList restaurantId={ownerRestaurantId}/>
-            </Route>
-            <Route path="/ClientOption" component={ClientOption}/>
-            <Route path="/uprofile">
-              <UProfile userId={userId}/>
-            </Route>
-            <Route path="/UprofileSetting">
-              <UProfileSetting userId={userId}/>
-            </Route>
-            <Route path="/UpdatePwd" component={UpdatePwd}/>
-            <Route path="/UserType">
-              <UserType owner={owner}/>
-            </Route>
-            <Route path="/activate">
-              <Activate/>
-            </Route>
+              <Route path="/booksetting">
+                <BookingSetting restaurantId={ownerRestaurantId}/>
+              </Route>
+              <Route path="/register">
+                <BRegister userId={userId}/>
+              </Route>
+              <Route path="/pay">
+                <PaymentChoice userId={userId} sendOrder={this.sendOrder}/>
+              </Route>
+              <Route path="/doneOrder" component={DoneOrder}/>
+              <Route path="/OwnerOption">
+                <OwnerOption/>
+              </Route>
+              <Route path="/rprofile">
+                <RProfile ownerRestaurantId={ownerRestaurantId}/>
+              </Route>
+              <Route path="/RProfileSetting">
+              <RProfileSetting restaurantId={ownerRestaurantId}/>
+              </Route> 
+              <Route path="/orderlist">
+                <OrderList restaurantId={ownerRestaurantId}/>
+              </Route>
+              <Route path="/ClientOption" component={ClientOption}/>
+              <Route path="/uprofile">
+                <UProfile userId={userId}/>
+              </Route>
+              <Route path="/UprofileSetting">
+                <UProfileSetting userId={userId}/>
+              </Route>
+              <Route path="/UpdatePwd" component={UpdatePwd}/>
+              <Route path="/UserType">
+                <UserType owner={owner}/>
+              </Route>
+              <Route path="/activate">
+                <Activate/>
+              </Route>
+              <Route path="/paypal">
+                <Paypal clientOrder={clientOrder} orderReset={this.orderReset} sendOrder={this.sendOrder} clientTotal={clientTotal}/>
+              </Route>
             </div>
           </Switch>
         </div>

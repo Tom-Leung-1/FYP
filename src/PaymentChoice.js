@@ -25,10 +25,12 @@ class PaymentChoice extends Component {
                     </div>
                     <div className="d-flex flex-wrap justify-content-center">
                         <div className="card border-0 bg-light my-3">
-                            <button type="button" className="btn btn-primary btn-lg fs-2 shadow border-0 mx-5" disabled style={{height: "18vh", width:"50vh", background: "#6E5EFE"}}>
-                                <i className="bi bi-credit-card d-flex flex-wrap justify-content-center"></i>
-                                Online Payment
-                            </button>
+                            <Link to={"/paypal"}>
+                                <button type="button" className="btn btn-primary btn-lg fs-2 shadow border-0 mx-5" style={{height: "18vh", width:"50vh", background: "#6E5EFE"}}>
+                                    <i className="bi bi-credit-card d-flex flex-wrap justify-content-center"></i>
+                                    Online Payment
+                                </button>
+                            </Link>
                         </div>
                         <div className="card border-0 bg-light my-3">
                             <button type="button" className="btn btn-primary btn-lg fs-2 shadow border-0 mx-5" disabled style={{height: "18vh", width:"50vh", background: "#6E5EFE", display: userId < 0 ? "block":"none"}}>
@@ -36,10 +38,10 @@ class PaymentChoice extends Component {
                                 Cash
                             </button>
                             <Link onClick={sendOrder} to={"/doneorder"} style={{display: userId < 0 ? "none":"block"}}>
-                            <button type="button" className="btn btn-primary btn-lg fs-2 shadow border-0 mx-5" style={{height: "18vh", width:"50vh", background: "#6E5EFE"}}>
-                                <i className="bi bi-cash-coin d-flex flex-wrap justify-content-center"></i>
-                                Cash
-                            </button>
+                                <button type="button" className="btn btn-primary btn-lg fs-2 shadow border-0 mx-5" style={{height: "18vh", width:"50vh", background: "#6E5EFE"}}>
+                                    <i className="bi bi-cash-coin d-flex flex-wrap justify-content-center"></i>
+                                    Cash
+                                </button>
                             </Link>
                             <br/>
                             <p className="mx-5">
