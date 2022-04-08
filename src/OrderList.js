@@ -104,12 +104,12 @@ class OrderList extends React.Component {
                   )
                   }
                   <span className="fs-5 fw-bold text-danger">Total: <span style={{float:"right"}}>${total}</span></span>
+                  <br/>
+                  <br/>
+                  <span className="fs-6 fw-bold">Phone No.:</span>
+                  <br/>
+                  {phone}
                   <div style={{display: takeAway ? 'none' : 'block'}}>
-                    <br/>
-                    <span className="fs-6 fw-bold">Phone No.:</span>
-                    <br/>
-                    {phone}
-                    <br/>
                     <span className="fs-6 fw-bold">Address:</span>
                     <br/>
                     {address}
