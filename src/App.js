@@ -33,6 +33,7 @@ import ForgotMail from './ForgotMail';
 import UserType from './UserType';
 import Paypal from "./Paypal";
 import Activate from "./Activate";
+import ActivateMail from "./activateMail";
 import axios from "axios"
 
 
@@ -199,6 +200,9 @@ class App extends Component {
               <Route path="/UpdatePwd" component={UpdatePwd}/>
               <Route path="/UserType">
                 <UserType owner={owner}/>
+              </Route>
+              <Route path="/activateMail">
+                <ActivateMail/>
               </Route>
               <Route path="/activate">
                 <Activate/>

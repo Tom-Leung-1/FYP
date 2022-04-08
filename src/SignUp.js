@@ -5,6 +5,9 @@ import LargeTextInput from "./components/Inputs/LargeTextInput"
 import axios from "axios"
 import {withRouter} from 'react-router';
 import emailjs from '@emailjs/browser';
+import Snackbar from '@mui/material/Snackbar';
+import Fade from '@mui/material/Fade';
+import Alert from '@mui/material/Alert';
 
 var CryptoJS = require("crypto-js");
 
@@ -22,7 +25,8 @@ class SignUp extends Component {
       phoneError: '',
       passwordError: '',
       confirmPassError: '',
-      showPass: false 
+      showPass: false,
+      checking: false,
     };
   }
 
@@ -153,13 +157,14 @@ class SignUp extends Component {
             .then(response => {
               console.log(response)
             })
-            alert("We have sent an email. Please validate the email address to activate the account.")
+            //alert("We have sent an email. Please validate the email address to activate the account.")
           })
           // this.props.signInSetting(response.data)
-          this.props.history.push('/sign-in')
+          this.props.history.push('/activateMail')
         })
         .catch(error => {
           if (error.response.status === 401) {
+            this.setState({checking: false});
             alert("Username or email is already used. Please use another.")
           }
         })
@@ -169,11 +174,15 @@ class SignUp extends Component {
   checkForm() {
     const {usernameError, emailError, phoneError, passwordError, confirmPassError} = this.state
     if (usernameError + passwordError + emailError + confirmPassError + phoneError === "OKOKOKOKOK") {
-      alert('Successfully sign up!');
+      this.setState({checking: true});
       return true;
     }
     alert("Some credentials are not valid. Please check them again.")
     return false
+  }
+
+  closeMessage = () => {
+    this.setState({checking: false});
   }
 
   render() {
@@ -219,6 +228,15 @@ class SignUp extends Component {
             </form>
           </div>
         </div>
+
+        <Snackbar
+                  sx={{ height: "100%", alignItems: 'center' }}
+                  open={this.state.checking}
+                  anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                  onClose={() => this.closeMessage()}
+                  TransitionComponent={Fade}
+                  message="Checking the credentials..."
+              />               
       </>
     );
   }
