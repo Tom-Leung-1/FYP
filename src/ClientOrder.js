@@ -131,10 +131,11 @@ class ClientOrder extends React.Component {
   }
 
   CheckTakeAway = () => {
+    const validPhone = /^\d{8}$/;
     this.TakeAway();
     if (this.state.TakeAway === null)
         this.setState({TakeAwayErr: "Please choose an option below"}); 
-    else if (this.state.phoneValue.length < 8)
+    else if (!(this.state.phoneValue.match(validPhone)))
     {
       this.setState({TakeAwayErr: "Please provide correct phone number"});
       if (this.state.addressValue.length < 1 && !this.state.TakeAway)
@@ -142,7 +143,7 @@ class ClientOrder extends React.Component {
     }
     else if (this.state.addressValue.length < 1)
         if (!this.state.TakeAway)
-            this.setState({TakeAwayErr: "Please provide correct address"});
+            this.setState({TakeAwayErr: "Please provide your address for delivery"});
         else
             document.getElementById("detailBtn").click();
     else
