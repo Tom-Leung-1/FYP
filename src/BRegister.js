@@ -184,7 +184,7 @@ class BRegister extends Component {
   fileSelectedHandler = event => {
     const fileType = event.target.dataset.type
     if (event.target.files.length === 0) {
-      this.setState({ [fileType]: null })
+      this.setState({ [fileType]: null, [fileType + "Url"]: null })
       return
     }
     this.setState({ [fileType]: event.target.files[0], [fileType + "Url"]: URL.createObjectURL(event.target.files[0]) })
