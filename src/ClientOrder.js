@@ -12,7 +12,10 @@ import { Link } from 'react-router-dom';
 import { margin } from '@mui/system';
 import Fab from '@mui/material/Fab';
 import Tooltip from '@mui/material/Tooltip';
+import config from "./config/config.json"
+import AddressInput from "./components/Inputs/AddressInput"
 
+const key = config["REACT_APP_GOOGLE_KEY"]
 
 class ClientOrder extends React.Component {
   constructor(props) {
@@ -24,10 +27,23 @@ class ClientOrder extends React.Component {
       TakeAway: null,
       phoneValue: "",
       addressValue: "",
+      lat: null,
+      lng: null,
+      marker: null,
       Order: [],
       Total: 0,
       mealReady: true,
     };
+  }
+
+  onMarkerComplete = marker => {
+    this.state.marker?.setMap(null);
+    const lat = marker.position.lat()
+    const lng = marker.position.lng()
+    console.log(marker, {lat, lng})
+    fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${key}`)
+      .then(response => response.json())
+      .then(data => this.setState({ marker: marker, addressValue: data.results[0].formatted_address, lat, lng }));
   }
 
   loadData = async (id) => {
@@ -117,17 +133,15 @@ class ClientOrder extends React.Component {
 
   TakeAway = () => {
     let radio = document.getElementsByName("radioTakeAway");
-    for (let i = 0; i < radio.length; i++) {
-      if(radio[0].checked) {
-        this.setState({TakeAway: false});
-        this.setState({TakeAwayErr: ""});
-      } 
-      if(radio[1].checked) {
-        this.setState({TakeAway: true});
-        this.setState({TakeAwayErr: ""});
-        this.setState({addressValue: "" })
-      } 
-    }
+    if(radio[0].checked) {
+      this.setState({TakeAway: false});
+      this.setState({TakeAwayErr: ""});
+    } 
+    if(radio[1].checked) {
+      this.setState({TakeAway: true});
+      this.setState({TakeAwayErr: ""});
+      this.setState({addressValue: "" })
+    } 
   }
 
   CheckTakeAway = () => {
@@ -299,9 +313,9 @@ class ClientOrder extends React.Component {
                       <br/>
                       <label for="phone" class="col-form-label">Phone No.: </label>
                       <input value={this.state.phoneValue} id="phone" className="form-control form-control-sm mb-1" onChange={this.handleOnChange}/>
-                      <div style={{display: this.state.TakeAway === false ? "block" : "none"}}>
-                        <label for="address" class="col-form-label">Address: </label>
-                        <textarea value={this.state.addressValue} id="address" className="form-control form-control-sm mb-1" onChange={this.handleOnChange}/>
+                      <div style={{display: this.state.TakeAway === false ? "block" : "none"}}>                        
+                          <AddressInput onChange={this.handleOnChange} sm_md_lg="-1_-1_8" id="address" address={this.state.addressValue} required={true} name="Address" onMarkerComplete={this.onMarkerComplete} />
+                        {/* <textarea value={this.state.addressValue} id="address" className="form-control form-control-sm mb-1" onChange={this.handleOnChange}/> */}
                       </div>
                     </div>
                   </form>
