@@ -79,9 +79,9 @@ class Activate extends Component {
                 <div className='container p-5'>
                           <Alert severity="error" className='mt-5'>
                             <AlertTitle><b>Error</b></AlertTitle>
-                              Invalid token for activating the account. Please check your email and try to click the activation link in activation email again.
+                              Invalid token for activating the account, please provide a valid token. Please check your email and click the activation link in activation email.
                               <br/>
-                              <Link to="/home" className='text-decoration-none'>Back to home page</Link>
+                              <Link to="/home" className='text-decoration-none'>&#8592;Back to home page</Link>
                           </Alert>
                         </div>
                 
