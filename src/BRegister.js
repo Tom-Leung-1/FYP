@@ -38,7 +38,9 @@ class BRegister extends Component {
       restaurantValue: '',
       descriptionValue: '',
       brFile: null,
+      brFileUrl: null,
       resPhoto: null,
+      resPhotoUrl: null,
       addressValue: '',
       marker: null,
       map: null,
@@ -92,7 +94,9 @@ class BRegister extends Component {
       idCheck: '',
       restaurantCheck: '',
       brFile: null,
+      brFileUrl: null,
       resPhoto: null,
+      resPhotoUrl: null,
       OpenHours: "",
       OpenWeekdays: "",
       OpenStart: "",
@@ -183,7 +187,7 @@ class BRegister extends Component {
       this.setState({ [fileType]: null })
       return
     }
-    this.setState({ [fileType]: event.target.files[0] })
+    this.setState({ [fileType]: event.target.files[0], [fileType + "Url"]: URL.createObjectURL(event.target.files[0]) })
   }
 
   fileUploadHandler = async (fileType) => {
@@ -236,7 +240,7 @@ class BRegister extends Component {
 
   render() {
     console.log("testing", process.env.REACT_RECAPTCHA_SITE_KEY)
-    const { descriptionValue, firstValue, lastValue, phoneValue, idValue, restaurantValue, recaptchaKey } = this.state
+    const { descriptionValue, firstValue, lastValue, phoneValue, idValue, brFileUrl, restaurantValue, resPhotoUrl, recaptchaKey } = this.state
     return (
       <div>
         <Helmet>
@@ -260,13 +264,13 @@ class BRegister extends Component {
                   <TextInput value={idValue} sm_md_lg="4_-1_2" id="id" required={true} placeholder="E.g. A123456(7)" onChange={this.handleOnChange} name="HKID Card Number" errorMsg={this.state.idCheck} />
                 </div>
                 <div className="row mb-4">
-                  <FileInput fileType="brFile" accept=".jpg,.png,.jpeg" id="upload" required={true} onChange={this.fileSelectedHandler} name="Upload Business Registration (with jpg, png or jpeg format)" />
+                  <FileInput imgSrc={brFileUrl} fileType="brFile" accept=".jpg,.png,.jpeg" id="upload" required={true} onChange={this.fileSelectedHandler} name="Upload Business Registration (with jpg, png or jpeg format)" />
                 </div>
                 <div className="row mb-2">
                   <TextInput value={restaurantValue} sm_md_lg="-1_-1_8" id="restaurant" required={true} onChange={this.handleOnChange} name="Restaurant Name" errorMsg={this.state.restaurantCheck} />
                 </div>
                 <div className="row">
-                  <FileInput fileType="resPhoto" accept=".jpg,.png,.jpeg" id="uploadPhoto" onChange={this.fileSelectedHandler} name="Upload Photo of restaurant (with jpg, png or jpeg format)" />
+                  <FileInput imgSrc={resPhotoUrl} fileType="resPhoto" accept=".jpg,.png,.jpeg" id="uploadPhoto" onChange={this.fileSelectedHandler} name="Upload Photo of restaurant (with jpg, png or jpeg format)" />
                 </div>
                 <div className="row mb-2">
                   <OpenHours name="Open Hours" id="openHours" sm_md_lg="-1_-1_8" value={this.state.OpenHours} saveOH={this.saveOH} weekday={this.state.OpenWeekdays} start={this.state.OpenStart} end={this.state.OpenEnd} required={true} />
