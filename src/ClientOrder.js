@@ -254,10 +254,14 @@ class ClientOrder extends React.Component {
                       <br/>
                       <span className="fw-bold">Information for delivery</span>
                       <br/>
-                      <label for="phone" class="col-form-label">Phone No.: </label>
-                      <input id="phone" className="form-control form-control-sm mb-1"/>
-                      <label for="address" class="col-form-label">Adress: </label>
-                      <textarea id="address" className="form-control form-control-sm mb-1"/>
+                      <div>
+                        <label for="phone" class="col-form-label">Phone No.: </label>
+                        <input id="phone" className="form-control form-control-sm mb-1"/>
+                      </div>
+                      <div>
+                        <label for="address" class="col-form-label">Adress: </label>
+                        <textarea id="address" className="form-control form-control-sm mb-1"/>
+                      </div>
                     </div>
                   </form>
                 </div>
