@@ -94,7 +94,7 @@ class RecentOrder extends React.Component {
 
   componentDidMount = async () => {
     const orders = groupBy(await this.getUserOrders(), "order_id")
-    const ordersSummary = eachFirst(orders).map(({restaurant, order_id, order_date, type, total, status}) => {
+    const ordersSummary = eachFirst(orders)?.map(({restaurant, order_id, order_date, type, total, status}) => {
       const [dateObj, time, date] = getTimeDate(order_date)
       // const dateObj = new Date(order_date)
       // dateObj.setUTCHours(dateObj.getUTCHours() + 8);
@@ -106,7 +106,7 @@ class RecentOrder extends React.Component {
         return 1
       }
       return -1
-    })
+    }) ?? []
     console.log({orders, ordersSummary})
     this.setState({orders, ordersSummary})
   }

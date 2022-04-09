@@ -137,13 +137,13 @@ class ClientOrder extends React.Component {
         this.setState({TakeAwayErr: "Please choose an option below"}); 
     else if (!(this.state.phoneValue.match(validPhone)))
     {
-      this.setState({TakeAwayErr: "Please provide correct phone number"});
+      this.setState({TakeAwayErr: "Please provide a valid phone number"});
       if (this.state.addressValue.length < 1 && !this.state.TakeAway)
-          this.setState({TakeAwayErr: "Please provide correct information for order"});
+          this.setState({TakeAwayErr: "Please provide a valid address and a phone number"});
     }
     else if (this.state.addressValue.length < 1)
         if (!this.state.TakeAway)
-            this.setState({TakeAwayErr: "Please provide your address for delivery"});
+            this.setState({TakeAwayErr: "Please provide a valid address"});
         else
             document.getElementById("detailBtn").click();
     else
