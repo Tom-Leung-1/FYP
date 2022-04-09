@@ -10,6 +10,10 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button';
+import Map from './components/GoogleMap/GoogleMap';
+import Geocode from "react-geocode";
+import config from "./config/config.json"
+const key = config["REACT_APP_GOOGLE_KEY"]
 
 // name, special order, price, order id, drinks, done, restaurantId,
 // merge with same order No, -> key dict (value: ordersItem)
@@ -23,8 +27,11 @@ class OrderList extends React.Component {
       orderReady: true,
       TAopen: false,
       DLopen: false,
+      MapOpen: false,
       orderId: -1,
       status: "",
+      lat: null,
+      lng: null
     };
   }
 
@@ -34,6 +41,7 @@ class OrderList extends React.Component {
     console.log(data)
     this.setState({data})
     if (Object.keys(data).length === 0) this.setState({orderReady: false})
+    Geocode.setApiKey(key);
   }
 
   groupBy = (arr, key) => {
@@ -62,12 +70,25 @@ class OrderList extends React.Component {
       this.setState({DLopen: true, orderId, status})
   }
 
+  mapOpen = (address) => {
+    Geocode.fromAddress(address).then(
+      (response) => {
+        const { lat, lng } = response.results[0].geometry.location;
+        this.setState({lat, lng})
+        this.setState({MapOpen: true})
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+  }
+
   changeStatus = (e) => {
     this.setState({status: e.currentTarget.value})
   }
 
   statusClose = () => {
-    this.setState({TAopen: false, DLopen: false, orderId: -1})
+    this.setState({TAopen: false, DLopen: false, MapOpen: false, orderId: -1})
   }
 
 
@@ -81,7 +102,7 @@ class OrderList extends React.Component {
         const total = order[0]["total"]
         const status = order[0]["status"]
         const phone = order[0]["phone"]
-        const address = "3248 Round Table Drive, ABC, EFG" // TODO
+        const address = "Room 101, Charles Kuen Kao Building Science Ctr. North BLK, The Chinese University of Hong Kong" // TODO
         return (
           <>
             <div className={`card m-2 ${takeAway ? "border-success" : "border-primary"}`} style={{width: "20em"}}>
@@ -104,15 +125,16 @@ class OrderList extends React.Component {
                   )
                   }
                   <span className="fs-5 fw-bold text-danger">Total: <span style={{float:"right"}}>${total}</span></span>
+                  <br/>
+                  <br/>
+                  <span className="fs-6 fw-bold">Phone No.:</span>
+                  <br/>
+                  {phone}
                   <div style={{display: takeAway ? 'none' : 'block'}}>
-                    <br/>
-                    <span className="fs-6 fw-bold">Phone No.:</span>
-                    <br/>
-                    {phone}
-                    <br/>
-                    <span className="fs-6 fw-bold">Address:</span>
+                    <span className="fs-6 fw-bold">Address: <button type="button" title="Check the location on Map" className="badge btn btn-sm btn-primary border-0" style={{backgroundColor:"#6E5EFE"}} onClick={() => this.mapOpen(address)}><i class="bi bi-geo-alt-fill"></i></button></span>
                     <br/>
                     {address}
+                    <br/>
                   </div>
               </div>
             </div>
@@ -138,7 +160,7 @@ class OrderList extends React.Component {
   }
 
   render() {
-    const {data, status, TAopen, DLopen} = this.state
+    const {data, status, TAopen, DLopen, MapOpen, lat, lng} = this.state
     return (
       <>
             <Helmet>
@@ -214,6 +236,17 @@ class OrderList extends React.Component {
                   <Button onClick={this.saveData} style={{color:"#6E5EFE", fontWeight:"bolder"}}>Save</Button>
                 </DialogActions>
             </Dialog>
+
+            <Dialog fullWidth="true" open={MapOpen} onClose={() => this.statusClose()}>
+                <DialogTitle>Location</DialogTitle>
+                <DialogContent>
+                  <Map position={{lat, lng}}/>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={() => this.statusClose()} className="text-secondary">Close</Button>
+                </DialogActions>
+            </Dialog>
+            
             <h1>
               <center className="p-5 text-muted" style={{display: this.state.orderReady && Object.keys(data).length === 0  ? "block" : "none"}}>
                 <span className="spinner-grow"></span>

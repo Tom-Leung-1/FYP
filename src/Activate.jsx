@@ -2,18 +2,23 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from "react-helmet";
 import axios from 'axios';
+import { ReactComponent as OKIcon } from './images/ok.svg';
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
 
 class Activate extends Component {
     constructor(props) {
         super(props);
         this.state = {
             valid : false,
+            loading: true,
         };
     }
 
     componentDidMount = async () => {
         const queryString = window.location.search;
         const token = new URLSearchParams(queryString).get("token");
+        if (!token) this.setState({loading : false})
         await this.checkValid(token)
     }
 
@@ -28,19 +33,22 @@ class Activate extends Component {
                 .then(response => {
                     console.log({response})
                     this.setState({valid : true})
+                    this.setState({loading : false})
                 })
                 .catch(error => {
                     console.log(error)
+                    this.setState({loading : false})
                 })
             }
           })
           .catch(error => {
             console.log(error)
+            this.setState({loading : false})
           })
     }
 
     render() {
-        const {valid} = this.state
+        const {valid, loading} = this.state
         return (
             <>
                 <Helmet>
@@ -48,9 +56,35 @@ class Activate extends Component {
                     <title>Activate User Account</title>
                 </Helmet>
                 {valid ?
-                <div>Activated</div>
+                <>
+                        <div className="container p-3">
+                          <div className="d-flex flex-wrap justify-content-center fs-1 mt-5">
+                            <OKIcon style={{height:"200px", width:"200px"}}/>
+                          </div>
+                          <div className="d-flex flex-wrap justify-content-center fs-1">
+                            Successfully Activate Account
+                          </div>
+                          <br/>
+                          <div className="d-flex flex-wrap justify-content-center fs-4">
+                            You can now <Link to="/sign-in" className="text-decoration-none">&nbsp;sign in&nbsp;</Link> your account and enjoy using Foodcreek!
+                          </div>
+                        </div>
+                </>
                 :
-                <div>Not activated</div>
+                loading ?
+                <>
+                <h1><center className="p-5 text-muted"><span className="spinner-grow"></span><br/>Activating your account...</center></h1>
+                </>
+                :
+                <div className='container p-5'>
+                          <Alert severity="error" className='mt-5'>
+                            <AlertTitle><b>Error</b></AlertTitle>
+                              Invalid token for activating the account, please provide a valid token. Please check your email and click the activation link in activation email.
+                              <br/>
+                              <Link to="/home" className='text-decoration-none'>&#8592;Back to home page</Link>
+                          </Alert>
+                        </div>
+                
                 }
             </>
         );
