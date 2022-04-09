@@ -158,7 +158,12 @@ class ClientOrder extends React.Component {
     else if (this.state.addressValue.length < 1)
         if (!this.state.TakeAway)
             this.setState({TakeAwayErr: "Please provide a valid address"});
-        else
+        else    
+            document.getElementById("detailBtn").click();
+    else if (this.state.lat === null || this.state.lng === null)
+        if (!this.state.TakeAway)
+            this.setState({TakeAwayErr: "Please set the marker on the map"});
+        else    
             document.getElementById("detailBtn").click();
     else
         document.getElementById("detailBtn").click();
@@ -289,7 +294,7 @@ class ClientOrder extends React.Component {
           </Tooltip>
 
           <div class="modal fade" id="takeAway" tabindex="-1" aria-labelledby="takeAwayLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
               <div class="modal-content">
                 <div class="modal-header">
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -312,10 +317,10 @@ class ClientOrder extends React.Component {
                       <br/>
                       <span className="fw-bold">Information for order:</span>
                       <br/>
-                      <label for="phone" class="col-form-label">Phone No.: </label>
+                      <label for="phone" class="col-form-label"><b><small>Phone No. </small></b></label>
                       <input value={this.state.phoneValue} id="phone" className="form-control form-control-sm mb-1" onChange={this.handleOnChange}/>
                       <div style={{display: this.state.TakeAway === false ? "block" : "none"}}>                        
-                          <AddressInput onChange={this.handleOnChange} sm_md_lg="-1_-1_8" id="address" address={this.state.addressValue} required={true} name="Address" onMarkerComplete={this.onMarkerComplete} />
+                          <AddressInput onChange={this.handleOnChange} sm_md_lg="-1_-1_12" id="address" address={this.state.addressValue} required={true} name="Address" onMarkerComplete={this.onMarkerComplete} />
                         {/* <textarea value={this.state.addressValue} id="address" className="form-control form-control-sm mb-1" onChange={this.handleOnChange}/> */}
                       </div>
                     </div>
