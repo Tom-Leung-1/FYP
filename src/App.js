@@ -160,7 +160,7 @@ class App extends Component {
                 <Client clientRestaurantId={clientRestaurantId} userId={userId} lat={lat} lng={lng} photo={photo} description={description} restaurant={restaurant} address={address} openHours={openHours}/>
               </Route>
               <Route path="/new">
-                <ClientOrder saveOrder={this.saveOrder} restaurantId={clientRestaurantId} restaurantName={restaurant}/>
+                <ClientOrder userId={userId} saveOrder={this.saveOrder} restaurantId={clientRestaurantId} restaurantName={restaurant}/>
               </Route>
               <Route path="/menu">
                 <MealMenu restaurantId={ownerRestaurantId}/>

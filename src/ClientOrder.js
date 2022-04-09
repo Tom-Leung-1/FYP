@@ -62,11 +62,34 @@ class ClientOrder extends React.Component {
     return Array.from(typeSet)
   }
 
+  //get phone no.
+  getUserProfile = async () => {
+    const {userId} = this.props
+    console.log(userId)
+    let data
+    await axios.get(`http://localhost:3001/getUserProfile?id=${userId}`)
+    .then(response => {
+      console.log(response.data[0])
+      data = response.data[0]
+    })
+    .catch(error => {
+      console.log(error)
+    })
+    console.log(data)
+    return data
+  }
+
   componentDidMount = async () => {
     const {restaurantId} = this.props
     const [data, withSetData] = await this.loadData(restaurantId)
     this.setState({data, withSetData})
     if (!data) this.setState({mealReady: false})
+    const {userId} = this.props
+    if (userId > 0)
+    {
+      const {phone} = await this.getUserProfile()
+      this.setState({phoneValue: phone})
+    }
   }
 
   drinkOpitions = () => {
@@ -275,7 +298,7 @@ class ClientOrder extends React.Component {
                       <span className="fw-bold">Information for order:</span>
                       <br/>
                       <label for="phone" class="col-form-label">Phone No.: </label>
-                      <input id="phone" className="form-control form-control-sm mb-1" onChange={this.handleOnChange}/>
+                      <input value={this.state.phoneValue} id="phone" className="form-control form-control-sm mb-1" onChange={this.handleOnChange}/>
                       <div style={{display: this.state.TakeAway === false ? "block" : "none"}}>
                         <label for="address" class="col-form-label">Address: </label>
                         <textarea value={this.state.addressValue} id="address" className="form-control form-control-sm mb-1" onChange={this.handleOnChange}/>
