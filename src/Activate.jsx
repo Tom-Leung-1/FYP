@@ -62,11 +62,11 @@ class Activate extends Component {
                             <OKIcon style={{height:"200px", width:"200px"}}/>
                           </div>
                           <div className="d-flex flex-wrap justify-content-center fs-1">
-                            Successfully Activate Account
+                            Successfully Activate the Account
                           </div>
                           <br/>
                           <div className="d-flex flex-wrap justify-content-center fs-4">
-                            You can now <Link to="/sign-in" className="text-decoration-none">&nbsp;sign in&nbsp;</Link> your account and enjoy using Foodcreek!
+                            You can now <Link to="/sign-in" className="text-decoration-none">&nbsp;sign in&nbsp;</Link> to access Foodcreek!
                           </div>
                         </div>
                 </>
@@ -79,7 +79,7 @@ class Activate extends Component {
                 <div className='container p-5'>
                           <Alert severity="error" className='mt-5'>
                             <AlertTitle><b>Error</b></AlertTitle>
-                              Invalid token for activating the account, please provide a valid token. Please check your email and click the activation link in activation email.
+                              You are supposed to receive a valid token to activate the account. Please check your email and click the activation link in it.
                               <br/>
                               <Link to="/home" className='text-decoration-none'>&#8592;Back to home page</Link>
                           </Alert>

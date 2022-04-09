@@ -53,6 +53,7 @@ class OrderList extends React.Component {
 
   getOrders = async (restaurantId) => {
     let data
+    console.log({restaurantId})
     await axios.get(`http://localhost:3001/getOrders?id=${restaurantId}`)
       .then(response => {
         data = response.data

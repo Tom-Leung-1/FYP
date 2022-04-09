@@ -66,6 +66,10 @@ class App extends Component {
       clientTakeaway: false,
     })
   }
+
+  setRestaurantId = (ownerRestaurantId) => {
+    this.setState({ownerRestaurantId})
+  }
   
   
   searchUpdate = (searchTag) => {
@@ -172,7 +176,7 @@ class App extends Component {
                 <BookingSetting restaurantId={ownerRestaurantId}/>
               </Route>
               <Route path="/register">
-                <BRegister userId={userId}/>
+                <BRegister setRestaurantId={this.setRestaurantId} userId={userId}/>
               </Route>
               <Route path="/pay">
                 <PaymentChoice userId={userId} sendOrder={this.sendOrder}/>

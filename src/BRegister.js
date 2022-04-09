@@ -151,16 +151,19 @@ class BRegister extends Component {
     this.props.history.push("/OwnerOption");
   }
 
-  uploadCredentials = (brFileName, photoFilename) => {
+  uploadCredentials = async (brFileName, photoFilename) => {
     const { userId } = this.props
     const { firstValue, lastValue, phoneValue, idValue, restaurantValue, addressValue, lat, lng, OpenHours, descriptionValue} = this.state
-    axios.post(`http://localhost:3001/uploadRegistration`, { firstValue, lastValue, phoneValue, idValue, restaurantValue, addressValue, brFileName, photoFilename, lat, lng, userId, OpenHours, descriptionValue})
+    let id
+    await axios.post(`http://localhost:3001/uploadRegistration`, { firstValue, lastValue, phoneValue, idValue, restaurantValue, addressValue, brFileName, photoFilename, lat, lng, userId, OpenHours, descriptionValue})
       .then(response => {
         console.log(response)
+        id = response.data.insertId
       })
       .catch(error => {
         console.log(error)
       })
+    this.props.setRestaurantId(id)
   }
 
   changeAddress = (event) => {
