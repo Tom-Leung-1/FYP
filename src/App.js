@@ -46,6 +46,10 @@ class App extends Component {
       searchTag : "",
       lat : -1,
       lng : -1,
+      orderLat : -1,
+      orderLng : -1,
+      orderPhone : "",
+      orderAddress : "",
       photo : "",
       description : "",
       restaurant: "",
@@ -89,14 +93,14 @@ class App extends Component {
     this.setState({userId : id, owner, ownerRestaurantId : restaurantId || -1})
   }
 
-  saveOrder = (clientOrder, clientTotal, clientTakeaway) => {
-    this.setState({clientOrder, clientTotal, clientTakeaway})
+  saveOrder = (clientOrder, clientTotal, clientTakeaway, orderLat, orderLng, orderPhone, orderAddress) => {
+    this.setState({clientOrder, clientTotal, clientTakeaway, orderLat, orderLng, orderPhone, orderAddress})
   }
 
   sendOrder = async () => {
-    const {userId, restaurant, clientOrder, clientTotal, clientTakeaway, clientRestaurantId} = this.state
+    const {userId, restaurant, clientOrder, clientTotal, clientTakeaway, clientRestaurantId, orderLat, orderLng, orderPhone, orderAddress} = this.state
     let orderId
-    await axios.post(`http://localhost:3001/sendOrder`, {clientOrder, clientTotal, clientTakeaway, clientRestaurantId})
+    await axios.post(`http://localhost:3001/sendOrder`, {clientOrder, clientTotal, clientTakeaway, clientRestaurantId, })
     .then(response => {
       orderId = response.data
     })
@@ -104,7 +108,7 @@ class App extends Component {
       console.log(error)
       return
     })
-    await axios.post(`http://localhost:3001/userOrder`, {userId, orderId, restaurant, clientTakeaway, clientTotal})
+    await axios.post(`http://localhost:3001/userOrder`, {userId, orderId, restaurant, clientTakeaway, clientTotal, orderLat, orderLng, orderPhone, orderAddress})
     .then(response => {
       console.log(response)
     })

@@ -71,17 +71,8 @@ class OrderList extends React.Component {
       this.setState({DLopen: true, orderId, status})
   }
 
-  mapOpen = (address) => {
-    Geocode.fromAddress(address).then(
-      (response) => {
-        const { lat, lng } = response.results[0].geometry.location;
-        this.setState({lat, lng})
-        this.setState({MapOpen: true})
-      },
-      (error) => {
-        console.error(error);
-      }
-    );
+  mapOpen = (lat, lng) => {
+    this.setState({lat, lng, MapOpen: true})
   }
 
   changeStatus = (e) => {
@@ -95,7 +86,7 @@ class OrderList extends React.Component {
 
   showOrderList = () => {
     const {data} = this.state
-
+    console.log(data)
     return (
       Object.values(data)?.map(order => {
         const takeAway = order[0].takeaway.data[0]
@@ -103,7 +94,9 @@ class OrderList extends React.Component {
         const total = order[0]["total"]
         const status = order[0]["status"]
         const phone = order[0]["phone"]
-        const address = "Room 101, Charles Kuen Kao Building Science Ctr. North BLK, The Chinese University of Hong Kong" // TODO
+        const address = order[0]["address"]
+        const lat = order[0]["lat"]
+        const lng = order[0]["lng"]
         return (
           <>
             <div className={`card m-2 ${takeAway ? "border-success" : "border-primary"}`} style={{width: "20em"}}>
@@ -132,7 +125,7 @@ class OrderList extends React.Component {
                   <br/>
                   {phone}
                   <div style={{display: takeAway ? 'none' : 'block'}}>
-                    <span className="fs-6 fw-bold">Address: <button type="button" title="Check the location on Map" className="badge btn btn-sm btn-primary border-0" style={{backgroundColor:"#6E5EFE"}} onClick={() => this.mapOpen(address)}><i class="bi bi-geo-alt-fill"></i></button></span>
+                    <span className="fs-6 fw-bold">Address: <button type="button" title="Check the location on Map" className="badge btn btn-sm btn-primary border-0" style={{backgroundColor:"#6E5EFE"}} onClick={() => this.mapOpen(lat, lng)}><i class="bi bi-geo-alt-fill"></i></button></span>
                     <br/>
                     {address}
                     <br/>

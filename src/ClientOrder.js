@@ -232,14 +232,14 @@ class ClientOrder extends React.Component {
     return (<h5 className='text-center text-muted'>The Shopping Cart is empty.</h5>)
   }
 
-  toPayment = (Order, Total, TakeAway) => {
-    this.props.saveOrder(Order, Total, TakeAway)
+  toPayment = (Order, Total, TakeAway, lat, lng, phoneValue, addressValue) => {
+    this.props.saveOrder(Order, Total, TakeAway, lat, lng, phoneValue, addressValue)
     document.getElementById("detailBtn").click();
   }
 
     render() {
       const {restaurantName, restaurantId} = this.props
-      const {Order, Total, TakeAway, data} = this.state
+      const {addressValue, Order, Total, TakeAway, lat, lng, data, phoneValue} = this.state
       const typeSet = this.getDataType(data)
 
       return (
@@ -345,7 +345,7 @@ class ClientOrder extends React.Component {
                 </div>
                 <div class="modal-footer">
                   <h3 class="mr-auto"><b>Total: <span class="text-danger">${this.state.Total}</span></b></h3>
-                  <Link onClick={() => this.toPayment(Order, Total, TakeAway)} to="/pay" type="button" class="btn btn-primary" style={{backgroundColor:"#6E5EFE"}}>Create</Link>
+                  <Link onClick={() => this.toPayment(Order, Total, TakeAway, lat, lng, phoneValue, addressValue)} to="/pay" type="button" class="btn btn-primary" style={{backgroundColor:"#6E5EFE"}}>Create</Link>
                 </div>
               </div>
             </div>
