@@ -187,7 +187,9 @@ class App extends Component {
               <Route path="/pay">
                 <PaymentChoice userId={userId} sendOrder={this.sendOrder}/>
               </Route>
-              <Route path="/doneOrder" component={DoneOrder}/>
+              <Route path="/doneOrder">
+                <DoneOrder userId={userId}/>
+              </Route>
               <Route path="/OwnerOption">
                 <OwnerOption/>
               </Route>
@@ -218,7 +220,7 @@ class App extends Component {
                 <Activate/>
               </Route>
               <Route path="/paypal">
-                <Paypal clientOrder={clientOrder} orderReset={this.orderReset} sendOrder={this.sendOrder} clientTotal={clientTotal}/>
+                <Paypal userId={userId} clientOrder={clientOrder} orderReset={this.orderReset} sendOrder={this.sendOrder} clientTotal={clientTotal}/>
               </Route>
               <Route path="/Rlist">
                 <RestaurantList/>

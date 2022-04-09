@@ -50,7 +50,7 @@ class Paypal extends Component {
     
     render() {
         const {payed} = this.state
-        const {clientOrder} = this.props
+        const {clientOrder, userId} = this.props
         return (
             <>
                 {
@@ -67,6 +67,9 @@ class Paypal extends Component {
                           <br/>
                           <div className="d-flex flex-wrap justify-content-center">
                             <Link to="/new" type="button" className="btn btn-link text-decoration-none fs-4">Back to the menu page</Link>
+                          </div>
+                          <div className="d-flex flex-wrap justify-content-center">
+                            <Link to="/recentorder" type="button" className="btn btn-link text-decoration-none fs-4" style={{display: userId > 0 ? "inline" : "none"}}>See recent order</Link>
                           </div>
                         </div>
                         </>
