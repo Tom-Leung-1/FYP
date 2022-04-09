@@ -34,6 +34,8 @@ import UserType from './UserType';
 import Paypal from "./Paypal";
 import Activate from "./Activate";
 import ActivateMail from "./activateMail";
+import RestaurantList from './RestaurantList';
+import BRstate from './BRstate';
 import axios from "axios"
 
 
@@ -213,6 +215,12 @@ class App extends Component {
               </Route>
               <Route path="/paypal">
                 <Paypal clientOrder={clientOrder} orderReset={this.orderReset} sendOrder={this.sendOrder} clientTotal={clientTotal}/>
+              </Route>
+              <Route path="/Rlist">
+                <RestaurantList/>
+              </Route>
+              <Route path="/brState">
+                <BRstate/>
               </Route>
             </div>
           </Switch>

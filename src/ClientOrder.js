@@ -145,10 +145,11 @@ class ClientOrder extends React.Component {
   }
 
   CheckTakeAway = () => {
+    const validPhone = /^\d{8}$/;
     this.TakeAway();
     if (this.state.TakeAway === null)
         this.setState({TakeAwayErr: "Please choose an option below"}); 
-    else if (this.state.phoneValue.length < 8)
+    else if (!(this.state.phoneValue.match(validPhone)))
     {
       this.setState({TakeAwayErr: "Please provide a valid phone number"});
       if (this.state.addressValue.length < 1 && !this.state.TakeAway)
