@@ -16,7 +16,6 @@ function AddressInput({ sm_md_lg, id, address, required, placeholder, onChange, 
                 1. click on the <img src={Pin} style={{height:"1.5em", width:"1.5em"}}/> button<br/>
                 2. set the marker on the loaction of your address on the map<br/>
                 3. Edit the address in the input box if it is needed<br/>
-                <b><i class="bi bi-exclamation-diamond"></i> You cannot input the address without setting any marker on the map</b>
             </Alert>
             <input onChange={onChange} type="text" id={id} className="form-control form-control-sm shadow-sm" value={address} />
             <GM firstCenter={firstCenter} position={position} setMarker={onMarkerComplete} />
