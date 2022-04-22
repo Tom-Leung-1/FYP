@@ -40,6 +40,10 @@ class Activate extends Component {
                     this.setState({loading : false})
                 })
             }
+            else
+            {
+              this.setState({loading : false})
+            }
           })
           .catch(error => {
             console.log(error)

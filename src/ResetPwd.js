@@ -19,7 +19,8 @@ class ResetPwd extends Component {
         password: '',
         passwordError: '',
         confirmPassError: '',
-        showPass: false 
+        showPass: false,
+        loading: true,
       };
   }
 
@@ -100,11 +101,18 @@ class ResetPwd extends Component {
           console.log({dateTime, now})
           if (dateTime < now) return
           this.setState({valid : true, token, id})
+          this.setState({loading : false})
+        }
+        else
+        {
+          this.setState({loading : false})
         }
       })
       .catch(error => {
       console.log(error)
+      this.setState({loading : false})
       })
+      
   }
 
   componentDidMount = async () => {
@@ -114,7 +122,7 @@ class ResetPwd extends Component {
   }
 
   render() {
-    const {passwordError, confirmPassError, valid} = this.state
+    const {passwordError, confirmPassError, valid, loading} = this.state
     return (
       <>
         <Helmet>
@@ -145,6 +153,11 @@ class ResetPwd extends Component {
             </div>
           </form>
         </div>
+        :
+        loading ?
+        <>
+        <h1><center className="p-5 text-muted"><span className="spinner-grow"></span><br/>Please wait...</center></h1>
+        </>
         :
         <div className='container p-5'>
           <Alert severity="error" className='mt-5'>
