@@ -43,7 +43,7 @@ class BookingStatus extends React.Component {
         {
           field: 'username',
           headerName: 'Username',
-          width: 120,
+          width: 115,
           sortable: false
         },
         {
@@ -62,14 +62,14 @@ class BookingStatus extends React.Component {
         {
           field: 'progress',
           headerName: 'progress',
-          width: 160,
+          width: 172,
         },
         {
           field: 'action',
           headerName: 'Action',
           sortable: false,
           filterable: false,
-          width: 90,
+          width: 80,
           renderCell: (params) => {
             const progress = params?.row.progress.split(" ")[0]
             const done = progress === "cancelled" || progress === "finished"
